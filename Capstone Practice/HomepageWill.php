@@ -1,9 +1,12 @@
 
 <!doctype html>
 <html>
-	<head>
-		<meta name="description" content="Concept for Project Homepage">
-	</head>
+<head>
+	<meta name="description" content="Concept for Project Homepage">
+	<!--script type="text/javascript">
+  	alert("Box Test");
+	</script-->
+</head>
 <body>
 <!-- Navigation Bar -->
 	<div class="navbar">
@@ -13,7 +16,8 @@
 		<a href="#about">About</a>
 		<a href="#about">Login</a>
 	</div> 
-	
+
+<!-- Placeholder Body Text/div -->
 	<div class = "mainbody">
 		<h2>Capstone Concept (Home Page + Nav)</h2>
 		<p>Ideally, this section would contain simple information about the Family Tree, instead of immediately shoving the designer UI on the first visit.</p>
@@ -42,9 +46,6 @@ body {
 background-color: #778899;
 
 }
-
-
-
 
 .navbar {
   background-color: #014462;
