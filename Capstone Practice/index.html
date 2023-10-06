@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>My test page</title>
+	<!-- connects css file and implements the code from there -->
+	<link rel="stylesheet" type="text/css" href="styles/styles.css">
+</head>
+
+
+<body>
+
+    <div class="container">
+        <div class="left-section">
+            <h1>Person</h1>
+            <p>Enter information about the person here: </p>
+			
+			<label for="Name">Name:</label>
+            <input type="text" id="Name" class="textbox"><br>
+
+            <label for="Age">Age:</label>
+            <input type="text" id="Age" class="textbox"><br>
+			
+			<button type="button" onclick="getData()">Store Info</button>
+			
+        </div>
+
+        <div class="right-section">
+            <h1>Tree</h1>
+            <p>This is the visualization of the tree.</p>
+			
+			<div id="Cell" class="click-box">Cell</div>
+        </div>
+    </div>
+	
+	<script src="scripts/main.js"></script>
+	
+</body>
+</html>

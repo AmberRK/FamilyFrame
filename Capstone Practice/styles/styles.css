@@ -1,0 +1,39 @@
+.click-box {
+	width: 200px;
+	height: 100px;
+	background-color: lightpink;
+	text-align: center;
+	line-height: 100px;
+	cursor: pointer;
+}
+
+
+/* Set the body and HTML height to 100% to ensure full page coverage */
+body, html {
+	height: 100%;
+	margin: 0;
+	padding: 0;
+}
+
+/* Create a container to hold both sections */
+.container {
+	display: flex;
+	height: 100%;
+}
+
+/* Style for the left section */
+.left-section {
+	flex: 1; /* Grow to fill available space */
+	background-color: lightblue; /* Change the background color */
+}
+
+/* Style for the right section */
+.right-section {
+	flex: 3; /* Grow to fill available space */
+	background-color: lightgreen; /* Change the background color */
+}
+
+/* Style for the textboxes */
+.textbox {
+	margin: 5px 0; /* Add spacing between textboxes */
+}
