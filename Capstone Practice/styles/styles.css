@@ -37,3 +37,12 @@ body, html {
 .textbox {
 	margin: 5px 0; /* Add spacing between textboxes */
 }
+
+#imageBox {
+  width: 200px;
+  height: 200px;
+  border: 1px solid #000;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
