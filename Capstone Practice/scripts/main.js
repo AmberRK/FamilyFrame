@@ -71,3 +71,13 @@ imageInput.addEventListener('change', function() {
         alert('Please select a valid image file.');
     }
 });
+
+
+
+function showInput()
+{
+	document.getElementById('displaye').innerHTML = 
+        document.getElementById("email").value;
+	document.getElementById('displayp').innerHTML =
+	document.getElementById("password").value;
+}
