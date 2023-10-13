@@ -1,36 +1,73 @@
-function getData() 
-{
-	// Retrieve values from textboxes using getElementById
-	var nameValue = document.getElementById("Name").value;
-	var ageValue = document.getElementById("Age").value;
+const clickBox = document.getElementById('Cell');
 
-	// Create an object and assign textbox values to its properties
-	var Person = {
-		field1: nameValue,
-		field2: ageValue
-	};
+// Add an event listener to the div to trigger a function when clicked
+clickBox.addEventListener('click', function() {
+    // Call your function here
+    FillInInfo();
+});
+
+
+function storeData()
+{
+	var nameValue = document.getElementById('Name').value;
+	var ageValue = document.getElementById('Age').value;
+
 	
-	setCell();
-	// You can now use dataObject for further processing or send it to a server, etc.
+	localStorage.setItem('Name', nameValue);
+	localStorage.setItem('Age', ageValue);
+	
+	const cellElement = document.getElementById('Cell');
+	const name = localStorage.getItem('Name');
+
+	cellElement.textContent = name;
+	
+	const textboxName = document.getElementById('Name');
+	const textboxAge = document.getElementById('Age');
+	const imageBox = document.getElementById('imageBox');
+	
+	textboxName.value = "";
+	textboxAge.value = "";
+	imageBox.style.backgroundImage = 'none';
 }
 
-function getName()
+function FillInInfo()
 {
-	string nameValue = string(document.getElementById("Name").value);
-	return nameValue;
+	const name = localStorage.getItem('Name');
+	const age = localStorage.getItem('Age');
+	const savedImage = localStorage.getItem('savedImage');
+	
+	const setName = document.getElementById('Name');
+	const setAge = document.getElementById('Age');
+	const setImage = document.getElementById('imageBox');
+	
+	setName.value = name;
+	setAge.value = age;
+	if (savedImage) {
+        imageBox.style.backgroundImage = `url(${savedImage})`;
+    } else {
+        alert('No saved image found in Local Storage.');
+    }
+	
 }
 
+const imageInput = document.getElementById('imageInput');
+const imageBox = document.getElementById('imageBox');
 
-// Get a reference to the box element by its ID
-var box = document.getElementById("Cell");
+imageInput.addEventListener('change', function() {
+    const selectedFile = imageInput.files[0];
 
-// Set the initial text content of the box (optional)
-box.textContent = "Something";
+    if (selectedFile && selectedFile.type.startsWith('image/')) {
+        const reader = new FileReader();
 
+        reader.onload = function(event) {
+            const imageUrl = event.target.result;
+            imageBox.style.backgroundImage = `url(${imageUrl})`;
+			
+			localStorage.setItem('savedImage', imageUrl);
+        };
 
-function setCell()
-{
-	var box = document.getElementById("Cell");
-
-	box.textContent = getName();
-}
+        reader.readAsDataURL(selectedFile);
+    } else {
+        alert('Please select a valid image file.');
+    }
+});
