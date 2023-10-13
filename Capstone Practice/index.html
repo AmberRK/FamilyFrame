@@ -16,13 +16,16 @@
             <h1>Person</h1>
             <p>Enter information about the person here: </p>
 			
+			<input type="file" id="imageInput" accept="image/*">
+			<div id="imageBox"></div>
+			
 			<label for="Name">Name:</label>
             <input type="text" id="Name" class="textbox"><br>
 
             <label for="Age">Age:</label>
             <input type="text" id="Age" class="textbox"><br>
 			
-			<button type="button" onclick="getData()">Store Info</button>
+			<button type="button" onclick="storeData()">Store Info</button>
 			
         </div>
 
