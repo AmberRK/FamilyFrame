@@ -65,7 +65,6 @@ background-color: #778899;
 */
 
 
-
 .navbar {
   background-color: #014462;
   overflow: hidden;
@@ -89,4 +88,10 @@ background-color: #778899;
 .navbar a.active {
   background-color: #ff711e;
   color: white;
-}</style>
+}
+/*login box CSS */
+.loginform h2 {color: #ff711e}
+.loginform tr {color: #014462}
+.loginform table {border: 1px solid}
+.loginform span {color: white}
+/*login box CSS */
