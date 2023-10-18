@@ -94,14 +94,14 @@ imageInput.addEventListener('change', function () {
 
 
 function newJsonObject() {
-	let returnObject = {
+	let templateObject = {
 		"firstName": null,
 		"lastName": null,
 		"spouse": null,
 		"children": []
 	}
 
-	return returnObject;
+	return templateObject;
 }
 
 function spawnTable(tableName) {
@@ -173,33 +173,6 @@ function spawnTable(tableName) {
 		let mainDiv = document.getElementById("main_div");
 		mainDiv.innerHTML = table.outerHTML;
 	}
-
-	// var table_level_array = tableName.split("_");
-	// console.log(table_level_array);
-
-	// var table_depth = table_level_array.length;
-
-	// alert(table_depth);
-
-	// var table = document.getElementById(tableName);
-
-
-	// var row = table.insertRow(1);
-
-	// var cell1 = row.insertCell(0);
-	// var innerText = "<table style='width: 100%;'><tr>";
-
-	// var nameArray = ["Hannah", "Hezzie", "Abster", "Jonnie", "Becky", "Adam"];
-
-	// for(i = 0; i < nameArray.length; i++) {
-	//     let table_id = tableName + "_" + i;
-	//     innerText += "<td><table id='" + table_id + "' style='width: 100%;' id='myTable2'><tr><td>" + nameArray[i] + "</td></tr></table><td>";
-	// }
-
-	// innerText += "</tr></table>";
-
-	// cell1.innerHTML = innerText;
-
 }
 
 function getChildString(children) {
