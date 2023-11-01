@@ -51,8 +51,11 @@ What expertise is missing?
 3\. SOFTWARE PROCESS MODEL DESCRIPTION
 -------------------------------------
 
-Describe the model to be used for this project (agile, waterfall,)
-Include justification for your choice.
+The agile methodology will be used for this project. Agile allows for more flexible development and will respond to changing requirements as development progresses. Our project can be broken into independent features that are tackled concurrently each sprint. Features can then be integrated by the end of each sprint. We will also check our progress at the end of each sprint and have more accountability for deadlines.
+
+However, Agile can also lead to burnout if there is not sufficient post-sprint review and unwinding. The short nature of sprints may also encourage development of small, non-critical features. Documentation may suffer due to the fast pace. Not enough time can be spent for retrospection and lead to problems further in development. Features may be designed too quickly and inelegantly which will put us into code debt, a system that will require more work to fix later.
+
+Waterfall ensure that components are complete and can be built upon but is inflexible for changing requirements which is likely in a senior project. Waterfall projects are easiliy tracked but Agile meetings following each sprint in Agile accomplishes the accountability that Waterfall provides.
 
 4\. PRODUCT DEFINITION
 ---------------------
