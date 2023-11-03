@@ -1,4 +1,4 @@
-Software Development Plan
+;Software Development Plan
 ==================================
 
 TITLE PAGE CONTENT
@@ -50,10 +50,17 @@ Functionalities:
 
 Describe the strengths/skills needed of the team members for this
 product. Use a table to list skills vs team members.
+  **Skill**       |**Amber**   |**Aiden**   |**Palak**          |**Will**
+  -------------- | ------------ |-------------------- |-------------------- |-----------------------------
+  Javascript  |  | y | |
+  Learning languages | y | y | y | y
+
 
 Is there a need for a Subject Matter Expert (SME)?
+No
 
 What expertise is missing?
+Database knowledge
 
 3\. SOFTWARE PROCESS MODEL DESCRIPTION
 -------------------------------------
@@ -147,16 +154,20 @@ What are the known risks and how will they be handled?
 
 ### Risk Identification and Prioritization
 
-The tree creation system breaks.
-Database runs into issues (when being put into place)
-Database runs into issues (when being accessed to save and pull trees by user)
-Minor features won’t be implemented in time
+1. The tree creation system breaks.
+2. Database runs into issues (when being put into place)
+3. Database runs into issues (when being accessed to save and pull trees by user)
+4. Minor features won’t be implemented in time
 
 ### Risk Mitigation
 
-How will risk factors be addressed? By when?
+1.  Keep backups of the progress and closely watch for any errors when testing the final product
+2.  Closely watch for any SQL errors and ensure there is no conflicts
+3.  Debug, pinpoint the issues, attempt to find a solution
+4.  Chop unimportant ideas, organize the priority of important features
 
 What are you going to prototype?
+Huh?
 
 9\. CONFIGURATION AND VERSION CONTROL
 ------------------------------------
