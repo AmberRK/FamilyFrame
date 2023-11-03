@@ -172,15 +172,14 @@ Huh?
 9\. CONFIGURATION AND VERSION CONTROL
 ------------------------------------
 
-Specify the process and attributes for version control for all project
-and product artifacts
+The version control that we're using is git and Github. We are also tagging our milestones like our demo. We will be labelling the versions using the following scheme: https://semver.org/spec/v2.0.0.html
 
 10\. TOOLS
 ---------
 
-Provide a list of tools required for the project and their use
+We'll be using SQLite, nginx and D3.
 
 11\. ARCHITECTURE
 ----------------
 
-List of hardware or other subsystems required for the product.
+We'll be using a rented VPS server.
