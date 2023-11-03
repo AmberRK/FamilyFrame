@@ -30,13 +30,20 @@ TABLE OF CONTENTS
 
 1\. PRODUCT DESCRIPTION
 ----------------------
+The family tree website offers a extensive way for one to view their family’s ancestry and relation, 
+organize information about their family, and view it in a way to suit their tastes.
 
-Describe the product and the client in general. What problem are you
-solving?
+Clients can consist of those looking to
+1.	View their ancestry in an organized manner
+2.	Easier way to display/share their familial connections to possibly show others
 
-Provide a description of the potential audience and what goals are to be
-satisfied with this product, including a list of major product
-functionalities and salient feature
+Functionalities:
+•	Show the entire family that one inputs, and their branches
+•	Be able to store names, photos, and relation between members
+•	Sharing trees (w/ use of an image)
+•	Show a member’s information in one place
+•	(Possibly color accents)
+
 
 2\. TEAM DESCRIPTION
 -------------------
@@ -138,13 +145,12 @@ What does success look like?
 
 What are the known risks and how will they be handled?
 
-### Risk Identification
+### Risk Identification and Prioritization
 
-Description of the risks
-
-### Risk Prioritization
-
-Prioritized list (biggest risk -\> lowest risk)
+The tree creation system breaks.
+Database runs into issues (when being put into place)
+Database runs into issues (when being accessed to save and pull trees by user)
+Minor features won’t be implemented in time
 
 ### Risk Mitigation
 
