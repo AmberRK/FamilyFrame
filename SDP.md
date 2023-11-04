@@ -6,17 +6,19 @@ TITLE PAGE CONTENT
 
 **NAME OF SYSTEM**
 
+Family Tree Designer
+
 **DATE**
 
-Version
+Version 1.0.0
 
 **Presented To:**
 
-who
+Dr. Schwesinger
 
 **Submitted By:**
 
-who
+Amber, Aidan, Will, Palak
 
 REVISION HISTORY
 ----------------
@@ -30,23 +32,37 @@ TABLE OF CONTENTS
 
 1\. PRODUCT DESCRIPTION
 ----------------------
+The family tree website offers a extensive way for one to view their family’s ancestry and relation, 
+organize information about their family, and view it in a way to suit their tastes.
 
-Describe the product and the client in general. What problem are you
-solving?
+Clients can consist of those looking to
+1.	View their ancestry in an organized manner
+2.	Easier way to display/share their familial connections to possibly show others
 
-Provide a description of the potential audience and what goals are to be
-satisfied with this product, including a list of major product
-functionalities and salient feature
+Functionalities:
+•	Show the entire family that one inputs, and their branches
+•	Be able to store names, photos, and relation between members
+•	Sharing trees (w/ use of an image)
+•	Show a member’s information in one place
+•	(Possibly color accents)
+
 
 2\. TEAM DESCRIPTION
 -------------------
 
 Describe the strengths/skills needed of the team members for this
 product. Use a table to list skills vs team members.
+  **Skill**       |**Amber**   |**Aiden**   |**Palak**          |**Will**
+  -------------- | ------------ |-------------------- |-------------------- |-----------------------------
+  Javascript  |  | y | |
+  Learning languages | y | y | y | y
+
 
 Is there a need for a Subject Matter Expert (SME)?
+No
 
 What expertise is missing?
+Database knowledge
 
 3\. SOFTWARE PROCESS MODEL DESCRIPTION
 -------------------------------------
@@ -110,60 +126,106 @@ Relationship information will be gathered from the normal users who create famil
 Initial prototype screens to validate initial understanding of the
 product.
 
+![Wireframes-New User](https://github.com/AmberRK/FamilyTree/assets/121211739/9bc58bb1-1a41-4382-a6ee-8c674c582cec)
+![Wireframes-Login](https://github.com/AmberRK/FamilyTree/assets/121211739/7b8728de-ba11-42da-87eb-7fd0b6fdf90f)
+![Wireframes-Home](https://github.com/AmberRK/FamilyTree/assets/121211739/8fd72dd7-c70c-4c9c-b3f3-640ad9880f2c)
+![Wireframes-Forgot Password](https://github.com/AmberRK/FamilyTree/assets/121211739/e8221eaa-9cdf-49a5-8bef-874ab6c16ec4)
+![Wireframes-About](https://github.com/AmberRK/FamilyTree/assets/121211739/1f2faae5-b91f-443a-a42b-8e796a89c4ee)
+![Wireframes-UI Settings](https://github.com/AmberRK/FamilyTree/assets/121211739/7cb88030-2447-45d0-bbeb-bef796da8f52)
+![Wireframes-Select Tree](https://github.com/AmberRK/FamilyTree/assets/121211739/adcaa275-146a-4beb-9aba-835610e0445e)
+![Wireframes-Phone Tree Editor](https://github.com/AmberRK/FamilyTree/assets/121211739/91129170-8e9c-489b-94b0-0791900a8f25)
+
+PDF of Wireframes:
+[Wireframes.pdf](https://github.com/AmberRK/FamilyTree/files/13255283/Wireframes.pdf)
+
 6\. PROJECT ORGANIZATION
 -----------------------
 
-Breakdown of major tasks and schedule
+Biggest weakness is the database; no one has much experience working with databases. Amber is going to focus on it, as she is the one with the most experience, though it will be a group effort.
 
 ### Matrix of Responsibilities
 
-Defines the high level which team members are responsible for which
-tasks
+- Amber: Database, Individual's information, UI customization
+- Aidan: Server, Tree Design
+- Palak: Home and About page, documentation, testing
+- Will: Login, Retreive saved tree
 
 ### PERT / Gantt Chart
 
-First cut at schedule
+**First cut at schedule**
+
+- Research: Continuous, Beginning in sprint 1
+- Database: 2 weeks
+- Server: 3 days
+- Home/About page: Continuous, Beginning in sprint 2
+- Login: 4 weeks, begin in sprint 2
+- Tree Design: 4 weeks, begin in sprint 2
+- Individuals: data - 2 weeks
+- Save Tree: 3 weeks, being in sprint 4
+- Phone Display: 2 weeks
+- Documentation: Continuous, beginning in sprint 3
+- Testing: Continuous, beginning in sprint 3
+
+<p>&nbsp;</p>
+ 
+- Sprint 1: Research, database
+
+- Sprint 2: Server, Login, Home/About, Tree design
+
+- Sprint 3: Tree Design, Login, documentation, Individuals, testing
+
+- Sprint 4: Save Trees, UI Customization, testing, documentation
+
+- Sprint 5: Save Trees, Stuff that got delayed, phone display
+
+![PERT Chart](https://github.com/AmberRK/FamilyTree/assets/121211739/2dbf89e9-c05e-4f58-84e8-10cbf38936f2)
 
 7\. VALIDATION PLAN
 ------------------
 
 ### Test Strategy
 
-What is the definition of done?
+**What is the definition of done?**
 
-What does success look like?
+Minimally, done would have the ability to add, remove, save, and retreive trees on a laptop and desktop. A secondsry goal would have the UI appropiated for a smaller screen, though that is a lower priority.
+
+**What does success look like?**
+
+When at least 10 people can be on the server at the same time and be able to create and edit trees as much as they want.
 
 8\. FEASIBILITY STUDY
 --------------------
 
 What are the known risks and how will they be handled?
 
-### Risk Identification
+### Risk Identification and Prioritization
 
-Description of the risks
-
-### Risk Prioritization
-
-Prioritized list (biggest risk -\> lowest risk)
+1. The tree creation system breaks.
+2. Database runs into issues (when being put into place)
+3. Database runs into issues (when being accessed to save and pull trees by user)
+4. Minor features won’t be implemented in time
 
 ### Risk Mitigation
 
-How will risk factors be addressed? By when?
+1.  Keep backups of the progress and closely watch for any errors when testing the final product
+2.  Closely watch for any SQL errors and ensure there is no conflicts
+3.  Debug, pinpoint the issues, attempt to find a solution
+4.  Chop unimportant ideas, organize the priority of important features
 
 What are you going to prototype?
+Huh?
 
 9\. CONFIGURATION AND VERSION CONTROL
 ------------------------------------
 
-Specify the process and attributes for version control for all project
-and product artifacts
+The version control that we're using is git and Github. We are also tagging our milestones like our demo. We will be labelling the versions using the following scheme: https://semver.org/spec/v2.0.0.html
 
 10\. TOOLS
 ---------
 
-Provide a list of tools required for the project and their use
+We'll be using SQLite, nginx and D3.
 
 11\. ARCHITECTURE
 ----------------
 
-List of hardware or other subsystems required for the product.
+We'll be using a rented VPS server.
