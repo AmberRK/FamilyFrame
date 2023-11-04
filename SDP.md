@@ -51,58 +51,58 @@ What expertise is missing?
 3\. SOFTWARE PROCESS MODEL DESCRIPTION
 -------------------------------------
 
-The agile methodology will be used for this project. Agile allows for more flexible development and will respond to changing requirements as development progresses. Our project can be broken into independent features that are tackled concurrently each sprint. Features can then be integrated by the end of each sprint. We will also check our progress at the end of each sprint and have more accountability for deadlines.
+The agile methodology will be used for this project. Agile allows for more flexible development and will respond to changing requirements as development progresses. We will take a variety of ideas from different agile methodologies, like sprints from scrum and the simplicity in Extreme Programming. Our project can be broken into independent features that are tackled concurrently each sprint. Features can then be integrated by the end of each sprint, similar to the incremental model. We will also be aware of our progress at the end of each sprint and have more accountability for deadlines. Solutions will be simple and understandable by other members to aid in integration.
 
-However, Agile can also lead to burnout if there is not sufficient post-sprint review and unwinding. The short nature of sprints may also encourage development of small, non-critical features. Documentation may suffer due to the fast pace. Not enough time can be spent for retrospection and lead to problems further in development. Features may be designed too quickly and inelegantly which will put us into code debt, a system that will require more work to fix later.
+However, Agile can also lead to burnout if there is not sufficient post-sprint review and unwinding. The short nature of sprints may also encourage development of small, non-critical features. This will be remedied by following the requirements traceability matrix. Documentation may suffer due to the fast pace. Not enough time might be spent for retrospection and could lead to problems later in development. Features may be designed too quickly and inelegantly which will put us into code debt.
 
-Waterfall ensure that components are complete and can be built upon but is inflexible for changing requirements which is likely in a senior project. Waterfall projects are easiliy tracked but Agile meetings following each sprint in Agile accomplishes the accountability that Waterfall provides.
+The waterfall methodology ensures that components are complete and can be built upon but is inflexible for changing requirements which is likely in a senior project. Waterfall projects are easiliy tracked but Agile meetings following each sprint provides the same accountability. The rational unified process and spiral model methods are similarly built on a foundation of design that will be unstable for this project.
 
 4\. PRODUCT DEFINITION
 ---------------------
 
-Describe the users and user environment.
+The application will support normal users and admins. Normal users can use the application with or without an account. A normal account can be created by any user. An initial admin account will be created for development and can create other admin accounts. 
 
-### Context Diagram
+Relationship information will be gathered from the normal users who create family trees. Family information will be collected and the application will visualize the information. The family tree will be stored in the application database to view later, export to other formats, or share to other users. Administrators can view a user list and the trees the users have created. 
 
-Defines the scope of your system - what is inside the system and what is
-outside the system. High level information flow between the system and
-the outside users or other systems (personas)
+## Use Case Descriptions
 
-### Personas
+### Add a tree
+1. Name: CreateTree
+2. Actor: User
+3. Entry condition:
+4. Exit condition: Tree is created and, if the user is optionally logged in, saved
+5. Flow of events
+    1. User adds self
+    1. User adds desired relatives
+    1. Application visualizes connections
+    1. User adds desired information to each relative
+    1. Application stores data attributes
+6. Special requirements:
+    - 3a incorrect connections can be removed
 
-Below is a brief description of those people outside the system that the
-system interfaces with.
+### Share a tree
+1. Name: ShareTree
+2. Actors: >=2 users
+3. Entry condition: A tree is created and saved to one user
+4. Exit condition: >=2 users have access to the tree
+5. Flow of events
+    1. User navigates to the tree to share
+    1. User clicks on share
+    1. Application shows tree's UUID
+    1. User shares the UUID
+6. Special requirements: None
 
-### User Stories
-
-Defines the high level user stories for the product
-
-### High Level Use Cases
-
-Defines the high level user stories for the product. Goal is to paint a
-picture of the product, not define the whole solution. Includes diagram
-and use case descriptions.
-
-### Use Case Descriptions
-
-Defines the high level descriptions
-
-Be sure to the textual use case description consists of 6 parts:
-
-1.  **Unique name**
-
-2.  **Participating actors**
-
-3.  **Entry conditions**
-
-4.  **Exit conditions**
-
-5.  **Flow of events: 5 - 7 steps describing the Happy Path**
-
-6.  **Special requirements.**
-
-Below are the high level use cases for the Application, based on the
-above use case diagram.
+### Delete a tree
+1. Name: DeleteTree
+2. Actor: User
+3. Entry condition: A tree is created and saved to one user
+4. Exit condition: The tree is removed from the user account and the database
+5. Flow of events
+    1. User navigates to the tree to remove
+    1. User clicks on delete
+    1. Application removes the tree from the database
+    1. User page of list of trees is updated
+6. Special requirements: 
 
 5\. USER EXPERIENCE WIREFRAMES
 -----------------------------
