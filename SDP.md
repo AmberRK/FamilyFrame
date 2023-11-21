@@ -52,7 +52,7 @@ Functionalities:
 
 Describe the strengths/skills needed of the team members for this
 product. Use a table to list skills vs team members.
-  **Skill**       |**Amber**   |**Aiden**   |**Palak**          |**Will**
+  **Skill**       |**Amber**   |**Aidan**   |**Palak**          |**Will**
   -------------- | ------------ |-------------------- |-------------------- |-----------------------------
   Javascript  |  | y | |
   Learning languages | y | y | y | y
@@ -126,17 +126,15 @@ Relationship information will be gathered from the normal users who create famil
 Initial prototype screens to validate initial understanding of the
 product.
 
-![Wireframes-New User](https://github.com/AmberRK/FamilyTree/assets/121211739/9bc58bb1-1a41-4382-a6ee-8c674c582cec)
-![Wireframes-Login](https://github.com/AmberRK/FamilyTree/assets/121211739/7b8728de-ba11-42da-87eb-7fd0b6fdf90f)
-![Wireframes-Home](https://github.com/AmberRK/FamilyTree/assets/121211739/8fd72dd7-c70c-4c9c-b3f3-640ad9880f2c)
-![Wireframes-Forgot Password](https://github.com/AmberRK/FamilyTree/assets/121211739/e8221eaa-9cdf-49a5-8bef-874ab6c16ec4)
-![Wireframes-About](https://github.com/AmberRK/FamilyTree/assets/121211739/1f2faae5-b91f-443a-a42b-8e796a89c4ee)
-![Wireframes-UI Settings](https://github.com/AmberRK/FamilyTree/assets/121211739/7cb88030-2447-45d0-bbeb-bef796da8f52)
-![Wireframes-Select Tree](https://github.com/AmberRK/FamilyTree/assets/121211739/adcaa275-146a-4beb-9aba-835610e0445e)
-![Wireframes-Phone Tree Editor](https://github.com/AmberRK/FamilyTree/assets/121211739/91129170-8e9c-489b-94b0-0791900a8f25)
+![Wireframes-New User](./SdpImagesAndPdf/Wireframes-NewUser.png)
+![Wireframes-Login](./SdpImagesAndPdf/Wireframes-Login.png)
+![Wireframes-Home](./SdpImagesAndPdf/Wireframes-Home.png)
+![Wireframes-Forgot Password](./SdpImagesAndPdf/Wireframes-ForgotPassword.png)
+![Wireframes-About](./SdpImagesAndPdf/Wireframes-About.png)
+![Wireframes-UI Settings](./SdpImagesAndPdf/Wireframes-UiSettings.png)
+![Wireframes-Select Tree](./SdpImagesAndPdf/Wireframes-SelectTree.png)
+![Wireframes-Phone Tree Editor](./SdpImagesAndPdf/Wireframes-PhoneTreeEditor.png)
 
-PDF of Wireframes:
-[Wireframes.pdf](https://github.com/AmberRK/FamilyTree/files/13255283/Wireframes.pdf)
 
 6\. PROJECT ORGANIZATION
 -----------------------
@@ -178,7 +176,7 @@ Biggest weakness is the database; no one has much experience working with databa
 
 - Sprint 5: Save Trees, Stuff that got delayed, phone display
 
-![PERT Chart](https://github.com/AmberRK/FamilyTree/assets/121211739/2dbf89e9-c05e-4f58-84e8-10cbf38936f2)
+![PERT Chart](./SdpImagesAndPdf/PertChart.png)
 
 7\. VALIDATION PLAN
 ------------------
