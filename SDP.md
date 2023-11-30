@@ -93,10 +93,10 @@ Relationship information will be gathered from the normal users who create famil
 
 ## Use Case Descriptions
 
-### Add a tree
+### 4.1 Add a tree
 1. Name: CreateTree
 2. Actor: User
-3. Entry condition:
+3. Entry condition: Tree editor page (homepage) is open
 4. Exit condition: Tree is created and, if the user is optionally logged in, saved
 5. Flow of events
     1. User adds self
@@ -105,9 +105,9 @@ Relationship information will be gathered from the normal users who create famil
     1. User adds desired information to each relative
     1. Application stores data attributes
 6. Special requirements:
-    - 3a incorrect connections can be removed
+    - 3a: incorrect connections can be removed
 
-### Share a tree
+### 4.2 Share a tree
 1. Name: ShareTree
 2. Actors: >=2 users
 3. Entry condition: A tree is created and saved to one user
@@ -119,7 +119,7 @@ Relationship information will be gathered from the normal users who create famil
     1. User shares the UUID
 6. Special requirements: None
 
-### Delete a tree
+### 4.3 Delete a tree
 1. Name: DeleteTree
 2. Actor: User
 3. Entry condition: A tree is created and saved to one user
@@ -129,6 +129,75 @@ Relationship information will be gathered from the normal users who create famil
     1. User clicks on delete
     1. Application removes the tree from the database
     1. User page of list of trees is updated
+6. Special requirements: 
+
+### 4.4 Create account
+1. Name: Create account
+2. Actor: User 
+3. Entry condition: User is not logged in
+4. Exit condition: User has an account on the site
+5. Flow of events:
+    1. User navigates to login page
+    1. User selects "Create account"
+    1. User registers an email address and password
+    1. Database securely stores user's credentials
+    1. User is taken to login page
+6. Special Requirements
+    - 4a: Entering an already-registered email throws an error and stays on the account creation page
+
+### 4.5 Log in
+1. Name: Log in
+2. Actor: User, admin
+3. Entry condition: User has an account
+4. Exit condition: User is logged in to the site
+5. Flow of events:
+    1. User
+6. Special Requirements
+
+### 4.6 Delete user
+1. Name: Delete user
+2. Actor: User, admin 
+3. Entry condition: User has an account
+4. Exit condition: User's account and trees are deleted, shared trees remain
+5. Flow of events:
+    1. User
+6. Special Requirements
+
+### 4.7 Delete all info
+1. Name: Delete all info
+2. Actor: User, admin
+3. Entry condition: User has an account
+4. Exit condition: User's account is deleted, all trees that the user created are deleted
+5. Flow of events:
+    1. User
+6. Special Requirements
+
+### 4.8 Customize UI
+1. Name: Customize UI
+2. Actor: User, admin
+3. Entry condition: Web app is open
+4. Exit condition: Interface appearance is changed
+5. Flow of events:
+    1. User
+6. Special Requirements
+
+### 4.9 Reset password
+1. Name: Reset password
+2. Actor: User
+3. Entry condition: User has an account 
+4. Exit condition: User's password is reset to gain account access
+5. Flow of events:
+    1. User
+6. Special Requirements
+
+### 4.10 Collaborative editing 
+1. Name: Collaborative editing 
+2. Actors: 2 users
+3. Entry condition: 2 users are logged in
+4. Exit condition: 2 users simultaneously edit a tree
+5. Flow of events:
+    1. User
+6. Special Requirements
 6. Special requirements: 
 
 5\. USER EXPERIENCE WIREFRAMES

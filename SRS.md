@@ -2,7 +2,7 @@
 
 **DATE**
 
-Version
+Version 1.0
 
 **Logo**
 
@@ -13,6 +13,7 @@ Version
 **Submitted By:**
 
 Group names
+Aidan La Penta
 
 TABLE OF CONTENTS
 -----------------
@@ -22,7 +23,7 @@ REVISION HISTORY
 
 | **Date** | **Author** | **Distributed to** | **Version** | **Description** |
 | --- | --- | --- | --- | --- |
-| Mmm DD, YYYY | name | who | 0 | template |
+| Dec 01, 2023 | name | who | 1.0 | Creation |
 
 1 Introduction
 --------------
@@ -67,29 +68,48 @@ The following list are the items still to be resolved:
 
 1.  ......
 
-### 3.2 Use Case 1 (example: comes directly from SDP)
+## Use Case Descriptions
 
-High-level information for the use case. Link to the SDP for detailed flow.
+### 3.1 Add a tree
+Description:
+A user can start a tree by adding members to the tree and entering their information. Members can be removed or edited. The user must sign in to save creations.
 
-#### 3.2.1 Use case description
+### 3.2 Share a tree
+Description:
+A user can share a tree to others. The other person does not have to be signed in to view a tree.
 
-Brief description and participating actors.
+### 3.3 Delete a tree
+Description:
+A user can delete a tree that they have created from the website's database.
 
-#### 3.2.2 user interface requirements
+### 3.4 Create account
+Description:
+A new user can create an account to save trees and share trees with others.
 
-#### 3.2.3 other details requirements
+### 3.5 Log in
+Description:
+A user with an account can login to access their saved trees.
 
-...
+### 3.6 Delete user
+Description:
+A user can delete their own account and choose to not delete trees that have collaborators.
 
-3.n Use Case N
---------------
+### 3.7 Delete all info
+Description:
+A user can delete their own account and all trees they have created.
 
-...
+### 3.8 Customize UI
+Description:
+Users are able to modify the color scheme of the website.
 
-4 Non Functional Requirements
------------------------------
+### 3.9 Reset password
+Description:
+A user can reset account password to regain access to their account.
 
-Below is a list of non-functional requirements gathered so far. **Must be measurable.**
+### 3.10 Collaborative editing 
+Description:
+Multiple users can simultaneously edit a tree.
+
 
 ### 4.1 Other Systems
 
@@ -142,3 +162,11 @@ AGREED TO:
 **Title:**
 
 **Date:**
+
+---
+
+Aidan La Penta
+
+Team Member
+
+1 Dec, 2023
