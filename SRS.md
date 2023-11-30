@@ -38,7 +38,7 @@ Context Diagram
 
 Personas / Actors
 
-Use Case Diagram
+![Use Case Diagram](./SdpImagesAndPdf/useCaseDiagram.png){width=75%}
 
 2 Related Documents
 -------------------
@@ -90,7 +90,7 @@ A new user can create an account to save trees and share trees with others.
 Description:
 A user with an account can login to access their saved trees.
 
-### 3.6 Delete user
+### 3.6 Delete self
 Description:
 A user can delete their own account and choose to not delete trees that have collaborators.
 
@@ -110,6 +110,12 @@ A user can reset account password to regain access to their account.
 Description:
 Multiple users can simultaneously edit a tree.
 
+### 3.11 Manage users
+Description:
+Admins can delete users and their associated trees.
+
+4 Non Functional Requirements
+---------
 
 ### 4.1 Other Systems
 
