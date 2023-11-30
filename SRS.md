@@ -134,7 +134,21 @@ How will it be maintained?
 
 Insert a diagram showing the different hardware components
 
-For each hardware component, list the use cases and functionality that will reside on each hardware component
+### 5.1 USER
+  - Requests information to the server
+  - Receives information from the server
+
+### 5.2 Server
+  - Processes user requests
+  - Request information from database
+  - Receives information from database
+  - Returns information to user
+
+### 5.3 Database
+  - Receives requests from server
+  - Processes requests
+  - Returns requested information to server
+  
 
 Signature Page
 --------------
