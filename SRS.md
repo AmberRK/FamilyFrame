@@ -132,7 +132,7 @@ How will it be maintained?
 5 Architecture
 --------------
 
-Insert a diagram showing the different hardware components
+![Architecture](./SRSOtherDocuments/architecture.jpg)
 
 ### 5.1 USER
   - Requests information to the server
