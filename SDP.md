@@ -266,7 +266,7 @@ Biggest weakness is the database; no one has much experience working with databa
 
 - Sprint 5: Save Trees, Stuff that got delayed, phone display
 
-![PERT Chart](./ImagesAndPdf/PertChart.png)
+![PERT Chart](./ImagesAndPdf/PERTChartUpdated.png)
 
 7\. VALIDATION PLAN
 ------------------
