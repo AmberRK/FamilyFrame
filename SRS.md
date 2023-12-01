@@ -44,11 +44,8 @@ Personas / Actors
 2 Related Documents
 -------------------
 
-Software Development Plan reference
-
-Requirements Traceability matrix reference
-
-Other diagrams references
+![SDP](SDP.md)
+![Wireframes](./ImagesAndPdf/Wireframes.pdf)
 
 3 Requirements
 --------------
