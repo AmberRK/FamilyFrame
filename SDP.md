@@ -216,14 +216,14 @@ Relationship information will be gathered from the normal users who create famil
 Initial prototype screens to validate initial understanding of the
 product.
 
-![Wireframes-New User](./SdpImagesAndPdf/Wireframes-NewUser.png)
-![Wireframes-Login](./SdpImagesAndPdf/Wireframes-Login.png)
-![Wireframes-Home](./SdpImagesAndPdf/Wireframes-Home.png)
-![Wireframes-Forgot Password](./SdpImagesAndPdf/Wireframes-ForgotPassword.png)
-![Wireframes-About](./SdpImagesAndPdf/Wireframes-About.png)
-![Wireframes-UI Settings](./SdpImagesAndPdf/Wireframes-UiSettings.png)
-![Wireframes-Select Tree](./SdpImagesAndPdf/Wireframes-SelectTree.png)
-![Wireframes-Phone Tree Editor](./SdpImagesAndPdf/Wireframes-PhoneTreeEditor.png)
+![Wireframes-New User](./ImagesAndPdf/Wireframes-NewUser.png)
+![Wireframes-Login](./ImagesAndPdf/Wireframes-Login.png)
+![Wireframes-Home](./ImagesAndPdf/Wireframes-Home.png)
+![Wireframes-Forgot Password](./ImagesAndPdf/Wireframes-ForgotPassword.png)
+![Wireframes-About](./ImagesAndPdf/Wireframes-About.png)
+![Wireframes-UI Settings](./ImagesAndPdf/Wireframes-UiSettings.png)
+![Wireframes-Select Tree](./ImagesAndPdf/Wireframes-SelectTree.png)
+![Wireframes-Phone Tree Editor](./ImagesAndPdf/Wireframes-PhoneTreeEditor.png)
 
 
 6\. PROJECT ORGANIZATION
@@ -266,7 +266,7 @@ Biggest weakness is the database; no one has much experience working with databa
 
 - Sprint 5: Save Trees, Stuff that got delayed, phone display
 
-![PERT Chart](./SdpImagesAndPdf/PertChart.png)
+![PERT Chart](./ImagesAndPdf/PertChart.png)
 
 7\. VALIDATION PLAN
 ------------------

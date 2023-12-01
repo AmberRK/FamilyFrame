@@ -38,7 +38,7 @@ Context Diagram
 
 Personas / Actors
 
-![Use Case Diagram](./SdpImagesAndPdf/useCaseDiagram.png){width=75%}
+![Use Case Diagram](./ImagesAndPdf/useCaseDiagram.png){width=75%}
 
 2 Related Documents
 -------------------
@@ -138,7 +138,7 @@ How will it be maintained?
 5 Architecture
 --------------
 
-![Architecture](./SRSOtherDocuments/architecture.jpg)
+![Architecture](./ImagesAndPdf/architecture.jpg)
 
 ### 5.1 USER
   - Requests information to the server
