@@ -28,7 +28,8 @@ REVISION HISTORY
 1 Introduction
 --------------
 
-Brief explanation of project (from SDP)
+The family tree website offers an extensive way to view a family's ancestry and relation, organize information about the family, and view it in a personalized way.​
+Clients can consist of those looking to view their ancestry in an organized manner or want to share their familial connections to show others.
 
 Brief explanation of purpose and goal of this document
 
