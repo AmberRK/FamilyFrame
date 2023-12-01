@@ -119,7 +119,7 @@ Admins can delete users and their associated trees.
 
 ### 4.1 Other Systems
 
-describe.
+Forget password system.
 
 ### 4.2 Security
 
@@ -132,9 +132,9 @@ Protection against login injection.
 
 ### 4.3 Performance
 
-Up time?
+Whatever out service guarantees.
 
-Response time?
+As instantaneous as possible.
 
 ### 4.4 Maintainability
 
