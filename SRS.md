@@ -52,21 +52,20 @@ Other diagrams references
 3 Requirements
 --------------
 
-For each Actor, list all the user stories:
+As someone with a large family I want to:
 
-As an Actor1 I want to.....
+- Diagram my entire family
+- Save my tree to view and edit later
+- Share the diagram with my family
+- Have my family help create my tree
 
--   Bulleted list
-
-As an Actor2 I want to.....
-
--   Bulleted list
 
 ### 3.1 Punch List
 
 The following list are the items still to be resolved:
 
-1.  ......
+1. Password and database security
+1. Reset password system
 
 ## Use Case Descriptions
 
