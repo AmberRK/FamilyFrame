@@ -148,15 +148,15 @@ Relationship information will be gathered from the normal users who create famil
 ### 4.5 Log in
 1. Name: Log in
 2. Actor: User, admin
-3. Entry condition: User has an account
-4. Exit condition: User is logged in to the site
+3. Entry condition: Person has an account
+4. Exit condition: Person is logged in to the site
 5. Flow of events:
-    1. User
+    1. Person
 6. Special Requirements
 
-### 4.6 Delete user
+### 4.6 Delete self
 1. Name: Delete user
-2. Actor: User, admin 
+2. Actor: User
 3. Entry condition: User has an account
 4. Exit condition: User's account and trees are deleted, shared trees remain
 5. Flow of events:
@@ -198,7 +198,17 @@ Relationship information will be gathered from the normal users who create famil
 5. Flow of events:
     1. User
 6. Special Requirements
-6. Special requirements: 
+
+### 4.11 Manage users
+1. Name: Manage users
+2. Actors: Admin
+3. Entry condition: Admin is logged in
+4. Exit condition: Site users are viewed and possibly deleted
+5. Flow of events:
+    1. Admin logs in to site.
+    1. Admin navigates to the manage user page.
+    1. Admin can delete user accounts and the trees they have created.
+6. Special Requirements
 
 5\. USER EXPERIENCE WIREFRAMES
 -----------------------------
@@ -226,7 +236,7 @@ Biggest weakness is the database; no one has much experience working with databa
 - Amber: Database, Individual's information, UI customization
 - Aidan: Server, Tree Design
 - Palak: Home and About page, documentation, testing
-- Will: Login, Retreive saved tree
+- Will: Login, Retrieve saved tree
 
 ### PERT / Gantt Chart
 
