@@ -138,7 +138,7 @@ As instantaneous as possible.
 
 ### 4.4 Maintainability
 
-How will it be maintained?
+It would be preferably kept up indefinitely, but realistically will be maintained as long as the service is paid for,
 
 5 Architecture
 --------------
