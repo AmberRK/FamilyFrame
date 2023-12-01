@@ -28,7 +28,8 @@ REVISION HISTORY
 1 Introduction
 --------------
 
-Brief explanation of project (from SDP)
+The family tree website offers an extensive way to view a family's ancestry and relation, organize information about the family, and view it in a personalized way.​
+Clients can consist of those looking to view their ancestry in an organized manner or want to share their familial connections to show others.
 
 Brief explanation of purpose and goal of this document
 
@@ -43,11 +44,13 @@ Personas / Actors
 2 Related Documents
 -------------------
 
-Software Development Plan reference
+![SDP](SDP.md)
 
-Requirements Traceability matrix reference
 
-Other diagrams references
+![Wireframes](./ImagesAndPdf/Wireframes.pdf)
+
+
+[Requirements Matrix](https://livekutztown-my.sharepoint.com/:x:/g/personal/akulp740_live_kutztown_edu/EQ182g2-lzRKm2lrfiVhs1cB6wXmORwszVTD_afr5tJlDg)
 
 3 Requirements
 --------------
@@ -118,21 +121,26 @@ Admins can delete users and their associated trees.
 
 ### 4.1 Other Systems
 
-describe.
+Forget password system.
 
 ### 4.2 Security
 
-SSL cert?
+HTTPS
+SSL CERT
+Encryption
+Encryption for passwords
+Protection against login injection.
+
 
 ### 4.3 Performance
 
-Up time?
+Whatever out service guarantees.
 
-Response time?
+As instantaneous as possible.
 
 ### 4.4 Maintainability
 
-How will it be maintained?
+It would be preferably kept up indefinitely, but realistically will be maintained as long as the service is paid for,
 
 5 Architecture
 --------------
