@@ -124,7 +124,12 @@ describe.
 
 ### 4.2 Security
 
-SSL cert?
+HTTPS
+SSL CERT
+Encryption
+Encryption for passwords
+Protection against login injection.
+
 
 ### 4.3 Performance
 
