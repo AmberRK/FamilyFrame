@@ -162,7 +162,10 @@ It would be preferably kept up indefinitely, but realistically will be maintaine
   - Processes requests
   - Returns requested information to server
   
-
+### 5.4 Password Retrieval System
+  - Receives requests from server
+  - Gives information to user
+  
 Signature Page
 --------------
 
