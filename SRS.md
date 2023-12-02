@@ -1,29 +1,40 @@
-**NAME OF SYSTEM**
+![Logo](./ImagesAndPdf/logo.png){width=10%}
 
-**DATE**
+# FamilyFrame
 
-Version 1.0
+Dec 01, 2023
 
-**Logo**
+Version 1.0.0
 
 **Presented To:**
 
-**Name (client or class)**
+Dr. Schwesinger
 
 **Submitted By:**
 
 Group names
-Aidan La Penta
 
-TABLE OF CONTENTS
------------------
+Aidan La Penta
 
 REVISION HISTORY
 ----------------
 
 | **Date** | **Author** | **Distributed to** | **Version** | **Description** |
 | --- | --- | --- | --- | --- |
-| Dec 01, 2023 | name | who | 1.0 | Creation |
+| Dec 01, 2023 | Aidan La Penta | Dr. Schwesinger | 1.0.0 | Creation |
+
+\newpage
+
+TABLE OF CONTENTS
+-----------------
+1. [Introduction](#1-introduction) ... 3
+2. [Related Documents](#2-related-documents) ... 3
+3. [Requirements](#3-requirements) ... 3
+4. [Non-Functional Requirements](#4-non-functional-requirements) ... 5
+5. [Architecture](#5-user-experience-wireframes) ... 6
+6. [Signature Page](#6-signature-page) ... 7
+
+\newpage
 
 1 Introduction
 --------------
@@ -35,19 +46,17 @@ Brief explanation of purpose and goal of this document
 
 ### 1.2 Scope
 
-Context Diagram
-
-Personas / Actors
+![Context Diagram](./ImagesAndPdf/contextDiagram.png){width=50%}
 
 ![Use Case Diagram](./ImagesAndPdf/useCaseDiagram.png){width=75%}
 
 2 Related Documents
 -------------------
 
-![SDP](SDP.md)
+[SDP](https://github.com/AmberRK/FamilyTree/blob/main/SDP.pdf)
 
 
-![Wireframes](./ImagesAndPdf/Wireframes.pdf)
+[Wireframes](https://github.com/AmberRK/FamilyTree/blob/main/ImagesAndPdf/Wireframes.pdf)
 
 
 [Requirements Matrix](https://livekutztown-my.sharepoint.com/:x:/g/personal/akulp740_live_kutztown_edu/EQ182g2-lzRKm2lrfiVhs1cB6wXmORwszVTD_afr5tJlDg)
@@ -62,6 +71,10 @@ As someone with a large family I want to:
 - Share the diagram with my family
 - Have my family help create my tree
 
+As an admin of the site I want to:
+
+- See a list of all users
+- Delete user accounts if needed
 
 ### 3.1 Punch List
 
@@ -145,7 +158,7 @@ It would be preferably kept up indefinitely, but realistically will be maintaine
 5 Architecture
 --------------
 
-![Architecture](./ImagesAndPdf/architecture.jpg)
+![Architecture](./ImagesAndPdf/architecture.jpg){width=75%}
 
 ### 5.1 USER
   - Requests information to the server
@@ -165,7 +178,9 @@ It would be preferably kept up indefinitely, but realistically will be maintaine
 ### 5.4 Password Retrieval System
   - Receives requests from server
   - Gives information to user
-  
+
+\newpage
+
 Signature Page
 --------------
 
@@ -181,6 +196,8 @@ AGREED TO:
 
 **Date:**
 
+---
+
 AGREED TO:
 
 **Team members**
@@ -193,7 +210,6 @@ AGREED TO:
 
 **Date:**
 
----
 
 Aidan La Penta
 
