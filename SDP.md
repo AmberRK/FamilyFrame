@@ -1,8 +1,6 @@
 Software Development Plan
 ==================================
 
-**NAME OF SYSTEM**
-
 Family Frame
 
 Nov 3, 2023
@@ -24,6 +22,8 @@ REVISION HISTORY
   -------------- | ------------ |-------------------- |-------------------- |-----------------------------
   Nov 3, 2023  | Aidan La Penta | Dr. Schwesinger | 1.0.0 | Creation
 
+\newpage
+
 TABLE OF CONTENTS
 -----------------
 1. [Product Description](#1-product-description)
@@ -38,6 +38,8 @@ TABLE OF CONTENTS
 10. [TOOLS](#10-tools)
 11. [ARCHITECTURE](#11-architecture)
 
+\newpage
+
 1\. PRODUCT DESCRIPTION
 ----------------------
 The family tree website offers a extensive way for one to view their family’s ancestry and relation, 
@@ -48,11 +50,12 @@ Clients can consist of those looking to
 2.	Easier way to display/share their familial connections to possibly show others
 
 Functionalities:
-•	Show the entire family that one inputs, and their branches
-•	Be able to store names, photos, and relation between members
-•	Sharing trees (w/ use of an image)
-•	Show a member’s information in one place
-•	(Possibly color accents)
+
+- Show the entire family that one inputs, and their branches
+- Be able to store names, photos, and relation between members
+- Sharing trees (w/ use of an image)
+- Show a member’s information in one place
+- (Possibly color accents)
 
 
 2\. TEAM DESCRIPTION
