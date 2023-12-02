@@ -1,14 +1,11 @@
 Software Development Plan
 ==================================
 
-TITLE PAGE CONTENT
-------------------
-
 **NAME OF SYSTEM**
 
-Family Tree Designer
+Family Frame
 
-**DATE**
+Nov 3, 2023
 
 Version 1.0.0
 
@@ -25,7 +22,7 @@ REVISION HISTORY
 
   **Date**       |**Author**   |**Distributed to**   |**Version**          |**Description**
   -------------- | ------------ |-------------------- |-------------------- |-----------------------------
-  Nov 3, 2023  |Aidan La Penta | Dr. Schwesinger |1.0 |Creation
+  Nov 3, 2023  | Aidan La Penta | Dr. Schwesinger | 1.0.0 | Creation
 
 TABLE OF CONTENTS
 -----------------
@@ -151,16 +148,22 @@ Relationship information will be gathered from the normal users who create famil
 3. Entry condition: Person has an account
 4. Exit condition: Person is logged in to the site
 5. Flow of events:
-    1. Person
+    1. Person (normal user or admin) navigates to the login page.
+    1. Person enters login credentials. 
+    1. Website authenticates user against a user list in the database.
+    1. User is logged in an starts a session.
 6. Special Requirements
 
 ### 4.6 Delete self
 1. Name: Delete user
 2. Actor: User
-3. Entry condition: User has an account
+3. Entry condition: User has an account and is logged in
 4. Exit condition: User's account and trees are deleted, shared trees remain
 5. Flow of events:
-    1. User
+    1. User navigates to the manage account page and selects delete account.
+    1. User chooses to leave trees that have collaborators and selects a new owner.
+    1. Website logs the user out and deletes user information from the database.
+    1. User is returned to the tree creation page in a temporary session.
 6. Special Requirements
 
 ### 4.7 Delete all info
@@ -169,8 +172,10 @@ Relationship information will be gathered from the normal users who create famil
 3. Entry condition: User has an account
 4. Exit condition: User's account is deleted, all trees that the user created are deleted
 5. Flow of events:
-    1. User
-6. Special Requirements
+    1. User navigates to the manage account page and selects delete account.
+    1. User chooses to delete trees that have collaborators.
+    1. Website logs the user out and deletes user information from the database.
+    1. User is returned to the tree creation page in a temporary session.6. Special Requirements
 
 ### 4.8 Customize UI
 1. Name: Customize UI
@@ -178,7 +183,10 @@ Relationship information will be gathered from the normal users who create famil
 3. Entry condition: Web app is open
 4. Exit condition: Interface appearance is changed
 5. Flow of events:
-    1. User
+    1. User selects the button to change the colors of the tree creation area.
+    1. A small pop-out window shows labels for elements of the page and the color they are currently.
+    1. User clicks on labels of elements and selects a new color from a popup palette.
+    1. The color change is reflected in the tree creation area.
 6. Special Requirements
 
 ### 4.9 Reset password
@@ -187,7 +195,11 @@ Relationship information will be gathered from the normal users who create famil
 3. Entry condition: User has an account 
 4. Exit condition: User's password is reset to gain account access
 5. Flow of events:
-    1. User
+    1. User navigates to login page.
+    1. User selects "Forgot my password".
+    1. An email is sent to the user with a link to set a new password.
+    1. User sets a new password and credentials are saved to the database.
+    1. User is returned to the login page.
 6. Special Requirements
 
 ### 4.10 Collaborative editing 
@@ -196,7 +208,9 @@ Relationship information will be gathered from the normal users who create famil
 3. Entry condition: 2 users are logged in
 4. Exit condition: 2 users simultaneously edit a tree
 5. Flow of events:
-    1. User
+    1. 2 users open a shared tree.
+    1. Users make changes to the tree.
+    1. Changes are displayed for both users in real time
 6. Special Requirements
 
 ### 4.11 Manage users
