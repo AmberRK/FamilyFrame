@@ -67,6 +67,13 @@ product. Use a table to list skills vs team members.
   -------------- | ------------ |-------------------- |-------------------- |-----------------------------
   Javascript  |  | y | |
   Learning languages | y | y | y | y
+  HTML |  | y |  | y
+  CSS |  | y |  | y
+  Server Maintenance |  |  |  | 
+  Database | y | y | y | y
+  Security |  |  |  | 
+  Markdown |  |  |  | y
+  
 
 
 Is there a need for a Subject Matter Expert (SME)?
