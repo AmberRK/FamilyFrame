@@ -324,8 +324,7 @@ What are the known risks and how will they be handled?
 3.  Debug, pinpoint the issues, attempt to find a solution
 4.  Chop unimportant ideas, organize the priority of important features
 
-What are you going to prototype?
-Huh?
+A prototype was made of a simple website that displays JSON data in a tree structure.
 
 9\. Configuration and Version Control
 ------------------------------------
