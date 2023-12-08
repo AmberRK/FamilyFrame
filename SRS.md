@@ -137,11 +137,11 @@ Forget password system.
 
 ### 4.2 Security
 
-HTTPS
-SSL CERT
-Encryption
-Encryption for passwords
-Protection against login injection.
+- HTTPS
+- SSL CERT
+- Encryption
+- Encryption for passwords
+- Protection against login injection
 
 
 ### 4.3 Performance
