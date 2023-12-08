@@ -40,9 +40,8 @@ TABLE OF CONTENTS
 --------------
 
 The family tree website offers an extensive way to view a family's ancestry and relation, organize information about the family, and view it in a personalized way.​
-Clients can consist of those looking to view their ancestry in an organized manner or want to share their familial connections to show others.
 
-Brief explanation of purpose and goal of this document
+Clients can consist of those looking to view their ancestry in an organized manner or want to share their familial connections to show others.
 
 ### 1.2 Scope
 
@@ -147,13 +146,13 @@ Protection against login injection.
 
 ### 4.3 Performance
 
-Whatever out service guarantees.
+Uptime is dependent on the VPS and rented architecture.
 
-As instantaneous as possible.
+Performance is also largely dependent on the rented hardware. Trees should save without interruption and be able to be loaded in one second.
 
 ### 4.4 Maintainability
 
-It would be preferably kept up indefinitely, but realistically will be maintained as long as the service is paid for,
+Under the MIT license, maintenance is left to the community. Files with be available indefinitely. The service will be hosted while student credit lasts.
 
 5 Architecture
 --------------
