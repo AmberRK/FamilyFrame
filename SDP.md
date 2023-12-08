@@ -1,7 +1,7 @@
 Software Development Plan
 ==================================
 
-Family Frame
+FamilyFrame
 
 Nov 3, 2023
 
@@ -28,19 +28,19 @@ TABLE OF CONTENTS
 -----------------
 1. [Product Description](#1-product-description)
 2. [Team Description](#2-team-description)
-3. [SOFTWARE PROCESS MODEL DESCRIPTION](#3-software-process-model-description)
-4. [PRODUCT DEFINITION](#4-product-definition)
-5. [USER EXPERIENCE WIREFRAMES](#5-user-experience-wireframes)
-6. [PROJECT ORGANIZATION](#6-project-organization)
-7. [VALIDATION PLAN](#7-validation-plan)
-8. [FEASIBILITY STUDY](#8-feasibility-study)
-9. [CONFIGURATION AND VERSION CONTROL](#9-configuration-and-version-control)
-10. [TOOLS](#10-tools)
-11. [ARCHITECTURE](#11-architecture)
+3. [Software Process Model Description](#3-software-process-model-description)
+4. [product Definition](#4-product-definition)
+5. [User Experience Wireframes](#5-user-experience-wireframes)
+6. [Project Organization](#6-project-organization)
+7. [Validation Plan](#7-validation-plan)
+8. [Feasibility Study](#8-feasibility-study)
+9. [Configuration and Version Control](#9-configuration-and-version-control)
+10. [Tools](#10-tools)
+11. [Architecture](#11-architecture)
 
 \newpage
 
-1\. PRODUCT DESCRIPTION
+1\. Product Description
 ----------------------
 The family tree website offers a extensive way for one to view their family’s ancestry and relation, 
 organize information about their family, and view it in a way to suit their tastes.
@@ -58,7 +58,7 @@ Functionalities:
 - (Possibly color accents)
 
 
-2\. TEAM DESCRIPTION
+2\. Team Description
 -------------------
 
 Describe the strengths/skills needed of the team members for this
@@ -75,7 +75,7 @@ No
 What expertise is missing?
 Database knowledge
 
-3\. SOFTWARE PROCESS MODEL DESCRIPTION
+3\. Software Process Model Description
 -------------------------------------
 
 The agile methodology will be used for this project. Agile allows for more flexible development and will respond to changing requirements as development progresses. We will take a variety of ideas from different agile methodologies, like sprints from scrum and the simplicity in Extreme Programming. Our project can be broken into independent features that are tackled concurrently each sprint. Features can then be integrated by the end of each sprint, similar to the incremental model. We will also be aware of our progress at the end of each sprint and have more accountability for deadlines. Solutions will be simple and understandable by other members to aid in integration.
@@ -84,7 +84,7 @@ However, Agile can also lead to burnout if there is not sufficient post-sprint r
 
 The waterfall methodology ensures that components are complete and can be built upon but is inflexible for changing requirements which is likely in a senior project. Waterfall projects are easiliy tracked but Agile meetings following each sprint provides the same accountability. The rational unified process and spiral model methods are similarly built on a foundation of design that will be unstable for this project.
 
-4\. PRODUCT DEFINITION
+4\. Product Definition
 ---------------------
 
 The application will support normal users and admins. Normal users can use the application with or without an account. A normal account can be created by any user. An initial admin account will be created for development and can create other admin accounts. 
@@ -243,7 +243,7 @@ product.
 ![Wireframes-Phone Tree Editor](./ImagesAndPdf/Wireframes-PhoneTreeEditor.png)
 
 
-6\. PROJECT ORGANIZATION
+6\. Project Organization
 -----------------------
 
 Biggest weakness is the database; no one has much experience working with databases. Amber is going to focus on it, as she is the one with the most experience, though it will be a group effort.
@@ -285,7 +285,7 @@ Biggest weakness is the database; no one has much experience working with databa
 
 ![PERT Chart](./ImagesAndPdf/PERTChartUpdated.png)
 
-7\. VALIDATION PLAN
+7\. Validation Plan
 ------------------
 
 ### Test Strategy
@@ -298,7 +298,7 @@ Minimally, done would have the ability to add, remove, save, and retreive trees 
 
 When at least 10 people can be on the server at the same time and be able to create and edit trees as much as they want.
 
-8\. FEASIBILITY STUDY
+8\. Feasibility Study
 --------------------
 
 What are the known risks and how will they be handled?
@@ -320,17 +320,17 @@ What are the known risks and how will they be handled?
 What are you going to prototype?
 Huh?
 
-9\. CONFIGURATION AND VERSION CONTROL
+9\. Configuration and Version Control
 ------------------------------------
 
 The version control that we're using is git and Github. We are also tagging our milestones like our demo. We will be labelling the versions using the following scheme: https://semver.org/spec/v2.0.0.html
 
-10\. TOOLS
+10\. Tools
 ---------
 
 We'll be using SQLite, nginx and D3.
 
-11\. ARCHITECTURE
+11\. Architecture
 ----------------
 
 We'll be using a rented VPS server.
