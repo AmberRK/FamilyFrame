@@ -160,7 +160,7 @@ It would be preferably kept up indefinitely, but realistically will be maintaine
 
 ![Architecture](./ImagesAndPdf/architecture.jpg){width=75%}
 
-### 5.1 USER
+### 5.1 User
   - Requests information to the server
   - Receives information from the server
 
