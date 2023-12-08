@@ -340,4 +340,4 @@ We'll be using SQLite, nginx and D3.
 11\. Architecture
 ----------------
 
-We'll be using a rented VPS server.
+The user will be able to retrieve the information from the database and also request information from the server that contains UI and App logic if the user wants to add, delete any information. If the a user wants to change their password, a request will sent to the server and the server will request from the password retrieval system to give the user information on how to make changes to their password.
