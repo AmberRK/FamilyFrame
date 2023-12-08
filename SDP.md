@@ -262,6 +262,22 @@ Biggest weakness is the database; no one has much experience working with databa
 - Palak: Home and About page, documentation, testing
 - Will: Login, Retrieve saved tree
 
+ **Skill**       |**Amber**   |**Aidan**   |**Palak**          |**Will**
+  -------------- | ------------ |-------------------- |-------------------- |-----------------------------
+  Javascript  | X | X | X | X
+  Learning languages | X | X | X | X
+  HTML | X | X | X | X
+  CSS | X | X | X | X
+  Server Maintenance | X | L | X | X
+  Database | L | X |  | 
+  Security | X |  |  |L 
+  Markdown | X| X | X | X
+
+  L - Lead
+
+  X - Participating
+  
+
 ### PERT / Gantt Chart
 
 **First cut at schedule**
