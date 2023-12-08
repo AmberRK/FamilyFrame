@@ -12,9 +12,13 @@ Dr. Schwesinger
 
 **Submitted By:**
 
-Group names
-
 Aidan La Penta
+
+Amber Kulp
+
+Palak Dilawari
+
+Will Bechtel
 
 REVISION HISTORY
 ----------------
@@ -185,33 +189,10 @@ Signature Page
 
 AGREED TO:
 
-**Customer?**
+Amber Kulp, Team Leader, 1 Dec 2023
 
-**Signature**
+Aidan La Penta, Team Member, 1 Dec 2023
 
-**Name:**
+Palak Dilawari, Team Member, 1 Dec 2023
 
-**Title:**
-
-**Date:**
-
----
-
-AGREED TO:
-
-**Team members**
-
-**Signature**
-
-**Name:**
-
-**Title:**
-
-**Date:**
-
-
-Aidan La Penta
-
-Team Member
-
-1 Dec, 2023
+Will Bechtel, Team Member, 1 Dec 2023
