@@ -345,12 +345,12 @@ A prototype was made of a simple website that displays JSON data in a tree struc
 9\. Configuration and Version Control
 ------------------------------------
 
-The version control that we're using is git and Github. We are also tagging our milestones like our demo. We will be labelling the versions using the following scheme: https://semver.org/spec/v2.0.0.html
+The version control that we're using is git and Github. We are also tagging our milestones like our demo. We will be labelling the versions using the following scheme: https://semver.org/spec/v2.0.0.html. In version control we have Major.Minor.Patch where the pateched are the specifications of all features, Minor will be the added or removed features and Major are the fundmental project changes.
 
 10\. Tools
 ---------
 
-We'll be using SQLite, nginx and D3.
+We'll be using SQLite, nginx, D3 and Discord.
 
 11\. Architecture
 ----------------
