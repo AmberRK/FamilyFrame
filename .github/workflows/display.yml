@@ -17,5 +17,8 @@ jobs:
           script: |
             mkdir test
             cd test
+            - name: Add SSH key to known hosts
+              run: ssh-keyscan -H ${{secrets.SSH_HOST}} >> ~/.ssh/known_hosts
+
             git clone git@github.com:AmberRK/FamilyTree.git
             echo 'Deployment successful to digital ocean'
