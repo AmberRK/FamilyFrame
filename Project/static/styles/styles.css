@@ -1,0 +1,121 @@
+.click-box {
+  width: 200px;
+  height: 100px;
+  background-color: lightpink;
+  text-align: center;
+  line-height: 100px;
+  cursor: pointer;
+}
+
+table,
+td {
+  border: 1px solid black;
+  text-align: center;
+}
+
+/* Set the body and HTML height to 100% to ensure full page coverage */
+body,
+html {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+/* Create a container to hold both sections */
+.container {
+  display: flex;
+  height: 100%;
+}
+
+/* Style for the left section */
+.left-section {
+  flex: 1;
+  /* Grow to fill available space */
+  background-color: lightblue;
+  /* Change the background color */
+}
+
+/* Style for the right section */
+.right-section {
+  flex: 3;
+  /* Grow to fill available space */
+  background-color: lightgreen;
+  /* Change the background color */
+}
+
+/* Style for the textboxes */
+.textbox {
+  margin: 5px 0;
+  /* Add spacing between textboxes */
+}
+
+#imageBox {
+  width: 200px;
+  height: 200px;
+  border: 1px solid #000;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+/* style that is used for the nav bar */
+
+/*.mainbody {
+	text-align: center;
+	font-size: 24px;
+}
+
+.mainbody h2 {border-style: double;
+  border-radius: 25px;}
+
+
+body {
+background-color: #778899;
+
+}
+*/
+
+
+.navbar {
+  background-color: #014462;
+  overflow: hidden;
+}
+
+.navbar a {
+  float: left;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 24px;
+  font-family: Arial, sans-serif;
+}
+
+.navbar a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+.navbar a.active {
+  background-color: #ff711e;
+  color: white;
+}
+
+/*login box CSS */
+.loginform h2 {
+  color: #ff711e
+}
+
+.loginform tr {
+  color: #014462
+}
+
+.loginform table {
+  border: 1px solid
+}
+
+.loginform span {
+  color: white
+}
+
+/*login box CSS */
