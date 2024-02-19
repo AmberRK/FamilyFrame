@@ -24,11 +24,11 @@
 </head>
 <body>
 	<div class="navbar">
-		<a href="home.html">Home</a>
-		<a href="index.html">Tree Editor</a>
-		<a href="home.html">UI Settings</a>
-		<a href="about.html">About</a>
-		<a class="active" href="login.html">Login</a>
+		<button onclick="navigateToHome()">Home</button>
+		<button onclick="navigateToEditor()">Tree Editor</button>
+		<button onclick="navigateToUI()">UI Settings</button>
+        <button onclick="navigateToAbout()">About</button>
+        <button style = "background-color: #ff711e; color: white;" onclick="navigateToLogin()">Login</button>
 	</div> 
    
 	<!-- The title for the current page -->
@@ -59,6 +59,9 @@
 <p><span id='displaye'></span></p>
 <p><span id='displayp'></span></p>
 -->
+	<script src="scripts/leader-line.min.js"></script>
+	<script src="scripts/main.js"></script>
+
 </body>
 </html>
 

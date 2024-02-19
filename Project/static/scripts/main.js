@@ -194,3 +194,23 @@ function getChildString(children) {
 
 	return innerText;
 }
+
+function navigateToHome() {
+	window.location.href = "/home";
+}
+
+function navigateToEditor() {
+	window.location.href = "/";
+}
+
+function navigateToAbout() {
+	window.location.href = "/about";
+}
+
+function navigateToUI() {
+	window.location.href = "/ui";
+}
+
+function navigateToLogin() {
+	window.location.href = "/login";
+}
