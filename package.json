@@ -1,4 +1,9 @@
 {
+  "name": "your-app",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "node ./Project/index.js"
+  },
   "dependencies": {
     "express": "^4.18.2"
   }
