@@ -1,8 +1,9 @@
 const express = require('express');
 const { Pool } = require('pg');
+const bodyParser = require('body-parser');
 
 const app = express();
-const port = process.env.PORT || 3000;
+const port = 3000;
 
 const pool = new Pool({
   user: 'family',
@@ -13,6 +14,8 @@ const pool = new Pool({
 });
 
 app.use(express.static(__dirname + '/static'));
+
+app.use(bodyParser.json());
 
 app.get('/', (req, res) => res.sendFile(__dirname + '/static/index.html'));
 
@@ -33,6 +36,15 @@ app.get('/home', (req, res) => res.sendFile(__dirname + '/static/home.html'));
 app.get('/homepage', (req, res) => res.sendFile(__dirname + '/static/homepage.html'));
 app.get('/aboutUs', (req, res) => res.sendFile(__dirname + '/static/aboutPage.html'));
 
+app.get('/login', (req, res) => res.sendFile(__dirname + '/static/login.html'));
+
+app.post('/api/endpoint', (req, res) => {
+  const receivedData = req.body;
+
+  if(receivedData.loggedIn) {
+    console.log("You are logged in!");
+  }
+});
 app.listen(port, () => {
     console.log(`Server is running on http://localhost:${port}`);
   });

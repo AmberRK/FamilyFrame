@@ -12,15 +12,6 @@
    <meta charset="utf-8">
    <title>Family Tree Login</title>
    <link rel="stylesheet" href="styles/styles.css" />
-      <script language="JavaScript">
-		function showInput() {
-			 document.getElementById('displaye').innerHTML = 
-                    document.getElementById("email").value;
-			 document.getElementById('displayp').innerHTML =
-					document.getElementById("password").value;
-		}
-		
-      </script> <noscript> Cannot run JavaScript ! </noscript>
 </head>
 <body>
 	<div class="navbar">
@@ -49,7 +40,7 @@
 			<td> <input name="password" id="password" type="password" size= "35" maxlength="35"> </td>
 		</tr>
 		</table>
-			<input class="submit" type="button" value="Login" onClick="showInput()">
+			<input class="submit" type="button" value="Login" onClick="loggedIn()">
 			<input class="reset" type="reset" value="Reset">
 		</center>
 	</form>
@@ -61,7 +52,7 @@
 -->
 	<script src="scripts/leader-line.min.js"></script>
 	<script src="scripts/main.js"></script>
-
+  <script src="scripts/login.js"></script>
 </body>
 </html>
 
@@ -120,3 +111,5 @@ background-color: #778899;
    .loginform table {border: 1px solid}
    .loginform span {color: white}
 </style>
+
+<script src="scripts/main.js"></script>
