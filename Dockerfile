@@ -23,7 +23,7 @@ RUN chown postgres:postgres /var/lib/postgresql/insertDB.sql
 
 WORKDIR /app
 
-COPY package*.json ./
+COPY ./package*.json ./
 
 RUN npm install
 
@@ -34,5 +34,7 @@ ENV PORT=8080
 EXPOSE 8080
 
 # Run the container command
-#CMD ["/bin/ash", "-c", "/startup.sh && /bin/ash"]
-CMD ["/bin/ash", "-c", "/startup.sh && npm start"]
+# CMD ["/bin/ash", "-c", "/startup.sh && /bin/ash"]
+CMD ["/bin/ash", "-c", "/startup.sh && node ./Project/index.js"]
+# CMD ["/bin/ash", "-c", "/startup.sh && npm start"]
+# CMD ["/bin/ash", "-c", "/startup.sh && nodemon ./Project/index.js"]
