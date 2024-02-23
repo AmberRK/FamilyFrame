@@ -6,6 +6,7 @@ CREATE TABLE family.tbUser (
     displayName text NOT NULL,
     email text NOT NULL UNIQUE,
     --password_hash text NOT NULL
+    salt text,
     pword text NOT NULL
 );
 

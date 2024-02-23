@@ -2,7 +2,7 @@
   "name": "your-app",
   "version": "1.0.0",
   "scripts": {
-    "start": "cd Project && node index.js"
+    "start": "nodemon ./Project/index.js"
   },
   "dependencies": {
     "express": "^4.18.2",

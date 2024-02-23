@@ -2,6 +2,8 @@ FROM alpine
 
 # Install postgresql and set up the database
 RUN apk add postgresql nodejs npm
+RUN npm install -g nodemon
+
 RUN su -l postgres -c "initdb -D /var/lib/postgresql/data"
 
 # Set up directories
@@ -27,14 +29,22 @@ COPY ./package*.json ./
 
 RUN npm install
 
-COPY . .
+# Doesn't copy files over, for dev environment bind mounting
+# COPY . .
 
 ENV PORT=8080
 
 EXPOSE 8080
 
 # Run the container command
+# Start container and use npm start
+CMD ["/bin/ash", "-c", "/startup.sh && npm start"]
+
+# Start a container and jump into a shell
 # CMD ["/bin/ash", "-c", "/startup.sh && /bin/ash"]
-CMD ["/bin/ash", "-c", "/startup.sh && node ./Project/index.js"]
-# CMD ["/bin/ash", "-c", "/startup.sh && npm start"]
+
+# Start the container and start serving it with node
+# CMD ["/bin/ash", "-c", "/startup.sh && nodemon ./Project/index.js"]
+
+# Start container and use nodemon as a CMD instead of in npm startup
 # CMD ["/bin/ash", "-c", "/startup.sh && nodemon ./Project/index.js"]
