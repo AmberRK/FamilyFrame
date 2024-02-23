@@ -30,6 +30,8 @@ app.get('/results', async (req, res) => {
 });
 
 app.get('/home', (req, res) => res.sendFile(__dirname + '/static/home.html'));
+app.get('/homepage', (req, res) => res.sendFile(__dirname + '/static/homepage.html'));
+app.get('/aboutUs', (req, res) => res.sendFile(__dirname + '/static/aboutPage.html'));
 
 app.listen(port, () => {
     console.log(`Server is running on http://localhost:${port}`);
