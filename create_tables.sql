@@ -5,9 +5,9 @@ CREATE TABLE family.tbUser (
     userID SERIAL PRIMARY KEY,
     displayName text NOT NULL,
     email text NOT NULL UNIQUE,
-    --password_hash text NOT NULL
+    password_hash text NOT NULL
     salt text,
-    pword text NOT NULL
+    --pword text NOT NULL
 );
 
 create table family.person (
@@ -17,7 +17,7 @@ create table family.person (
     dateOfBirth date,
     dateOfDeath date,
     gender text,
-    creatorID int references family.tbUser
+    creatorID int references family.tbUser(userID)
 );
 
 create table family.relationshipType (
