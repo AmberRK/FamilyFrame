@@ -11,13 +11,13 @@ RUN mkdir /run/postgresql
 RUN chown postgres:postgres /run/postgresql
 
 # Copy startup file
-COPY startup.sh /
+COPY ./initDB/startup.sh /
 RUN chmod u+x /startup.sh
 
 # Copy over SQL files and run them
-COPY make_db.sql /var/lib/postgresql/make_db.sql
-COPY create_tables.sql /var/lib/postgresql/create_tables.sql
-COPY insertDB.sql /var/lib/postgresql/insertDB.sql
+COPY ./initDB/make_db.sql /var/lib/postgresql/make_db.sql
+COPY ./initDB/create_tables.sql /var/lib/postgresql/create_tables.sql
+COPY ./initDB/insertDB.sql /var/lib/postgresql/insertDB.sql
 
 RUN chown postgres:postgres /var/lib/postgresql/make_db.sql
 RUN chown postgres:postgres /var/lib/postgresql/create_tables.sql

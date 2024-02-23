@@ -1,7 +1,7 @@
 BEGIN;
 
 -- Make a user
-INSERT INTO family.tbUser (displayName, email, pword)
+INSERT INTO family.tbUser (displayName, email, password_hash)
 VALUES
     ('admin', 'alape632@live.kutztown.edu', 'familyFrame');
 

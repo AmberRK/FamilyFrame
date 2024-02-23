@@ -5,8 +5,8 @@ CREATE TABLE family.tbUser (
     userID SERIAL PRIMARY KEY,
     displayName text NOT NULL,
     email text NOT NULL UNIQUE,
-    password_hash text NOT NULL
-    salt text,
+    password_hash text NOT NULL,
+    salt text
     --pword text NOT NULL
 );
 
