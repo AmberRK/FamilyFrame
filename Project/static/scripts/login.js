@@ -8,11 +8,11 @@ function showInput() {
 async function loggedIn()
 {
   try{
-    let loginInfo = {
+    const loginInfo = {
         email: document.getElementById("email").value,
         password: document.getElementById("password").value,
         loggedIn: true
-    }
+    };
 
     const response = await fetch('/api/endpoint', 
     {
@@ -23,6 +23,7 @@ async function loggedIn()
       },
       body: JSON.stringify(loginInfo)
     });
+    console.log("Response");
     if (!response.ok) 
     {
       console.log("Uh oh");
@@ -30,8 +31,8 @@ async function loggedIn()
     }
     const data = await response.json();
 
-    console.log('Success:', data);
-    document.getElementById('displaye').innerHTML = data.message;
+    console.log('Success:', data.message);
+    document.getElementById('email').value = data.message;
   }
   catch(error)
   {

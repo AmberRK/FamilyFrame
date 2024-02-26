@@ -21,37 +21,45 @@ app.get('/', (req, res) => res.sendFile(__dirname + '/static/index.html'));
 
 // Example query
 app.get('/results', async (req, res) => {
-  try {
+  try 
+  {
     const client = await pool.connect();
     const result = await client.query('SELECT * FROM person');
     const results = { 'results': (result) ? result.rows : null };
     res.send(results);
-  } catch (err) {
+  } 
+  catch (err) 
+  {
     console.error(err);
     res.send("Error " + err);
   }
 });
 
-app.get('/home', (req, res) => res.sendFile(__dirname + '/static/home.html'));
-app.get('/homepage', (req, res) => res.sendFile(__dirname + '/static/homepage.html'));
-app.get('/aboutUs', (req, res) => res.sendFile(__dirname + '/static/aboutPage.html'));
-
+app.get('/home', (req, res) => res.sendFile(__dirname + '/static/homepage.html'));
+app.get('/about', (req, res) => res.sendFile(__dirname + '/static/aboutPage.html'));
 app.get('/login', (req, res) => res.sendFile(__dirname + '/static/login.html'));
 
 app.post('/api/endpoint', (req, res) => {
   const receivedData = req.body;
-
-  if(receivedData.loggedIn) 
+  try
   {
-    console.log("You are logged in!");
-
-    const dataToSend = 
+    if(receivedData.loggedIn) 
     {
-      message: 'Login validated!'
-    };
-    
-    res.json(dataToSend);
-    
+      console.log("You are logged in!");
+
+      const dataToSend = 
+      {
+        message: 'Login validated!'
+      };
+      
+      res.json(dataToSend);
+      
+    }
+  }
+  catch (error) 
+  {
+    console.error('Error:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
   }
 });
 app.listen(port, () => {
