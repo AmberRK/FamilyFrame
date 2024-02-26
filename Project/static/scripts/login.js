@@ -5,19 +5,37 @@ function showInput() {
            document.getElementById("password").value;
 }
 
-function loggedIn()
+async function loggedIn()
 {
+  try{
     let loginInfo = {
         email: document.getElementById("email").value,
         password: document.getElementById("password").value,
         loggedIn: true
     }
 
-    fetch('/api/endpoint', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(loginInfo)
-      })
+    const response = await fetch('/api/endpoint', 
+    {
+      method: 'POST',
+      headers: 
+      {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(loginInfo)
+    });
+    if (!response.ok) 
+    {
+      console.log("Uh oh");
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+    const data = await response.json();
+
+    console.log('Success:', data);
+    document.getElementById('displaye').innerHTML = data.message;
+  }
+  catch(error)
+  {
+    console.error('Error:', error);
+    throw error;
+  }
 }

@@ -16,8 +16,17 @@ app.get('/login', (req, res) => res.sendFile(__dirname + '/static/login.html'));
 app.post('/api/endpoint', (req, res) => {
   const receivedData = req.body;
 
-  if(receivedData.loggedIn) {
+  if(receivedData.loggedIn) 
+  {
     console.log("You are logged in!");
+
+    const dataToSend = 
+    {
+      message: 'Login validated!'
+    };
+    
+    res.json(dataToSend);
+    
   }
 });
 app.listen(port, () => {
