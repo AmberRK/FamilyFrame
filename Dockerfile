@@ -11,7 +11,9 @@ RUN mkdir /run/postgresql
 RUN chown postgres:postgres /run/postgresql
 
 # Copy startup file
+#RUN dos2unix /initDB/startup.sh
 COPY ./initDB/startup.sh /
+RUN dos2unix /startup.sh
 RUN chmod u+x /startup.sh
 
 # Copy over SQL files and run them
