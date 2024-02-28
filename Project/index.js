@@ -24,9 +24,13 @@ app.get('/results', async (req, res) => {
   try 
   {
     const client = await pool.connect();
-    const result = await client.query('SELECT * FROM person');
-    const results = { 'results': (result) ? result.rows : null };
-    res.send(results);
+    const result1 = await client.query('SELECT * FROM person');
+    const result2 = await client.query('SELECT * FROM relationship');
+    const results1 = { 'results': (result1) ? result1.rows : null };
+    const results2 = { 'results': (result2) ? result2.rows : null };
+    res.send(results1);
+    // res.send(results2);
+    client.release();
   } 
   catch (err) 
   {
