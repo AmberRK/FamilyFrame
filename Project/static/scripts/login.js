@@ -7,14 +7,19 @@ function showInput() {
 
 async function loggedIn()
 {
+  console.log("Stuff changes");
   try{
+    // Object to send to server
     const loginInfo = {
         email: document.getElementById("email").value,
         password: document.getElementById("password").value,
         loggedIn: true
     };
 
-    const response = await fetch('/api/endpoint', 
+    // Send the object to the server
+    const currentUrl = `http://${window.location.hostname}:5000`;
+    console.log("Current URL: " + currentUrl);
+    const response = await fetch('api/endpoint', 
     {
       method: 'POST',
       headers: 
@@ -24,11 +29,15 @@ async function loggedIn()
       body: JSON.stringify(loginInfo)
     });
     console.log("Response");
+
+    // If the server sends back an error, throw it
     if (!response.ok) 
     {
       console.log("Uh oh");
       throw new Error(`HTTP error! Status: ${response.status}`);
     }
+
+    // Get response from server
     const data = await response.json();
 
     console.log('Success:', data.message);

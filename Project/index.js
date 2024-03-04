@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 
 const app = express();
 const port = process.env.PORT || 3000;
+console.log("Port: " + port);
 
 const pool = new Pool({
   user: 'family',
@@ -17,6 +18,7 @@ app.use(express.static(__dirname + '/static'));
 
 app.use(bodyParser.json());
 
+app.use(bodyParser.urlencoded({ extended: true }));
 app.get('/', (req, res) => res.sendFile(__dirname + '/static/index.html'));
 
 // Example query
@@ -43,6 +45,7 @@ app.get('/home', (req, res) => res.sendFile(__dirname + '/static/homepage.html')
 app.get('/about', (req, res) => res.sendFile(__dirname + '/static/aboutPage.html'));
 app.get('/login', (req, res) => res.sendFile(__dirname + '/static/login.html'));
 
+// Get stuff from login
 app.post('/api/endpoint', (req, res) => {
   const receivedData = req.body;
   try
@@ -50,12 +53,17 @@ app.post('/api/endpoint', (req, res) => {
     if(receivedData.loggedIn) 
     {
       console.log("You are logged in!");
-
+      // Response to client
       const dataToSend = 
       {
-        message: 'Login validated!'
+        message: 'Login completed!'
       };
       
+      if(receivedData.email === "email")
+      {
+        dataToSend.message = "Email is correct!";
+      }
+      // Send to client
       res.json(dataToSend);
       
     }

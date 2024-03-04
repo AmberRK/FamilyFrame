@@ -40,13 +40,13 @@ EXPOSE 8080
 
 # Run the container command
 # Start container and use npm start
-CMD ["/bin/ash", "-c", "/startup.sh && npm start"]
+#CMD ["/bin/ash", "-c", "/startup.sh && npm start"]
 
 # Start a container and jump into a shell
 # CMD ["/bin/ash", "-c", "/startup.sh && /bin/ash"]
 
 # Start the container and start serving it with node
-# CMD ["/bin/ash", "-c", "/startup.sh && nodemon ./Project/index.js"]
+# CMD ["/bin/ash", "-c", "/startup.sh && node ./Project/index.js"]
 
 # Start container and use nodemon as a CMD instead of in npm startup
-# CMD ["/bin/ash", "-c", "/startup.sh && nodemon ./Project/index.js"]
+CMD ["/bin/ash", "-c", "/startup.sh && nodemon -L ./Project/index.js"]
