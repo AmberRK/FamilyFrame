@@ -4,23 +4,24 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
-    <title>My test page</title>
+    <title>Family Frame</title>
     <!-- connects css file and implements the code from there -->
     <link rel="stylesheet" type="text/css" href="styles/styles.css">
 </head>
 
 
 <body>
-    
-<div class="navbar">
+
+    <!-- <div class="navbar">
 		<button onclick="navigateToHome()">Home</button>
 		<button style = "background-color: #ff711e; color: white;" onclick="navigateToEditor()">Tree Editor</button>
 		<button onclick="navigateToUI()">UI Settings</button>
         <button onclick="navigateToAbout()">About</button>
         <button onclick="navigateToLogin()">Login</button>
-</div> 
+</div>  -->
+    <div id="navbarPlaceholder"></div>
 
-    
+
     <div class="container">
         <div class="left-section">
             <h1>Person</h1>
@@ -48,7 +49,7 @@
             </div>
         </div>
     </div>
-    
+
     <p>Click the button to add a new row at the first position of the table and then add cells and content.</p>
 
     <div id="main_div">
@@ -58,9 +59,19 @@
 
     <button type="button" onclick="spawnTable('table_0')">Try it</button>
 
+    <div id="footerPlaceholder"></div>
+
     <script src="scripts/leader-line.min.js"></script>
     <script src="scripts/main.js"></script>
-    
+    <script src="scripts/navbar.js"></script>
+    <script src="scripts/footer.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            replacePlaceholderNavbar();
+            replacePlaceholderFooter();
+        });
+    </script>
+
 </body>
 
 </html>

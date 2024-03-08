@@ -1,55 +1,69 @@
-
 <!doctype html>
 <html>
-	<head>
-		<meta charset="utf-8">
-   		<title>Home - Family Tree</title>
-		<meta name="description" content="Concept for Project Homepage">
-		<link rel="stylesheet" href="styles/styles.css" />
-	</head>
+
+<head>
+	<meta charset="utf-8">
+	<title>Home - Family Tree</title>
+	<meta name="description" content="Concept for Project Homepage">
+	<link rel="stylesheet" href="styles/styles.css" />
+</head>
+
 <body>
 	<!-- Navigation Bar -->
-	<div class="navbar">
+	<!-- <div class="navbar">
 		<button style = "background-color: #ff711e; color: white;" onclick="navigateToHome()">Home</button>
 		<button onclick="navigateToEditor()">Tree Editor</button>
 		<button onclick="navigateToUI()">UI Settings</button>
 		<button onclick="navigateToAbout()">About</button>
 		<button onclick="navigateToLogin()">Login</button>
-	</div> 
-	
-	<div class = "mainbody">
+	</div>  -->
+	<div id="navbarPlaceholder"></div>
+
+	<div class="mainbody">
 		<h2>Capstone Concept (Home Page + Nav)</h2>
-		<p>Ideally, this section would contain simple information about the Family Tree, instead of immediately shoving the designer UI on the first visit.</p>
+		<p>Ideally, this section would contain simple information about the Family Tree, instead of immediately shoving
+			the designer UI on the first visit.</p>
 		<p>The navigation bar on top allows for easy navigation between what we may decide to implement into the site
 	</div>
-	
+
+	<div id="footerPlaceholder"></div>
+
 	<script src="scripts/leader-line.min.js"></script>
-    <script src="scripts/main.js"></script>
-	
+	<script src="scripts/main.js"></script>
+	<script src="scripts/navbar.js"></script>
+	<script src="scripts/footer.js"></script>
+	<script>
+		document.addEventListener('DOMContentLoaded', function () {
+			replacePlaceholderNavbar();
+			replacePlaceholderFooter();
+		});
+	</script>
 </body>
+
 </html>
 
 
 
 <style>
+	.mainbody {
+		text-align: center;
+		font-size: 24px;
+	}
 
-.mainbody {
-	text-align: center;
-	font-size: 24px;
-}
-
-.mainbody h2 {border-style: double;
-  border-radius: 25px;}
-
-
-body {
-background-color: #778899;
-
-}
+	.mainbody h2 {
+		border-style: double;
+		border-radius: 25px;
+	}
 
 
+	body {
+		background-color: #778899;
 
-/*
+	}
+
+
+
+	/*
 .navbar {
   background-color: #014462;
   overflow: hidden;
