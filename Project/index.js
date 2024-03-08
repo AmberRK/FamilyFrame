@@ -30,6 +30,14 @@ app.get('/results', async (req, res) => {
   }
 });
 
+// Dynamic route testing
+app.get('/results/:id', async (req, res) => {
+  const { id } = req.params
+  const { rows } = await db.query('SELECT * FROM person WHERE personid = $1', [id])
+  res.send(rows[0])
+})
+
+
 app.get('/home', (req, res) => res.sendFile(__dirname + '/static/homepage.html'));
 app.get('/about', (req, res) => res.sendFile(__dirname + '/static/aboutPage.html'));
 app.get('/login', (req, res) => res.sendFile(__dirname + '/static/login.html'));

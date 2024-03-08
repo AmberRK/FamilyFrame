@@ -92,7 +92,19 @@ imageInput.addEventListener('change', function () {
 	}
 });
 
-function getData() {
+function getDynamicData() {
+	fetch('/results/2')
+		.then(response => response.json())
+		.then(data => {
+			// Display the data in the 'result' div
+			const resultDiv = document.getElementById('result2');
+			resultDiv.innerHTML = JSON.stringify(data, null, 2);
+		})
+		.catch(error => {
+			console.error('Error fetching data:', error);
+		});
+}
+function getAllData() {
 	fetch('/results')
 		.then(response => response.json())
 		.then(data => {
