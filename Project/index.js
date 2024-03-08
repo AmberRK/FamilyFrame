@@ -44,6 +44,7 @@ app.get('/results', async (req, res) => {
 app.get('/home', (req, res) => res.sendFile(__dirname + '/static/homepage.html'));
 app.get('/about', (req, res) => res.sendFile(__dirname + '/static/aboutPage.html'));
 app.get('/login', (req, res) => res.sendFile(__dirname + '/static/login.html'));
+app.get('/newuser', (req, res) => res.sendFile(__dirname + '/static/newuser.html'));
 
 // Get stuff from login
 app.post('/api/endpoint', (req, res) => {
