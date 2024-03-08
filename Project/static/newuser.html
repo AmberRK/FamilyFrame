@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+
+<!--
+     Concept Creator:			William Bechtel
+	   Creation Date:	Mar. 7, 2024
+     Course:		SOFTWARE ENGINEERING 1
+     Project:		NEWUSER (CONCEPT | NO PHP VERS | NO STYLESHEET VER.)
+	 File Name:		newuser.html
+-->
+<html lang="en">
+<head>
+   <meta charset="utf-8">
+   <title>Family Tree New User</title>
+   <link rel="stylesheet" href="styles/styles.css" />
+</head>
+<body>
+	<div class="navbar">
+		<button onclick="navigateToHome()">Home</button>
+		<button onclick="navigateToEditor()">Tree Editor</button>
+		<button onclick="navigateToUI()">UI Settings</button>
+        <button onclick="navigateToAbout()">About</button>
+        <button style = "background-color: #ff711e; color: white;" onclick="navigateToLogin()">Create Account</button>
+	</div> 
+   
+	<!-- The title for the current page -->
+	<h2 style="text-align: center">Account Creation</h2>
+   
+   
+   <!-- login form, labeled for each box's expected input -->
+   <div class="loginform">
+   <form name "accCreate" method="post">
+	<center>
+	  <table>
+		<tr>
+			<td> <label for="email">Email Address:</label> </td>
+			<td> <input name="email" id="email" type="email" size= "35" maxlength="35"> </td>
+		</tr>
+    <tr>
+			<td> <label for="username">Username:</label> </td>
+			<td> <input name="email" id="email" type="email" size= "35" maxlength="35"> </td>
+		</tr>
+		<tr>
+			<td> <label for="pass">Password:</label> </td>
+			<td> <input name="password" id="password" type="password" size= "35" maxlength="35"> </td>
+		</tr>
+		</table>
+			<input class="submit" type="button" value="Create Account" onClick="loggedIn()">
+			<input class="reset" type="reset" value="Reset">
+		</center>
+	</form>
+   </div>
+
+
+	<script src="scripts/leader-line.min.js"></script>
+	<script src="scripts/main.js"></script>
+  <script src="scripts/login.js"></script>
+</body>
+</html>
+
+
+
+<style>
+/* This should be converted into a style sheet in the future once a decision is made on the appearance of the site */
+.mainbody {
+	text-align: center;
+	font-size: 24px;
+}
+
+.mainbody h2 {border-style: double;
+  border-radius: 25px;}
+
+
+body {
+background-color: #778899;
+
+}
+
+
+
+/*
+.navbar {
+  background-color: #014462;
+  overflow: hidden;
+}
+
+.navbar a {
+  float: left;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 24px;
+  font-family: Arial, sans-serif;
+}
+
+.navbar a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+.navbar a.active {
+  background-color: #ff711e;
+  color: white;
+	
+}*/
+</style>
+
+
+<style>
+   .loginform h2 {color: #ff711e}
+   .loginform tr {color: #014462}
+   .loginform table {border: 1px solid}
+   .loginform span {color: white}
+</style>
+
+<script src="scripts/main.js"></script>
