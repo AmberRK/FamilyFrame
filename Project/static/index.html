@@ -42,27 +42,20 @@
 
         <div class="right-section">
             <h1>Tree Design</h1>
-            <p>This is the visualization of the tree.</p>
-
-            <div id="Cell" class="click-box">Cell
-                <button onclick="spawnChild()">Spawn child</button>
+            <div>
+                <button onclick="getData()">Fetch data</button>
+                <div id="result"></div>
             </div>
         </div>
     </div>
 
-    <p>Click the button to add a new row at the first position of the table and then add cells and content.</p>
-
-    <div id="main_div">
-
-    </div>
-    <br>
-
-    <button type="button" onclick="spawnTable('table_0')">Try it</button>
+    <!-- <button type="button" onclick="spawnTable('table_0')">Try it</button> -->
 
     <div id="footerPlaceholder"></div>
 
     <script src="scripts/leader-line.min.js"></script>
     <script src="scripts/main.js"></script>
+    <script src="scripts/transaction.js"></script>
     <script src="scripts/navbar.js"></script>
     <script src="scripts/footer.js"></script>
     <script>

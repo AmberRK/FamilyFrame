@@ -92,6 +92,18 @@ imageInput.addEventListener('change', function () {
 	}
 });
 
+function getData() {
+	fetch('/results')
+		.then(response => response.json())
+		.then(data => {
+			// Display the data in the 'result' div
+			const resultDiv = document.getElementById('result');
+			resultDiv.innerHTML = JSON.stringify(data, null, 2);
+		})
+		.catch(error => {
+			console.error('Error fetching data:', error);
+		});
+}
 
 function newJsonObject() {
 	let templateObject = {
@@ -100,43 +112,33 @@ function newJsonObject() {
 		"spouse": null,
 		"children": []
 	}
-
 	return templateObject;
 }
 
 function spawnTable(tableName) {
 
 	let mainData = newJsonObject();
-
 	mainData.firstName = "Jane";
 	mainData.lastName = "Smith";
 	mainData.spouse = "John";
-
 	let child1 = newJsonObject();
 	child1.firstName = "Kate";
 	child1.lastName = "Lobos";
 	child1.spouse = "Bob";
-
 	let child1_1 = newJsonObject()
 	child1_1.firstName = "Sam";
 	child1_1.lastName = "Lobos";
-
 	let child1_2 = newJsonObject()
 	child1_2.firstName = "Sarah";
 	child1_2.lastName = "Lobos";
-
 	child1.children.push(child1_1);
 	child1.children.push(child1_2);
-
 	mainData.children.push(child1);
-
-
 	let child2 = newJsonObject();
 	child2.firstName = "Misty";
 	child2.lastName = "Alleman";
 	child2.spouse = "Will";
 	mainData.children.push(child2);
-
 	let child3 = newJsonObject();
 	child3.firstName = "Laura";
 	child3.lastName = "Jordan";
@@ -152,7 +154,6 @@ function spawnTable(tableName) {
 		table.setAttribute("width", "100%");
 
 		let row1 = table.insertRow(0);
-
 		let cell1 = row1.insertCell(0);
 
 		if (mainData.spouse) {
@@ -161,26 +162,21 @@ function spawnTable(tableName) {
 		else {
 			cell1.innerHTML = mainData.firstName;
 		}
-
 		if (mainData.children.length > 0) {
 			let row2 = table.insertRow(1);
 			let cell2 = row2.insertCell(0);
-
 			let childTables = getChildString(mainData.children);
 			cell2.innerHTML = "<table style='width:100%;'><tr>" + childTables + "</tr></table>";
 		}
-
 		let mainDiv = document.getElementById("main_div");
 		mainDiv.innerHTML = table.outerHTML;
 	}
 }
 
 function getChildString(children) {
-
 	var innerText = "";
 	for (i = 0; i < children.length; i++) {
 		let table_id = "table_0_" + i;
-
 		let cellText = "";
 		if (children[i].spouse) {
 			cellText = children[i].firstName + " / " + children[i].spouse;
@@ -188,10 +184,8 @@ function getChildString(children) {
 		else {
 			cellText = children[i].firstName;
 		}
-
 		innerText += "<td><table id='" + table_id + "' style='width: 100%;' id='myTable2'><tr><td>" + cellText + "</td></tr></table><td>";
 	}
-
 	return innerText;
 }
 

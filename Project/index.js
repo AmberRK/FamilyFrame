@@ -1,18 +1,11 @@
 const express = require('express');
-const { Pool } = require('pg');
+const db = require('./static/scripts/transaction.js');
 const bodyParser = require('body-parser');
 
 const app = express();
 const port = process.env.PORT || 3000;
 console.log("Port: " + port);
 
-const pool = new Pool({
-  user: 'family',
-  host: 'localhost',
-  database: 'mydb',
-  password: 'frame',
-  port: 5432,
-});
 
 app.use(express.static(__dirname + '/static'));
 
@@ -23,19 +16,15 @@ app.get('/', (req, res) => res.sendFile(__dirname + '/static/index.html'));
 
 // Example query
 app.get('/results', async (req, res) => {
-  try 
-  {
-    const client = await pool.connect();
-    const result1 = await client.query('SELECT * FROM person');
-    const result2 = await client.query('SELECT * FROM relationship');
-    const results1 = { 'results': (result1) ? result1.rows : null };
-    const results2 = { 'results': (result2) ? result2.rows : null };
-    res.send(results1);
-    // res.send(results2);
-    client.release();
-  } 
-  catch (err) 
-  {
+  try {
+    // ADD parameterizing and client releasing
+    // const result = await db.query('SELECT * FROM person WHERE id = $1', [req.params.id])
+    const result = await db.query("SELECT * FROM person;")
+    // const result = await db.query("SELECT * FROM person WHERE personid > 3;")
+    res.send(result.rows)
+    // res.send(result)
+  }
+  catch (err) {
     console.error(err);
     res.send("Error " + err);
   }
@@ -49,32 +38,28 @@ app.get('/newuser', (req, res) => res.sendFile(__dirname + '/static/newuser.html
 // Get stuff from login
 app.post('/api/endpoint', (req, res) => {
   const receivedData = req.body;
-  try
-  {
-    if(receivedData.loggedIn) 
-    {
+  try {
+    if (receivedData.loggedIn) {
       console.log("You are logged in!");
       // Response to client
-      const dataToSend = 
+      const dataToSend =
       {
         message: 'Login completed!'
       };
-      
-      if(receivedData.email === "email")
-      {
+
+      if (receivedData.email === "email") {
         dataToSend.message = "Email is correct!";
       }
       // Send to client
       res.json(dataToSend);
-      
+
     }
   }
-  catch (error) 
-  {
+  catch (error) {
     console.error('Error:', error);
     res.status(500).json({ error: 'Internal Server Error' });
   }
 });
 app.listen(port, () => {
-    console.log(`Server is running on http://localhost:${port}`);
-  });
+  console.log(`Server is running on http://localhost:${port}`);
+});
