@@ -68,6 +68,53 @@ imageInput.addEventListener('change', function () {
 	}
 });
 
+function grabFormData() {
+	document.getElementById('userForm').addEventListener('submit', function (event) {
+		event.preventDefault();
+
+		const formData = new FormData(this);
+		const jsonData = {};
+
+		formData.forEach((value, key) => {
+			jsonData[key] = value;
+		});
+
+		// console.log(jsonData);
+		postNewPerson(jsonData);
+	});
+};
+
+function postNewPerson(jsonData) {
+	fetch("/insertData", {
+		method: "POST",
+		body: JSON.stringify(jsonData),
+		headers: {
+			"Content-type": "application/json; charset=UTF-8"
+		}
+	})
+		.then((response) => response.json())
+		.then((json) => console.log(json));
+}
+
+// function postNewPerson() {
+// 	fetch("/insertData", {
+// 		method: "POST",
+// 		body: JSON.stringify({
+// 			firstName: "Mona",
+// 			lastName: "Simpson",
+// 			dob: '1901-01-12',
+// 			gender: "Female",
+// 			createdBy: 1,
+// 			treeID: 1
+// 		}),
+// 		headers: {
+// 			"Content-type": "application/json; charset=UTF-8"
+// 		}
+// 	})
+// 		.then((response) => response.json())
+// 		.then((json) => console.log(json));
+// }
+
 function getDynamicData() {
 	fetch('/results/2')
 		.then(response => response.json())
@@ -80,6 +127,7 @@ function getDynamicData() {
 			console.error('Error fetching data:', error);
 		});
 }
+
 function getAllData() {
 	fetch('/results')
 		.then(response => response.json())
@@ -91,35 +139,6 @@ function getAllData() {
 		.catch(error => {
 			console.error('Error fetching data:', error);
 		});
-}
-
-function postNewPerson() {
-	// const insertValues = ['Mona', 'Simpson', '1901-01-12', 'Female', 1, 1];
-	fetch("/insertData", {
-		method: "POST",
-
-		// body: JSON.parse(JSON.stringify({
-		// 	firstName: "Mona",
-		// 	lastName: "Simpson",
-		// 	dob: '1901-01-12',
-		// 	gender: "Female",
-		// 	createdBy: 1,
-		// 	treeID: 1
-		// })),
-		body: JSON.stringify({
-			firstName: "Mona",
-			lastName: "Simpson",
-			dob: '1901-01-12',
-			gender: "Female",
-			createdBy: 1,
-			treeID: 1
-		}),
-		headers: {
-			"Content-type": "application/json; charset=UTF-8"
-		}
-	})
-		.then((response) => response.json())
-		.then((json) => console.log(json));
 }
 
 function newJsonObject() {

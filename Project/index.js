@@ -30,7 +30,6 @@ app.get('/results', async (req, res) => {
   }
 });
 
-// Dynamic route testing
 app.get('/results/:id', async (req, res) => {
   const { id } = req.params
   const { rows } = await db.query('SELECT * FROM person WHERE personid = $1', [id])
@@ -79,7 +78,6 @@ app.post('/api/endpoint', (req, res) => {
       }
       // Send to client
       res.json(dataToSend);
-
     }
   }
   catch (error) {
@@ -87,6 +85,7 @@ app.post('/api/endpoint', (req, res) => {
     res.status(500).json({ error: 'Internal Server Error' });
   }
 });
+
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
 });
