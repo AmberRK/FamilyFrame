@@ -1,4 +1,3 @@
-// import { Pool } from 'pg'
 const { Pool } = require('pg');
 
 const pool = new Pool({
@@ -8,10 +7,6 @@ const pool = new Pool({
   password: 'frame',
   port: 5432,
 });
-
-// const query = (text, params, callback) => {
-//   return pool.query(text, params, callback)
-// }
 
 query = async (text, params) => {
   const start = Date.now()

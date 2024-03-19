@@ -38,35 +38,23 @@ app.get('/results/:id', async (req, res) => {
 })
 
 app.post('/insertData', (req, res) => {
-  const client = pool.connect()
+  // const client = db.getClient()
 
   try {
-    client.query('BEGIN')
-    const queryText = 'INSERT INTO users(name) VALUES($1) RETURNING id'
+    db.query('BEGIN')
 
     const insertText = 'INSERT INTO person(firstName, lastName, dateOfBirth, gender, createdBy, treeID) VALUES ($1, $2, $3, $4, $5, $6)';
-    const insertValues = ['Mona', 'Simpson', '1901-01-12', 'Female', 1, 1];
-    client.query(insertText, insertValues)
-    client.query('COMMIT')
+    // const insertValues = ['Mona', 'Simpson', '1901-01-12', 'Female', 1, 1];
+    const insertValues = [req.body.firstName, req.body.lastName, req.body.dob, req.body.gender, req.body.createdBy, req.body.treeID];
+    db.query(insertText, insertValues)
+    db.query('COMMIT')
   } catch (e) {
-    client.query('ROLLBACK')
+    db.query('ROLLBACK')
     throw e
-  } finally {
-    client.release()
   }
-
-  const insertText = 'INSERT INTO person(firstName, lastName, dateOfBirth, gender, createdBy, treeID) VALUES ($1, $2, $3, $4, $5, $6)';
-  const insertValues = ['Mona', 'Simpson', '1901-01-12', 'Female', 1, 1];
-
-  // pool.query(insertText, insertValues, (err, result) => {
-  //   if (err) {
-  //     console.error('Error inserting data:', err);
-  //     res.status(500).send('Error inserting data');
-  //   } else {
-  //     console.log('Data inserted successfully:', result.rows[0]);
-  //     res.status(200).json(result.rows[0]);
-  //   }
-  // });
+  // finally {
+  //   client.release()
+  // }
 });
 
 app.get('/home', (req, res) => res.sendFile(__dirname + '/static/homepage.html'));
