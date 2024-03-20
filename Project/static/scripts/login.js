@@ -5,6 +5,38 @@ function showInput() {
            document.getElementById("password").value;
 }
 
+async function testCookie()
+{
+  try{
+    const response = await fetch('newUser', 
+    {
+      method: 'POST',
+      headers: 
+      {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({loggedIn: true})
+    });
+
+    if (!response.ok) 
+    {
+      throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+
+    const data = await response.json();
+
+    console.log('Success:', data.message);
+    document.getElementById('email').value = data.message;
+  }
+  catch(error)
+  {
+    console.error('Error:', error);
+    throw error;
+  }
+
+
+}
+
 async function loggedIn()
 {
   console.log("Stuff changes");
@@ -19,7 +51,7 @@ async function loggedIn()
     // Send the object to the server
     const currentUrl = `http://${window.location.hostname}:5000`;
     console.log("Current URL: " + currentUrl);
-    const response = await fetch('api/endpoint', 
+    const response = await fetch('login', 
     {
       method: 'POST',
       headers: 

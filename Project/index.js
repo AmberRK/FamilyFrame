@@ -1,14 +1,14 @@
 const express = require('express');
 const db = require('./static/scripts/transaction.js');
 const bodyParser = require('body-parser');
-
+var cookieParser = require('cookie-parser');
 const app = express();
 const port = process.env.PORT || 3000;
 console.log("Port: " + port);
 
 
 app.use(express.static(__dirname + '/static'));
-
+app.use(cookieParser());
 app.use(bodyParser.json());
 
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -75,19 +75,23 @@ app.get('/login', (req, res) => res.sendFile(__dirname + '/static/login.html'));
 app.get('/newuser', (req, res) => res.sendFile(__dirname + '/static/newuser.html'));
 
 // Get stuff from login
-app.post('/api/endpoint', (req, res) => {
+app.post('/login', (req, res) => {
   const receivedData = req.body;
   try {
     if (receivedData.loggedIn) {
       console.log("You are logged in!");
-      // Response to client
+      // Set cookie
+      res.cookie('emails', receivedData.email);
+
+      // Get cookie
+      const cookieValue = req.cookies.emails;
       const dataToSend =
       {
-        message: 'Login completed!'
+        message: cookieValue
       };
 
       if (receivedData.email === "email") {
-        dataToSend.message = "Email is correct!";
+        dataToSend.message = cookieValue;
       }
       // Send to client
       res.json(dataToSend);
@@ -98,6 +102,17 @@ app.post('/api/endpoint', (req, res) => {
     console.error('Error:', error);
     res.status(500).json({ error: 'Internal Server Error' });
   }
+});
+
+app.post('/newUser', (req, res) => {
+  // Get cookie
+  const cookieValue = req.cookies.emails;
+  const dataToSend =
+  {
+    message: cookieValue
+  };
+  res.json(dataToSend);
+
 });
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
