@@ -5,49 +5,49 @@
 // });
 
 
-function storeData() {
-	var nameValue = document.getElementById('Name').value;
-	var ageValue = document.getElementById('Age').value;
+// function storeData() {
+// 	var nameValue = document.getElementById('Name').value;
+// 	var ageValue = document.getElementById('Age').value;
 
 
-	localStorage.setItem('Name', nameValue);
-	localStorage.setItem('Age', ageValue);
+// 	localStorage.setItem('Name', nameValue);
+// 	localStorage.setItem('Age', ageValue);
 
-	const cellElement = document.getElementById('Cell');
-	const name = localStorage.getItem('Name');
+// 	const cellElement = document.getElementById('Cell');
+// 	const name = localStorage.getItem('Name');
 
-	cellElement.textContent = name;
+// 	cellElement.textContent = name;
 
-	const textboxName = document.getElementById('Name');
-	const textboxAge = document.getElementById('Age');
-	const imageBox = document.getElementById('imageBox');
+// 	const textboxName = document.getElementById('Name');
+// 	const textboxAge = document.getElementById('Age');
+// 	const imageBox = document.getElementById('imageBox');
 
-	textboxName.value = "";
-	textboxAge.value = "";
-	imageBox.style.backgroundImage = 'none';
-}
+// 	textboxName.value = "";
+// 	textboxAge.value = "";
+// 	imageBox.style.backgroundImage = 'none';
+// }
 
-function FillInInfo() {
-	const name = localStorage.getItem('Name');
-	const age = localStorage.getItem('Age');
-	const savedImage = localStorage.getItem('savedImage');
+// function FillInInfo() {
+// 	const name = localStorage.getItem('Name');
+// 	const age = localStorage.getItem('Age');
+// 	const savedImage = localStorage.getItem('savedImage');
 
-	const setName = document.getElementById('Name');
-	const setAge = document.getElementById('Age');
-	const setImage = document.getElementById('imageBox');
+// 	const setName = document.getElementById('Name');
+// 	const setAge = document.getElementById('Age');
+// 	const setImage = document.getElementById('imageBox');
 
-	setName.value = name;
-	setAge.value = age;
-	if (savedImage) {
-		imageBox.style.backgroundImage = `url(${savedImage})`;
-	} else {
-		alert('No saved image found in Local Storage.');
-	}
+// 	setName.value = name;
+// 	setAge.value = age;
+// 	if (savedImage) {
+// 		imageBox.style.backgroundImage = `url(${savedImage})`;
+// 	} else {
+// 		alert('No saved image found in Local Storage.');
+// 	}
 
-}
+// }
 
-const imageInput = document.getElementById('imageInput');
-const imageBox = document.getElementById('imageBox');
+// const imageInput = document.getElementById('imageInput');
+// const imageBox = document.getElementById('imageBox');
 
 imageInput.addEventListener('change', function () {
 	const selectedFile = imageInput.files[0];
@@ -141,12 +141,12 @@ function getAllData() {
 		});
 }
 
-function newJsonObject() {
-	let templateObject = {
-		"firstName": null,
-		"lastName": null,
-		"spouse": null,
-		"children": []
-	}
-	return templateObject;
-}
+// function newJsonObject() {
+// 	let templateObject = {
+// 		"firstName": null,
+// 		"lastName": null,
+// 		"spouse": null,
+// 		"children": []
+// 	}
+// 	return templateObject;
+// }
