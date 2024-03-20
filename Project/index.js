@@ -14,15 +14,11 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.get('/', (req, res) => res.sendFile(__dirname + '/static/index.html'));
 
-// Example query
 app.get('/results', async (req, res) => {
   try {
-    // ADD parameterizing and client releasing
-    // const result = await db.query('SELECT * FROM person WHERE id = $1', [req.params.id])
+    // Add client releasing?
     const result = await db.query("SELECT * FROM person;")
-    // const result = await db.query("SELECT * FROM person WHERE personid > 3;")
     res.send(result.rows)
-    // res.send(result)
   }
   catch (err) {
     console.error(err);
@@ -36,12 +32,22 @@ app.get('/results/:id', async (req, res) => {
   res.send(rows[0])
 })
 
+app.get('/rel', async (req, res) => {
+  try {
+    // Add client releasing?
+    const result = await db.query("SELECT p1.firstname AS person1_name, r2.relationshiplabel, p2.firstname AS person2_name FROM family.relationship r JOIN family.person p1 ON r.person1ID = p1.personID JOIN family.person p2 ON r.person2ID = p2.personID JOIN family.relationshiptype r2 on r.relationshiptypeid = r2.relationshiptypeid;")
+    res.send(result.rows)
+  }
+  catch (err) {
+    console.error(err);
+    res.send("Error " + err);
+  }
+});
+
 app.post('/insertData', (req, res) => {
   // const client = db.getClient()
-
   try {
     db.query('BEGIN')
-
     const insertText = 'INSERT INTO person(firstName, lastName, dateOfBirth, gender, createdBy, treeID) VALUES ($1, $2, $3, $4, $5, $6)';
     // const insertValues = ['Mona', 'Simpson', '1901-01-12', 'Female', 1, 1];
     const insertValues = [req.body.firstName, req.body.lastName, req.body.dob, req.body.gender, req.body.createdBy, req.body.treeID];
