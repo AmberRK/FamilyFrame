@@ -29,13 +29,8 @@
                 <input type="date" id="dateOfBirth" name="dateOfBirth"><br><br>
 
                 <label for="gender">Gender:</label><br>
-                <!-- <select id="gender" name="gender"> -->
-                <select id="gender" name="gender">
-                    <option value="">Select</option>
-                    <option value="male">Male</option>
-                    <option value="female">Female</option>
-                    <option value="other">Other</option>
-                </select><br><br>
+                <input type="text" id="gender" name="gender">
+                <br><br>
 
                 <label for="createdBy">Created By (userID, temp):</label><br>
                 <input type="text" id="createdBy" name="createdBy" required><br><br>
@@ -44,7 +39,6 @@
                 <input type="text" id="treeID" name="treeID" required><br><br>
 
                 <input type="submit" value="Submit">
-                <!-- <button onclick="javascript:myFunction();">Save</button> -->
             </form>
         </div>
 
@@ -55,7 +49,6 @@
                 <div id="result"></div>
                 <button onclick="getDynamicData()">Fetch dynamic data</button>
                 <div id="result2"></div>
-                <!-- <button onclick="postNewPerson()">Post new user</button> -->
             </div>
         </div>
     </div>
@@ -74,20 +67,6 @@
             replacePlaceholderNavbar();
             replacePlaceholderFooter();
         });
-    </script>
-    <script>
-        // document.getElementById('userForm').addEventListener('submit', function (event) {
-        //     event.preventDefault();
-
-        //     const formData = new FormData(this);
-        //     const jsonData = {};
-
-        //     formData.forEach((value, key) => {
-        //         jsonData[key] = value;
-        //     });
-
-        //     console.log(jsonData);
-        // });
     </script>
 </body>
 
