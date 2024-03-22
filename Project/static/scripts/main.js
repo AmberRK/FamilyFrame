@@ -49,6 +49,11 @@
 // const imageInput = document.getElementById('imageInput');
 // const imageBox = document.getElementById('imageBox');
 
+// Grabs the login cookie
+document.addEventListener('DOMContentLoaded', async () => {
+	await grabCookie();
+});
+
 imageInput.addEventListener('change', function () {
 	const selectedFile = imageInput.files[0];
 
@@ -94,6 +99,38 @@ function postNewPerson(jsonData) {
 	})
 		.then((response) => response.json())
 		.then((json) => console.log(json));
+}
+
+async function grabCookie()
+{
+	try
+	{
+		const response = await fetch('index', 
+		{
+		  method: 'POST',
+		  headers: 
+		  {
+			'Content-Type': 'application/json'
+		  },
+		  body: JSON.stringify({loggedIn: true})
+		});
+	
+		if (!response.ok) 
+		{
+		  throw new Error(`HTTP error! Status: ${response.status}`);
+		}
+	
+		const data = await response.json();
+
+		// Right now just prints email, can be used to determine other logic
+		console.log('Success:', data.message);
+		document.getElementById('email').value = data.message != Null ? data.message : "";
+	  }
+	  catch(error)
+	  {
+		console.error('Error:', error);
+		throw error;
+	  }
 }
 
 // function postNewPerson() {
