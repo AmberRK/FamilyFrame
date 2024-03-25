@@ -5,6 +5,7 @@ function replacePlaceholderNavbar() {
     var navbarContent = '<nav class="navbar">' +
                         '   <ul>' +
                         '       <li><a href="#"onclick="navigateToHome()">Home</a></li>' +
+                        '       <li><a href="#"onclick="navigateToMyTrees()">My Trees</a></li>' +
                         '       <li><a href="#"onclick="navigateToEditor()">Tree Editor</a></li>' +
                         '       <li><a href="#"onclick="navigateToLogin()">Login</a></li>' +
                         '   </ul>' +
@@ -12,8 +13,13 @@ function replacePlaceholderNavbar() {
     // Replace the innerHTML with dynamic content
      navbarPlaceholder.innerHTML = navbarContent;
 }
+
 function navigateToHome() {
 	window.location.href = "/home";
+}
+
+function navigateToMyTrees() {
+	window.location.href = "/mytrees";
 }
 
 function navigateToEditor() {
