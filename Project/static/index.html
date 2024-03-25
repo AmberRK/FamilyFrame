@@ -25,7 +25,6 @@
                 <input type="text" id="lastName" name="lastName" required><br><br>
 
                 <label for="dateOfBirth">Date of Birth:</label><br>
-                <!-- <input type="date" id="dateOfBirth" name="dateOfBirth"><br><br> -->
                 <input type="date" id="dateOfBirth" name="dateOfBirth"><br><br>
 
                 <label for="gender">Gender:</label><br>
@@ -46,14 +45,23 @@
             <h1>Tree Design</h1>
             <div>
                 <button onclick="getAllData()">Fetch all data</button>
+                <!-- <div id="result" style="display: none;"></div> -->
                 <div id="result"></div>
                 <button onclick="getDynamicData()">Fetch dynamic data</button>
                 <div id="result2"></div>
             </div>
+            <div class="person">
+                <div>
+                Person
+                </div>
+                    <button onclick="getInfo()">Get Info</button>
+                    <button>Get Parents</button>
+                    <button onclick="getChildren(1)">Get Children</button>
+            </div>
         </div>
     </div>
 
-    <!-- <button type="button" onclick="spawnTable('table_0')">Try it</button> -->
+
 
     <div id="footerPlaceholder"></div>
 

@@ -85,7 +85,7 @@ function grabFormData() {
 };
 
 function postNewPerson(jsonData) {
-	fetch("/insertData", {
+	fetch("/insertPerson", {
 		method: "POST",
 		body: JSON.stringify(jsonData),
 		headers: {
@@ -95,25 +95,6 @@ function postNewPerson(jsonData) {
 		.then((response) => response.json())
 		.then((json) => console.log(json));
 }
-
-// function postNewPerson() {
-// 	fetch("/insertData", {
-// 		method: "POST",
-// 		body: JSON.stringify({
-// 			firstName: "Mona",
-// 			lastName: "Simpson",
-// 			dob: '1901-01-12',
-// 			gender: "Female",
-// 			createdBy: 1,
-// 			treeID: 1
-// 		}),
-// 		headers: {
-// 			"Content-type": "application/json; charset=UTF-8"
-// 		}
-// 	})
-// 		.then((response) => response.json())
-// 		.then((json) => console.log(json));
-// }
 
 function getDynamicData() {
 	fetch('/results/2')
@@ -135,12 +116,49 @@ function getAllData() {
 			// Display the data in the 'result' div
 			const resultDiv = document.getElementById('result');
 			resultDiv.innerHTML = JSON.stringify(data, null, 2);
+			// const jsonAlert = document.getElementById('result').innerText;
+			// window.alert(jsonAlert);
+			// window.alert(resultDiv.innerHTML);
 		})
 		.catch(error => {
 			console.error('Error fetching data:', error);
 		});
 }
 
+function spawnChild() {
+	// Create a new child box
+	const parentBox = document.getElementById('Cell');
+	const childBox = document.createElement('div');
+	childBox.className = 'click-box';
+	// childBox.id = parentBox.id + "_1";
+	childBox.id = 'child of ' + parentBox.id;
+	childBox.textContent = childBox.id;
+
+	// // Append the child and line to the parent
+	parentBox.appendChild(childBox);
+
+}
+
+function getInfo() {
+	// const jsonAlert = JSON.parse(document.getElementById('result').innerText);
+	const jsonObj = JSON.parse(document.getElementById('result').innerText);
+	const jsonAlert = jsonObj[0].firstname;
+	window.alert(jsonAlert);
+}
+
+function getChildren(parentID) {
+	fetch("/children/"+parentID)
+		.then(response => response.json())
+		.then(data => {
+			// Display the data in the 'result' div
+			const resultDiv = document.getElementById('result');
+			resultDiv.innerHTML = JSON.stringify(data, null, 2);
+			// window.alert(resultDiv.innerHTML);
+		})
+		.catch(error => {
+			console.error('Error fetching data:', error);
+		});
+}
 // function newJsonObject() {
 // 	let templateObject = {
 // 		"firstName": null,
