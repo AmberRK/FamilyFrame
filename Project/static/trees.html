@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en-US">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Family Frame</title>
+    <link rel="stylesheet" type="text/css" href="styles/styles.css">
+</head>
+
+
+<body>
+    <div id="flex-container">
+        <div id="navbarPlaceholder"></div>
+
+        <div>
+            <h2>My Trees</h2>
+        </div>
+
+        <div>treeList</div>
+
+        <footer>
+            <div id="footerPlaceholder"></div>
+        </footer>
+
+        <script src="scripts/leader-line.min.js"></script>
+        <script src="scripts/main.js"></script>
+        <script src="scripts/transaction.js"></script>
+        <script src="scripts/navbar.js"></script>
+        <script src="scripts/footer.js"></script>
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                replacePlaceholderNavbar();
+                replacePlaceholderFooter();
+            });
+        </script>
+    </div>
+</body>
+
+</html>
