@@ -18,7 +18,7 @@ app.get('/mytrees', (req, res) => res.sendFile(__dirname + '/static/trees.html')
 app.get('/results', async (req, res) => {
   try {
     // Add client releasing?
-    const result = await db.query("SELECT * FROM person;")
+    const result = await db.query("SELECT personid, firstname, lastname, dateofbirth FROM person;")
     res.send(result.rows)
   }
   catch (err) {
