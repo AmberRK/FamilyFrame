@@ -3,6 +3,8 @@
 
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>About Family Frame</title>
+
   <style>
     body {
       font-family: Arial, Helvetica, sans-serif;
@@ -21,9 +23,11 @@
 
     .column {
       float: left;
-      width: 33.3%;
+      width: 10%;
       margin-bottom: 16px;
       padding: 0 8px;
+      width: 100%;
+      display: block;
     }
 
     .card {
@@ -38,11 +42,11 @@
       color: white;
     }
 
-    .container {
+    .contactContainer {
       padding: 0 16px;
     }
 
-    .container::after,
+    .contactContainer::after,
     .row::after {
       content: "";
       clear: both;
@@ -59,14 +63,14 @@
       display: inline-block;
       padding: 8px;
       color: white;
-      background-color: #000;
+      background-color: #234;
       text-align: center;
       cursor: pointer;
       width: 100%;
     }
 
     .button:hover {
-      background-color: #555;
+      background-color: #345;
     }
 
     @media screen and (max-width: 650px) {
@@ -76,66 +80,67 @@
       }
     }
   </style>
-  <!-- <link rel="stylesheet" type="text/css" href="styles/styles.css"> -->
+  <link rel="stylesheet" type="text/css" href="styles/styles.css">
 </head>
 
 <body>
 
-  <div id="navbarPlaceholder"></div>
+  <div id="flex-container">
+    <div id="navbarPlaceholder"></div>
 
-  <div class="about-section">
-    <h1>Family Frame</h1>
-    <p>We help people discover their family's history through our website. </p>
-    <p>.</p>
-  </div>
+    <div class="about-section">
+      <h1>Family Frame</h1>
+      <p>We help people discover their family's history through our website. </p>
+    </div>
 
-  <h2 style="text-align:center">Our Team</h2>
-  <div class="row">
-    <div class="column">
-      <div class="card">
-        <div class="container">
-          <h2>Amber Kulp</h2>
-          <p class="title"></p>
-          <p>Some text that describes me</p>
-          <p>amber@example.com</p>
-          <p><button class="button">Contact</button></p>
+    <h2 style="text-align:center">Our Team</h2>
+    <div class="row">
+      <div class="column">
+        <div class="card">
+          <div class="contactContainer">
+            <h2>Amber Kulp</h2>
+            <p class="title"></p>
+            <p>Some text that describes me.</p>
+            <p>amber@example.com</p>
+            <p><button class="button">Contact</button></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="column">
+        <div class="card">
+          <div class="contactContainer">
+            <h2>Aidan La Penta </h2>
+            <p class="title"></p>
+            <p>Some text that describes me.</p>
+            <p>aidan@example.com</p>
+            <p><button class="button">Contact</button></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="column">
+        <div class="card">
+          <div class="contactContainer">
+            <h2>Will Bechtel</h2>
+            <p class="title"></p>
+            <p>Some text that describes me.</p>
+            <p>will@example.com</p>
+            <p><button class="button">Contact</button></p>
+          </div>
         </div>
       </div>
     </div>
 
     <div class="column">
       <div class="card">
-        <div class="container">
-          <h2>Aidan La Penta </h2>
+        <div class="contactContainer">
+          <h2>Palak Dilawari</h2>
           <p class="title"></p>
           <p>Some text that describes me.</p>
-          <p>aidan@example.com</p>
+          <p>palak@example.com</p>
           <p><button class="button">Contact</button></p>
         </div>
-      </div>
-    </div>
-
-    <div class="column">
-      <div class="card">
-        <div class="container">
-          <h2>Will Bechtel</h2>
-          <p class="title"></p>
-          <p>Some text that describes me.</p>
-          <p>will@example.com</p>
-          <p><button class="button">Contact</button></p>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="column">
-    <div class="card">
-      <div class="container">
-        <h2>Palak Dilawari</h2>
-        <p class="title"></p>
-        <p>Some text that describes me.</p>
-        <p>palak@example.com</p>
-        <p><button class="button">Contact</button></p>
       </div>
     </div>
   </div>
