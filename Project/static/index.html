@@ -42,21 +42,33 @@
         </div>
 
         <div class="right-section">
+            <template id="boxTemplate">
+                <div class="person">
+                    <button onclick="getInfo()">Get Info</button>
+                    <button>Get Parents</button>
+                    <button onclick="getChildren(1)">Get Children</button>
+                </div>
+            </template>
             <h1>Tree Design</h1>
             <div>
                 <button onclick="getAllData()">Fetch all data</button>
                 <!-- <div id="result" style="display: none;"></div> -->
-                <div id="result"></div>
+                <div id="resultDiv">
+                    <pre id="result"></pre>
+                </div>
                 <button onclick="getDynamicData()">Fetch dynamic data</button>
                 <div id="result2"></div>
             </div>
             <div class="person">
                 <div>
-                Person
+                    Homer
                 </div>
-                    <button onclick="getInfo()">Get Info</button>
-                    <button>Get Parents</button>
-                    <button onclick="getChildren(1)">Get Children</button>
+                <button onclick="getInfo()">Get Info</button>
+                <button>Get Parents</button>
+                <button onclick="getChildren(1)">Get Children</button>
+                <div id="resultDiv">
+                    <pre id="children"></pre>
+                </div>
             </div>
         </div>
     </div>

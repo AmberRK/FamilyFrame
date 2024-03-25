@@ -101,36 +101,32 @@ function postNewPerson(jsonData) {
 		.then((json) => console.log(json));
 }
 
-async function grabCookie()
-{
-	try
-	{
-		const response = await fetch('index', 
-		{
-		  method: 'POST',
-		  headers: 
-		  {
-			'Content-Type': 'application/json'
-		  },
-		  body: JSON.stringify({loggedIn: true})
-		});
-	
-		if (!response.ok) 
-		{
-		  throw new Error(`HTTP error! Status: ${response.status}`);
+async function grabCookie() {
+	try {
+		const response = await fetch('index',
+			{
+				method: 'POST',
+				headers:
+				{
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({ loggedIn: true })
+			});
+
+		if (!response.ok) {
+			throw new Error(`HTTP error! Status: ${response.status}`);
 		}
-	
+
 		const data = await response.json();
 
 		// Right now just prints email, can be used to determine other logic
 		console.log('Success:', data.message);
 		document.getElementById('email').value = data.message != Null ? data.message : "";
-	  }
-	  catch(error)
-	  {
+	}
+	catch (error) {
 		console.error('Error:', error);
 		throw error;
-	  }
+	}
 }
 
 // function postNewPerson() {
@@ -170,8 +166,8 @@ function getAllData() {
 		.then(response => response.json())
 		.then(data => {
 			// Display the data in the 'result' div
-			const resultDiv = document.getElementById('result');
-			resultDiv.innerHTML = JSON.stringify(data, null, 2);
+			const resultField = document.getElementById('result');
+			resultField.innerHTML = JSON.stringify(data, null, 2);
 			// const jsonAlert = document.getElementById('result').innerText;
 			// window.alert(jsonAlert);
 			// window.alert(resultDiv.innerHTML);
@@ -203,18 +199,28 @@ function getInfo() {
 }
 
 function getChildren(parentID) {
-	fetch("/children/"+parentID)
+	fetch("/children/" + parentID)
 		.then(response => response.json())
 		.then(data => {
 			// Display the data in the 'result' div
-			const resultDiv = document.getElementById('result');
-			resultDiv.innerHTML = JSON.stringify(data, null, 2);
+			const resultField = document.getElementById('children');
+			resultField.innerHTML = "";
+			data.forEach(function (row) {
+				let box = document.createElement("div");
+				box.classList.add("person");
+				box.textContent = row.childname;
+				resultField.appendChild(box)
+
+			})
+			// resultField.innerHTML = JSON.stringify(data, null, 2);
+			// resultField.innerHTML = JSON.stringify(data, null, 2);
 			// window.alert(resultDiv.innerHTML);
 		})
 		.catch(error => {
 			console.error('Error fetching data:', error);
 		});
 }
+
 // function newJsonObject() {
 // 	let templateObject = {
 // 		"firstName": null,
