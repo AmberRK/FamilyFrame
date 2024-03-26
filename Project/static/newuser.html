@@ -16,115 +16,53 @@
 </head>
 
 <body>
-  <div class="navbar">
-    <button onclick="navigateToHome()">Home</button>
-    <button onclick="navigateToEditor()">Tree Editor</button>
-    <button onclick="navigateToUI()">UI Settings</button>
-    <button onclick="navigateToAbout()">About</button>
-    <button style="background-color: #ff711e; color: white;" onclick="navigateToLogin()">Create Account</button>
+  <div id="flex-container">
+
+    <div id="navbarPlaceholder"></div>
+
+    <!-- The title for the current page -->
+    <h2 style="text-align: center">Create an Account</h2>
+
+
+    <!-- login form, labeled for each box's expected input -->
+    <div class="loginform">
+      <form name="accCreate" method="post">
+        <table>
+          <tr>
+            <td> <label for="email">Email Address:</label> </td>
+            <td> <input name="email" id="email" type="email" size="35" maxlength="35"> </td>
+          </tr>
+          <tr>
+            <td> <label for="username">Username:</label> </td>
+            <td> <input name="userName" id="userName" type="userName" size="35" maxlength="35"> </td>
+          </tr>
+          <tr>
+            <td> <label for="pass">Password:</label> </td>
+            <td> <input name="password" id="password" type="password" size="35" maxlength="35"> </td>
+          </tr>
+        </table>
+        <input class="submit" type="button" value="Create Account" onClick="loggedIn()">
+        <input class="reset" type="reset" value="Reset">
+      </form>
+      <br>
+      <div>Already have an account? <a href="./login.html">Login</a></div>
+    </div>
   </div>
+  <footer>
+    <div id="footerPlaceholder"></div>
+  </footer>
 
-  <!-- The title for the current page -->
-  <h2 style="text-align: center">Account Creation</h2>
-
-
-  <!-- login form, labeled for each box's expected input -->
-  <div class="loginform">
-    <form name="accCreate" method="post">
-      <table>
-        <tr>
-          <td> <label for="email">Email Address:</label> </td>
-          <td> <input name="email" id="email" type="email" size="35" maxlength="35"> </td>
-        </tr>
-        <tr>
-          <td> <label for="username">Username:</label> </td>
-          <td> <input name="userName" id="userName" type="userName" size="35" maxlength="35"> </td>
-        </tr>
-        <tr>
-          <td> <label for="pass">Password:</label> </td>
-          <td> <input name="password" id="password" type="password" size="35" maxlength="35"> </td>
-        </tr>
-      </table>
-      <input class="submit" type="button" value="Create Account" onClick="loggedIn()">
-      <input class="reset" type="reset" value="Reset">
-    </form>
-  </div>
-
-
-  <script src="scripts/leader-line.min.js"></script>
   <script src="scripts/main.js"></script>
   <script src="scripts/login.js"></script>
+  <script src="scripts/navbar.js"></script>
+  <script src="scripts/footer.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      replacePlaceholderNavbar();
+      replacePlaceholderFooter();
+    });
+  </script>
+
 </body>
 
 </html>
-
-
-
-<style>
-  /* This should be converted into a style sheet in the future once a decision is made on the appearance of the site */
-  .mainbody {
-    text-align: center;
-    font-size: 24px;
-  }
-
-  .mainbody h2 {
-    border-style: double;
-    border-radius: 25px;
-  }
-
-
-  body {
-    background-color: #778899;
-
-  }
-
-
-
-  /*
-.navbar {
-  background-color: #014462;
-  overflow: hidden;
-}
-
-.navbar a {
-  float: left;
-  color: #f2f2f2;
-  text-align: center;
-  padding: 14px 16px;
-  text-decoration: none;
-  font-size: 24px;
-  font-family: Arial, sans-serif;
-}
-
-.navbar a:hover {
-  background-color: #ddd;
-  color: black;
-}
-
-.navbar a.active {
-  background-color: #ff711e;
-  color: white;
-	
-}*/
-</style>
-
-
-<style>
-  .loginform h2 {
-    color: #ff711e
-  }
-
-  .loginform tr {
-    color: #014462
-  }
-
-  .loginform table {
-    border: 1px solid
-  }
-
-  .loginform span {
-    color: white
-  }
-</style>
-
-<script src="scripts/main.js"></script>
