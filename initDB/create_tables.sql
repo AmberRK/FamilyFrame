@@ -4,7 +4,7 @@ create schema family;
 CREATE TABLE family.user (
     userID SERIAL PRIMARY KEY,
     displayName text NOT NULL,
-    email text NOT NULL UNIQUE CHECK(email ~* '^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}(\\.[a-zA-Z]{2,})?$'),
+    email text NOT NULL UNIQUE CHECK(email ~* '^[a-zA-Z0-9.!#$%&’*+\/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$'),
     password_hash text NOT NULL,
     salt text
     --pword text NOT NULL
