@@ -17,13 +17,6 @@
 
 <body>
   <div id="flex-container">
-    <!-- <div class="navbar">
-		<button onclick="navigateToHome()">Home</button>
-		<button onclick="navigateToEditor()">Tree Editor</button>
-		<button onclick="navigateToUI()">UI Settings</button>
-        <button onclick="navigateToAbout()">About</button>
-        <button style = "background-color: #ff711e; color: white;" onclick="navigateToLogin()">Login</button>
-	</div>  -->
 
     <div id="navbarPlaceholder"></div>
     <!-- The title for the current page -->
@@ -33,22 +26,22 @@
     <!-- login form, labeled for each box's expected input -->
     <div class="loginform">
       <form name "login" method="post">
-        <center>
-          <table>
-            <tr>
-              <td> <label for="email">Email Address:</label> </td>
-              <td> <input name="email" id="email" type="email" size="35" maxlength="35"> </td>
-            </tr>
-            <tr>
-              <td> <label for="pass">Password:</label> </td>
-              <td> <input name="password" id="password" type="password" size="35" maxlength="35"> </td>
-            </tr>
-          </table>
-          <input class="submit" type="button" value="Login" onClick="loggedIn()">
-          <input class="reset" type="reset" value="Reset">
-        </center>
+        <table>
+          <tr>
+            <td> <label for="email">Email Address:</label> </td>
+            <td> <input name="email" id="email" type="email" size="35" maxlength="35"> </td>
+          </tr>
+          <tr>
+            <td> <label for="pass">Password:</label> </td>
+            <td> <input name="password" id="password" type="password" size="35" maxlength="35"> </td>
+          </tr>
+        </table>
+        <input class="submit" type="button" value="Login" onClick="loggedIn()">
+        <input class="reset" type="reset" value="Reset">
       </form>
     </div>
+    <br>
+    <div>Don't have an account? <a href="./newuser.html">Sign Up</a></div>
 
     <footer>
       <div id="footerPlaceholder"></div>
