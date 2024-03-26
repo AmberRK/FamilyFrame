@@ -13,7 +13,7 @@ app.use(bodyParser.json());
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.get('/', (req, res) => res.sendFile(__dirname + '/static/index.html'));
-app.get('/mytrees', (req, res) => res.sendFile(__dirname + '/static/trees.html'));
+app.get('/mytrees', (req, res) => res.sendFile(__dirname + '/static/displayTrees.html'));
 
 app.get('/results', async (req, res) => {
   try {
