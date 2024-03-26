@@ -54,24 +54,24 @@ document.addEventListener('DOMContentLoaded', async () => {
 	await grabCookie();
 });
 
-imageInput.addEventListener('change', function () {
-	const selectedFile = imageInput.files[0];
+// imageInput.addEventListener('change', function () {
+// 	const selectedFile = imageInput.files[0];
 
-	if (selectedFile && selectedFile.type.startsWith('image/')) {
-		const reader = new FileReader();
+// 	if (selectedFile && selectedFile.type.startsWith('image/')) {
+// 		const reader = new FileReader();
 
-		reader.onload = function (event) {
-			const imageUrl = event.target.result;
-			imageBox.style.backgroundImage = `url(${imageUrl})`;
+// 		reader.onload = function (event) {
+// 			const imageUrl = event.target.result;
+// 			imageBox.style.backgroundImage = `url(${imageUrl})`;
 
-			localStorage.setItem('savedImage', imageUrl);
-		};
+// 			localStorage.setItem('savedImage', imageUrl);
+// 		};
 
-		reader.readAsDataURL(selectedFile);
-	} else {
-		alert('Please select a valid image file.');
-	}
-});
+// 		reader.readAsDataURL(selectedFile);
+// 	} else {
+// 		alert('Please select a valid image file.');
+// 	}
+// });
 
 function grabFormData() {
 	document.getElementById('userForm').addEventListener('submit', function (event) {
