@@ -33,9 +33,16 @@ app.get('/results/:id', async (req, res) => {
   res.send(rows[0])
 })
 
+app.get('/stratifyChildren', async (req, res) => {
+  const { id } = req.params
+  const { rows } = await db.query("select p2.firstname AS name, p1.firstname as parent FROM family.relationship r JOIN family.person p1 ON r.person1ID = p1.personID JOIN family.person p2 ON r.person2ID = p2.personID JOIN family.relationshiptype r2 on r.relationshiptypeid = r2.relationshiptypeid where p1.personID = 1 and r2.relationshiplabel = 'Parent';")
+// --where p1.personID = 1 and r2.relationshiplabel = 'Parent';
+  res.send(rows)
+})
+
 app.get('/children/:id', async (req, res) => {
   const { id } = req.params
-  const { rows } = await db.query("SELECT p2.firstname AS childName FROM family.relationship r JOIN family.person p1 ON r.person1ID = p1.personID JOIN family.person p2 ON r.person2ID = p2.personID JOIN family.relationshiptype r2 on r.relationshiptypeid = r2.relationshiptypeid where p1.personID = $1 and r2.relationshiplabel = 'Parent';", [id])
+  const { rows } = await db.query("SELECT p2.personid as id, p2.firstname AS childName FROM family.relationship r JOIN family.person p1 ON r.person1ID = p1.personID JOIN family.person p2 ON r.person2ID = p2.personID JOIN family.relationshiptype r2 on r.relationshiptypeid = r2.relationshiptypeid where p1.personID = $1 and r2.relationshiplabel = 'Parent';", [id])
   // const { rows } = await db.query("SELECT p2.firstname AS children FROM "family".relationship r JOIN "family".person p1 ON r.person1ID = p1.personID JOIN "family".person p2 ON r.person2ID = p2.personID JOIN "family".relationshiptype r2 on r.relationshiptypeid = r2.relationshiptypeid where p1.personID = 1 and r2.relationshiplabel = 'Parent';", [id])
   res.send(rows)
 })

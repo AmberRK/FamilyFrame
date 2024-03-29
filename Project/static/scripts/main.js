@@ -1,53 +1,4 @@
-// Add an event listener to the div to trigger a function when clicked
-// clickBox.addEventListener('click', function () {
-// 	// Call your function here
-// 	FillInInfo();
-// });
-
-
-// function storeData() {
-// 	var nameValue = document.getElementById('Name').value;
-// 	var ageValue = document.getElementById('Age').value;
-
-
-// 	localStorage.setItem('Name', nameValue);
-// 	localStorage.setItem('Age', ageValue);
-
-// 	const cellElement = document.getElementById('Cell');
-// 	const name = localStorage.getItem('Name');
-
-// 	cellElement.textContent = name;
-
-// 	const textboxName = document.getElementById('Name');
-// 	const textboxAge = document.getElementById('Age');
-// 	const imageBox = document.getElementById('imageBox');
-
-// 	textboxName.value = "";
-// 	textboxAge.value = "";
-// 	imageBox.style.backgroundImage = 'none';
-// }
-
-// function FillInInfo() {
-// 	const name = localStorage.getItem('Name');
-// 	const age = localStorage.getItem('Age');
-// 	const savedImage = localStorage.getItem('savedImage');
-
-// 	const setName = document.getElementById('Name');
-// 	const setAge = document.getElementById('Age');
-// 	const setImage = document.getElementById('imageBox');
-
-// 	setName.value = name;
-// 	setAge.value = age;
-// 	if (savedImage) {
-// 		imageBox.style.backgroundImage = `url(${savedImage})`;
-// 	} else {
-// 		alert('No saved image found in Local Storage.');
-// 	}
-
-// }
-
-// const imageInput = document.getElementById('imageInput');
-// const imageBox = document.getElementById('imageBox');
+// import * as d3 from "https://cdn.jsdelivr.net/npm/d3@7/+esm";
 
 // Grabs the login cookie
 document.addEventListener('DOMContentLoaded', async () => {
@@ -177,56 +128,77 @@ function getAllData() {
 		});
 }
 
-function spawnChild() {
-	// Create a new child box
-	const parentBox = document.getElementById('Cell');
-	const childBox = document.createElement('div');
-	childBox.className = 'click-box';
-	// childBox.id = parentBox.id + "_1";
-	childBox.id = 'child of ' + parentBox.id;
-	childBox.textContent = childBox.id;
-
-	// // Append the child and line to the parent
-	parentBox.appendChild(childBox);
-
+function getInfo(targetID) {
+	return fetch("/results/" + targetID)
+		.then(response => response.json())
+		.then(data => {
+			// return (data);
+			window.alert(JSON.stringify(data));
+		})
 }
 
-function getInfo() {
-	// const jsonAlert = JSON.parse(document.getElementById('result').innerText);
-	const jsonObj = JSON.parse(document.getElementById('result').innerText);
-	const jsonAlert = jsonObj[0].firstname;
-	window.alert(jsonAlert);
+function getChildrenToStratify() {
+	return fetch("/stratifyChildren/")
+		.then(response => response.json())
+		.then(data => {
+			console.log(data);
+			const root = d3.stratify()
+				.id((d) => d.name)
+				.parentId((d) => d.parent)
+				(data);
+			console.log(root);
+			return (root);
+		})
+		.catch(error => {
+			console.error('Error fetching data:', error);
+		});
+	// return fetch("/stratifyChildren/")
+	// 	.then(response => response.json())
+	// 	.then(data => {
+	// 		// return (data);
+	// 		window.alert(JSON.stringify(data));
+	// 	});
 }
 
 function getChildren(parentID) {
-	fetch("/children/" + parentID)
+	return fetch("/children/" + parentID)
 		.then(response => response.json())
 		.then(data => {
-			// Display the data in the 'result' div
-			const resultField = document.getElementById('children');
-			resultField.innerHTML = "";
-			data.forEach(function (row) {
-				let box = document.createElement("div");
-				box.classList.add("person");
-				box.textContent = row.childname;
-				resultField.appendChild(box)
-
-			})
-			// resultField.innerHTML = JSON.stringify(data, null, 2);
-			// resultField.innerHTML = JSON.stringify(data, null, 2);
-			// window.alert(resultDiv.innerHTML);
+			return (data);
 		})
 		.catch(error => {
 			console.error('Error fetching data:', error);
 		});
 }
 
-// function newJsonObject() {
-// 	let templateObject = {
-// 		"firstName": null,
-// 		"lastName": null,
-// 		"spouse": null,
-// 		"children": []
-// 	}
-// 	return templateObject;
-// }
+function spawnChild(id) {
+	getChildren(id)
+		.then(data => {
+			let resultID = "resultDiv" + id;
+			const resultField = document.getElementById(resultID);
+			resultField.innerHTML = "";
+			if (Object.values(data).length != 0) {
+
+				data.forEach(function (row) {
+					let childDiv = document.createElement("div");
+					childDiv.classList.add("person");
+					childDiv.id = (row.id);
+					childDiv.textContent = row.childname;
+					resultField.appendChild(childDiv);
+
+					let spawnChildButton = document.createElement("button");
+					spawnChildButton.textContent = "Get Children";
+					spawnChildButton.addEventListener("click", function () { spawnChild(this.parentNode.id); });
+					childDiv.appendChild(spawnChildButton);
+
+					let grandChildDiv = document.createElement("div");
+
+					grandChildDiv.id = "resultDiv" + row.id;
+					childDiv.appendChild(grandChildDiv);
+				});
+			}
+			else {
+				resultField.innerHTML = "No children";
+			}
+		})
+}
