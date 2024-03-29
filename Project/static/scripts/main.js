@@ -120,8 +120,8 @@ async function grabCookie() {
 		const data = await response.json();
 
 		// Right now just prints email, can be used to determine other logic
-		console.log('Success:', data.message);
-		document.getElementById('email').value = data.message != Null ? data.message : "";
+		console.log('Success:', data.message, 'is logged in.');
+
 	}
 	catch (error) {
 		console.error('Error:', error);

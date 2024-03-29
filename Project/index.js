@@ -75,6 +75,7 @@ app.get('/about', (req, res) => res.sendFile(__dirname + '/static/aboutPage.html
 app.get('/login', (req, res) => res.sendFile(__dirname + '/static/login.html'));
 app.get('/newuser', (req, res) => res.sendFile(__dirname + '/static/newuser.html'));
 app.get('/index', (req, res) => res.sendFile(__dirname + '/static/index.html'));
+app.get('/ui', (req, res) => res.sendFile(__dirname + '/static/uiDesign.html'));
 
 // Get stuff from login
 app.post('/login', (req, res) => {
@@ -82,8 +83,8 @@ app.post('/login', (req, res) => {
   try {
     if (receivedData.loggedIn) {
       console.log("You are logged in!");
-      // Set cookie
-      res.cookie('emails', receivedData.email);
+      // Set cookie, set secure = true for https when we have it
+      res.cookie('emails', receivedData.email, httpOnly = true, maxAge = 1000 * 60 * 60 * 24 * 7);
 
       // Get cookie
       const cookieValue = req.cookies.emails;

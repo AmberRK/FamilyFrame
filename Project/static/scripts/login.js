@@ -17,8 +17,6 @@ async function loggedIn()
     };
 
     // Send the object to the server
-    const currentUrl = `http://${window.location.hostname}:5000`;
-    console.log("Current URL: " + currentUrl);
     const response = await fetch('login', 
     {
       method: 'POST',
@@ -41,7 +39,14 @@ async function loggedIn()
     const data = await response.json();
 
     console.log('Success:', data.message);
-    document.getElementById('email').value = data.message != Null ? data.message : "";
+    try
+    {
+      document.getElementById('email').value = data.message != Null ? data.message : "";
+    }
+    catch(error)
+    {
+      document.getElementById('email').value = "";
+    }
   }
   catch(error)
   {
