@@ -159,8 +159,9 @@ li {
 }
 
 /*login box CSS */
-.loginform h2 {
-  color: #ff711e
+.loginform {
+  margin: auto;
+  text-align: center;
 }
 
 .loginform tr {

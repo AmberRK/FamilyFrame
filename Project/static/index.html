@@ -42,13 +42,6 @@
         </div>
 
         <div class="right-section">
-            <template id="boxTemplate">
-                <div class="person">
-                    <button onclick="getInfo()">Get Info</button>
-                    <button>Get Parents</button>
-                    <button onclick="getChildren(1)">Get Children</button>
-                </div>
-            </template>
             <h1>Tree Design</h1>
             <div>
                 <button onclick="getAllData()">Fetch all data</button>
@@ -56,24 +49,39 @@
                 <div id="resultDiv">
                     <pre id="result"></pre>
                 </div>
-                <button onclick="getDynamicData()">Fetch dynamic data</button>
-                <div id="result2"></div>
+                <!-- <button onclick="getDynamicData()">Fetch dynamic data</button>
+                <div id="result2"></div> -->
+                <button onclick="getChildrenToStratify()">D3 Stratify</button>
+                <div id="stratifyDiv">
+                    <div id="container"></div>
+                    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+                    <script type="module">
+
+                        // Declare the chart dimensions and margins.
+                        const width = 640;
+                        const height = 400;
+                        const marginTop = 20;
+                        const marginRight = 20;
+                        const marginBottom = 30;
+                        const marginLeft = 40;
+
+                    </script>
+                </div>
             </div>
-            <div class="person">
+            <!-- Set div id to the personid and then query for info where it equals id and the userid -->
+            <div class="person" id="1">
                 <div>
                     Homer
                 </div>
-                <button onclick="getInfo()">Get Info</button>
+                <button onclick="getInfo(this.parentNode.id)">Get Info</button>
                 <button>Get Parents</button>
-                <button onclick="getChildren(1)">Get Children</button>
-                <div id="resultDiv">
-                    <pre id="children"></pre>
+                <!-- <button onclick="getChildren(1)">Get Children</button> -->
+                <button onclick="spawnChild(this.parentNode.id)">Get Children</button>
+                <div id="resultDiv1">
                 </div>
             </div>
         </div>
     </div>
-
-
 
     <div id="footerPlaceholder"></div>
 
