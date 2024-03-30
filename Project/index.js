@@ -49,7 +49,8 @@ app.get('/results/:id', async (req, res) => {
 
 app.get('/stratifyChildren', async (req, res) => {
   const { id } = req.params
-  const { rows } = await db.query("select p2.firstname AS name, p1.firstname as parent FROM family.relationship r JOIN family.person p1 ON r.person1ID = p1.personID JOIN family.person p2 ON r.person2ID = p2.personID JOIN family.relationshiptype r2 on r.relationshiptypeid = r2.relationshiptypeid where p1.personID = 1 and r2.relationshiplabel = 'Parent';")
+  // const { rows } = await db.query("select p2.firstname AS name, p1.firstname as parent FROM family.relationship r JOIN family.person p1 ON r.person1ID = p1.personID JOIN family.person p2 ON r.person2ID = p2.personID JOIN family.relationshiptype r2 on r.relationshiptypeid = r2.relationshiptypeid where p1.personID = 1 and r2.relationshiplabel = 'Parent';")
+  const { rows } = await db.query("select p.firstname as name, null as parent from family.person p where p.personid not in (select distinct person2id from family.relationship r where r.relationshiptypeid = 1) union select p2.firstname as name, p1.firstname as parent from family.relationship r join family.person p1 on r.person1ID = p1.personID join family.person p2 on r.person2ID = p2.personID join family.relationshiptype r2 on r.relationshiptypeid = r2.relationshiptypeid --where r2.relationshiplabel = 'Parent'; where p1.personID = 1 and r2.relationshiplabel = 'Parent' order by parent desc");
 // --where p1.personID = 1 and r2.relationshiplabel = 'Parent';
   res.send(rows)
 })
