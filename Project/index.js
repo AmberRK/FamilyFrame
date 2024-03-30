@@ -1,11 +1,25 @@
-const express = require('express');
-const db = require('./static/scripts/transaction.js');
-const bodyParser = require('body-parser');
-var cookieParser = require('cookie-parser');
+import express from "express";
+import bodyParser from "body-parser";
+import cookieParser from "cookie-parser";
+import * as d3 from "d3";
+import * as db from './static/scripts/transaction.js'
+
+import path from 'path';
+import url from 'url';
+
+const __filename = url.fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+// const express = require('express');
+// const db = require('./static/scripts/transaction.js');
+// const bodyParser = require('body-parser');
+// var cookieParser = require('cookie-parser');
+
 const app = express();
 const port = process.env.PORT || 3000;
 console.log("Port: " + port);
 
+// import * as d3 from "d3";
+// const d3 = require('d3');
 
 app.use(express.static(__dirname + '/static'));
 app.use(cookieParser());

@@ -1,6 +1,7 @@
 {
   "name": "your-app",
   "version": "1.0.0",
+  "type": "module",
   "scripts": {
     "start": "nodemon -L ./Project/index.js"
   },
