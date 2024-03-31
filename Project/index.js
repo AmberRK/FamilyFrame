@@ -141,10 +141,34 @@ app.post('/login', (req, res) => {
   }
 });
 
-app.post('/createUser', async (req, res) => {
-  let saltRounds = 10;
+app.post('/existingUser', async (req, res) => {
   try {
-    // const insertText = 'INSERT INTO familyFrame.tbUser(displayName, email, passwordHash) VALUES ($1, $2, $3)';
+    db.query('BEGIN')
+    const queryText = 'SELECT displayname FROM familyFrame.tbUser WHERE email = $1 and passwordHash = crypt($2, passwordHash)';
+    const passedValues = [req.body.email, req.body.password];
+    db.query(queryText, passedValues)
+      .then(() => {
+        console.log("Insert successful");
+        res.status(200).json({ message: "Account authenticated" });
+        return db.query('COMMIT');
+      })
+      // const result = await db.query("SELECT p1.firstname AS person1_name, r2.relationshiplabel, p2.firstname AS person2_name FROM familyFrame.tbRelationship r JOIN familyFrame.tbPerson p1 ON r.person1ID = p1.personID JOIN familyFrame.tbPerson p2 ON r.person2ID = p2.personID JOIN familyFrame.tbRelationshiptype r2 on r.relationshiptypeid = r2.relationshiptypeid;")
+      // res.send(result.rows)
+      .catch(error => {
+        console.error("Error:", error);
+        res.status(400).json({ err: error });
+        db.query('ROLLBACK');
+      });
+
+  }
+  catch (error) {
+    console.error('Error:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+app.post('/createUser', async (req, res) => {
+  try {
     db.query('BEGIN')
     const insertText = 'INSERT INTO familyFrame.tbUser(displayName, email, passwordHash) VALUES ($1, $2, crypt($3, gen_salt(\'bf\')))';
     const insertValues = [req.body.displayName, req.body.email, req.body.password];
@@ -157,10 +181,11 @@ app.post('/createUser', async (req, res) => {
       .catch(error => {
         console.error("Error:", error);
         res.status(400).json({ err: error });
-        db.query('ROLLBACK'); // Rollback the transaction in case of error
+        db.query('ROLLBACK');
       });
   }
 
+  // let saltRounds = 10;
   // bcrypt.hash("password", saltRounds).then(function (hash) {
   //   // res.status(200).json({ pword: hash });
   //   console.log(hash);
