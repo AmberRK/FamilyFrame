@@ -16,8 +16,8 @@ async function createAcct() {
         "Content-type": "application/json; charset=UTF-8"
       }
     })
-      // .then((response) => response.json())
-      // .then((json) => console.log(json));
+      .then((response) => response.json())
+      .then((json) => console.log(json));
 
     // bcrypt.hash(myPlaintextPassword, saltRounds).then(function (hash) {
     // Store hash in your password DB.

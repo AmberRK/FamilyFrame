@@ -41,6 +41,28 @@
       </form>
       <br>
       <div>Already have an account? <a href="./login.html">Login</a></div>
+      <script>
+        function fetchData() {
+          fetch('/users') // Replace '/your-route' with your actual route
+            .then(response => {
+              if (!response.ok) {
+                throw new Error('Network response was not ok');
+              }
+              return response.json();
+            })
+            .then(data => {
+              // Display the results in a window alert
+              window.alert(JSON.stringify(data));
+            })
+            .catch(error => {
+              console.error('There was a problem with the fetch operation:', error);
+            });
+        }
+      </script>
+      </head>
+
+      <body>
+        <button onclick="fetchData()">Fetch Data</button>
     </div>
   </div>
   <footer>

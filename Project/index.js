@@ -63,6 +63,18 @@ app.get('/children/:id', async (req, res) => {
   res.send(rows)
 })
 
+app.get('/users', async (req, res) => {
+  try {
+    // Add client releasing?
+    const result = await db.query("SELECT * from familyFrame.tbUser");
+    res.send(result.rows)
+  }
+  catch (err) {
+    console.error(err);
+    res.send("Error " + err);
+  }
+});
+
 app.get('/rel', async (req, res) => {
   try {
     // Add client releasing?
@@ -132,17 +144,19 @@ app.post('/login', (req, res) => {
 app.post('/createUser', async (req, res) => {
   let saltRounds = 10;
   try {
+    // const insertText = 'INSERT INTO familyFrame.tbUser(displayName, email, passwordHash) VALUES ($1, $2, $3)';
     db.query('BEGIN')
-    // const insertText = 'INSERT INTO familyFrame.tbUser(displayName, email, passwordHash) VALUES ($1, $2, crypt($3, gen_salt("bf")))';
-    const insertText = 'INSERT INTO familyFrame.tbUser(displayName, email, passwordHash) VALUES ($1, $2, $3)';
+    const insertText = 'INSERT INTO familyFrame.tbUser(displayName, email, passwordHash) VALUES ($1, $2, crypt($3, gen_salt(\'bf\')))';
     const insertValues = [req.body.displayName, req.body.email, req.body.password];
     db.query(insertText, insertValues)
       .then(() => {
         console.log("Insert successful");
+        res.status(200).json({ message: "Account created successfully" });
         return db.query('COMMIT');
       })
       .catch(error => {
         console.error("Error:", error);
+        res.status(400).json({ err: error });
         db.query('ROLLBACK'); // Rollback the transaction in case of error
       });
   }
