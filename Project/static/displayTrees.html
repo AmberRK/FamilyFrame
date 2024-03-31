@@ -19,27 +19,12 @@
 
         <div id="treeList"></div>
         <div id="JWT test">
-            <button value="fetchTokenButton" onclick="fetchToken()">Fetch Token</button>
         </div>
 
         <footer>
             <div id="footerPlaceholder"></div>
         </footer>
 
-        <script>
-            function fetchToken() {
-                jsonData = {};
-                return fetch("/loginJWT", {
-                    method: "POST",
-                    body: JSON.stringify(jsonData),
-                    headers: {
-                        "Content-type": "application/json; charset=UTF-8"
-                    }
-                })
-                    .then((response) => response.json())
-                    .then((json) => console.log(json));
-            };
-        </script>
         <script src="scripts/leader-line.min.js"></script>
         <script src="scripts/main.js"></script>
         <script src="scripts/transaction.js"></script>
