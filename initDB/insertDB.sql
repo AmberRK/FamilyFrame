@@ -1,9 +1,8 @@
 BEGIN;
 
--- Make a user
 INSERT INTO familyFrame.tbUser (displayName, email, passwordHash)
 VALUES
-    ('admin', 'alape632@live.kutztown.edu', 'familyFrame');
+    ('admin', 'alape632@live.kutztown.edu', crypt('familyFrame', gen_salt('bf')));
 
 -- Insert predefined relationship types
 INSERT INTO familyFrame.tbRelationshipType (relationshipLabel) VALUES
