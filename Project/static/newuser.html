@@ -1,32 +1,15 @@
 <!DOCTYPE html>
 
-<!--
-     Concept Creator:			William Bechtel
-	   Creation Date:	Mar. 7, 2024
-     Course:		SOFTWARE ENGINEERING 1
-     Project:		NEWUSER (CONCEPT | NO PHP VERS | NO STYLESHEET VER.)
-	 File Name:		newuser.html
--->
 <html lang="en">
 
 <head>
   <meta charset="utf-8">
-  <title>Family Tree New User</title>
+  <title>Create an Account</title>
   <link rel="stylesheet" href="styles/styles.css" />
 </head>
 
 <body>
-	<div id="navbarPlaceholder"></div>
-   
-	<!-- The title for the current page -->
-	<h2 style="text-align: center">Account Creation</h2>
-   
-   
-   <!-- login form, labeled for each box's expected input -->
-   <div class="loginform">
-   <form name= "accCreate" method="post">
-	</form>
-   </div>
+  <div id="navbarPlaceholder"></div>
 
   <div id="flex-container">
 
@@ -38,7 +21,7 @@
 
     <!-- login form, labeled for each box's expected input -->
     <div class="loginform">
-      <form name="accCreate" method="post">
+      <form id="accCreate">
         <table>
           <tr>
             <td> <label for="email">Email Address:</label> </td>
@@ -53,7 +36,7 @@
             <td> <input name="password" id="password" type="password" size="35" maxlength="35"> </td>
           </tr>
         </table>
-        <input class="submit" type="button" value="Create Account" onClick="loggedIn()">
+        <input class="submit" type="submit" value="Create Account" onClick="createAcct()">
         <input class="reset" type="reset" value="Reset">
       </form>
       <br>
@@ -66,6 +49,7 @@
 
   <script src="scripts/main.js"></script>
   <script src="scripts/login.js"></script>
+  <script src="scripts/accCreate.js"></script>
   <script src="scripts/navbar.js"></script>
   <script src="scripts/footer.js"></script>
   <script>

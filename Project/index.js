@@ -1,6 +1,7 @@
 import express from "express";
 import bodyParser from "body-parser";
 import cookieParser from "cookie-parser";
+import bcrypt from "bcrypt";
 import * as d3 from "d3";
 import * as db from './static/scripts/transaction.js'
 
@@ -51,7 +52,7 @@ app.get('/stratifyChildren', async (req, res) => {
   const { id } = req.params
   // const { rows } = await db.query("select p2.firstname AS name, p1.firstname as parent FROM family.relationship r JOIN family.person p1 ON r.person1ID = p1.personID JOIN family.person p2 ON r.person2ID = p2.personID JOIN family.relationshiptype r2 on r.relationshiptypeid = r2.relationshiptypeid where p1.personID = 1 and r2.relationshiplabel = 'Parent';")
   const { rows } = await db.query("select p.firstname as name, null as parent from family.person p where p.personid not in (select distinct person2id from family.relationship r where r.relationshiptypeid = 1) union select p2.firstname as name, p1.firstname as parent from family.relationship r join family.person p1 on r.person1ID = p1.personID join family.person p2 on r.person2ID = p2.personID join family.relationshiptype r2 on r.relationshiptypeid = r2.relationshiptypeid --where r2.relationshiplabel = 'Parent'; where p1.personID = 1 and r2.relationshiplabel = 'Parent' order by parent desc");
-// --where p1.personID = 1 and r2.relationshiplabel = 'Parent';
+  // --where p1.personID = 1 and r2.relationshiplabel = 'Parent';
   res.send(rows)
 })
 
@@ -125,6 +126,47 @@ app.post('/login', (req, res) => {
   catch (error) {
     console.error('Error:', error);
     res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+app.post('/createUser', async (req, res) => {
+  // let saltRounds = 10;
+  // try {
+  //   console.log(req.body.password);
+  //   // bcrypt.hash(req.body.password, saltRounds).then(function (hash) {
+  //   //   // res.status(200).json({ pword: hash });
+  //   //   console.log(hash);
+  //   // })
+  // }
+  //  catch (e) {
+  //     throw (e);
+  //   }
+  // });
+  try {
+    // Extract the password from the request body
+    const { password } = req.body;
+
+    // Number of salt rounds
+    const saltRounds = 10;
+
+    // Generate a salt
+    const salt = await bcrypt.genSalt(saltRounds);
+
+    // Hash the password using the generated salt
+    const hashedPassword = await bcrypt.hash(password, salt);
+
+    // At this point, hashedPassword contains the hashed password
+    console.log('Hashed Password:', hashedPassword);
+
+    // You might want to store hashedPassword in your database here
+
+    // Send a response indicating success
+    res.status(200).json({ success: true, message: 'Password hashed successfully' });
+  }
+  catch (error) {
+    // If an error occurs, send an error response
+    console.error('Error hashing password:', error);
+    res.status(500).json({ success: false, error: 'Error hashing password' });
   }
 });
 
