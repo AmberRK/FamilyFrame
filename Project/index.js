@@ -153,6 +153,7 @@ app.post('/existingUser', async (req, res) => {
       // const fakeUser = { id: 1, username: 'example_user' };
       const accessToken = jwt.sign(user, secretKey, { expiresIn: '1d' });
       // res.json({ accessToken });
+      res.cookie('jwt', accessToken, { httpOnly: true, sameSite: true });
       res.status(200).json({ message: "Account authenticated", user, accessToken });
 
     } else {

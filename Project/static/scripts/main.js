@@ -2,9 +2,9 @@
 // const d3 = require('d3');
 
 // Grabs the login cookie
-document.addEventListener('DOMContentLoaded', async () => {
-	await grabCookie();
-});
+// document.addEventListener('DOMContentLoaded', async () => {
+// 	await grabCookie();
+// });
 
 function grabFormData() {
 	document.getElementById('userForm').addEventListener('submit', function (event) {

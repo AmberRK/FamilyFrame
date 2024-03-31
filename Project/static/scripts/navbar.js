@@ -1,25 +1,25 @@
 async function replacePlaceholderNavbar() {
     var navbarPlaceholder = document.getElementById('navbarPlaceholder');
     
-    let clickable = await checkLoggedIn();
-    console.log(clickable);
-    var navbarContent = "";
-    // Use express session for if user is logged in, show my trees and login, else opposite
-    if(clickable === null || clickable === "")
-    {
-        navbarContent = '<nav class="navbar">' +
-                        '   <ul>' +
-                        '       <li><a href="#"onclick="navigateToHome()">Home</a></li>' +
-                        '       <li style = color: #ccc; display: none; ><a href="#">My Trees</a></li>' +
-                        '       <li><a href="#"onclick="navigateToEditor()">Tree Editor</a></li>' +
-                        '       <li><a href="#"onclick="navigateToUI()">UI</a></li>' +
-                        '       <li><a href="#"onclick="navigateToAbout()">About</a></li>' +
-                        '       <li><a href="#"onclick="navigateToLogin()">Login</a></li>' +
-                        '   </ul>' +
-                        '</nav>';
-    }
-    else
-    {
+    // let clickable = await checkLoggedIn();
+    // console.log(clickable);
+    // var navbarContent = "";
+    // // Use express session for if user is logged in, show my trees and login, else opposite
+    // if(clickable === null || clickable === "")
+    // {
+    //     navbarContent = '<nav class="navbar">' +
+    //                     '   <ul>' +
+    //                     '       <li><a href="#"onclick="navigateToHome()">Home</a></li>' +
+    //                     '       <li style = color: #ccc; display: none; ><a href="#">My Trees</a></li>' +
+    //                     '       <li><a href="#"onclick="navigateToEditor()">Tree Editor</a></li>' +
+    //                     '       <li><a href="#"onclick="navigateToUI()">UI</a></li>' +
+    //                     '       <li><a href="#"onclick="navigateToAbout()">About</a></li>' +
+    //                     '       <li><a href="#"onclick="navigateToLogin()">Login</a></li>' +
+    //                     '   </ul>' +
+    //                     '</nav>';
+    // }
+    // else
+    // {
         navbarContent = '<nav class="navbar">' +
         '   <ul>' +
         '       <li><a href="#"onclick="navigateToHome()">Home</a></li>' +
@@ -30,7 +30,7 @@ async function replacePlaceholderNavbar() {
         '       <li><a href="#"onclick="navigateToLogin()">Login</a></li>' +
         '   </ul>' +
         '</nav>';
-    }
+    // }
         
     // Design the navbar
     
@@ -49,25 +49,23 @@ async function checkLoggedIn() {
 				},
 				
 			});
-
 		if (!response.ok) {
 			throw new Error(`HTTP error! Status: ${response.status}`);
 		}
 
 		const data = await response.json();
         console.log('Success:', data.message, 'logged in.');
-        try 
-		{
+        try {
 			return (data.message != null ? data.message : "");
 		}
-		catch
-		{
+		catch {
 			return "";
 		}
     }
 	catch (error) {
 		console.error('Error:', error);
-		throw error;	}
+		throw error;
+    }
 }
 
 function navigateToHome() {
