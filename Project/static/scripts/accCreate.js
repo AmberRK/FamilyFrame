@@ -9,7 +9,6 @@ async function createAcct() {
     });
     // Email regex
     // '^[a-zA-Z0-9.!#$%&’*+\/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$'
-    console.log(jsonData);
     fetch("/createUser", {
       method: "POST",
       body: JSON.stringify(jsonData),
@@ -17,8 +16,8 @@ async function createAcct() {
         "Content-type": "application/json; charset=UTF-8"
       }
     })
-      .then((response) => response.json())
-      .then((json) => console.log(json));
+      // .then((response) => response.json())
+      // .then((json) => console.log(json));
 
     // bcrypt.hash(myPlaintextPassword, saltRounds).then(function (hash) {
     // Store hash in your password DB.

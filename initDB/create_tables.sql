@@ -1,48 +1,47 @@
-drop schema if exists family cascade;
-create schema family;
+drop schema if exists familyFrame cascade;
+create schema familyFrame;
+create EXTENSION pgcrypto; 
 
-CREATE TABLE family.user (
+CREATE TABLE familyFrame.tbUser (
     userID SERIAL PRIMARY KEY,
     displayName text NOT NULL,
     email text NOT NULL UNIQUE CHECK(email ~* '^[a-zA-Z0-9.!#$%&’*+\/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$'),
-    password_hash text NOT NULL,
-    salt text
-    --pword text NOT NULL
+    passwordHash text NOT NULL
 );
 
-CREATE TABLE family.tree (
+CREATE TABLE familyFrame.tbTree (
     treeID serial PRIMARY KEY,
     treeLabel text NOT NULL,
-    createdBy INT REFERENCES family.user(userID),
+    createdBy INT REFERENCES familyFrame.tbUser(userID),
     createdDate timestamp DEFAULT CURRENT_TIMESTAMP
 );
 
-create table family.person (
+create table familyFrame.tbPerson(
     personID serial primary key,
     firstName text not null,
     lastName text not null,
     dateOfBirth date,
     dateOfDeath date,
     gender text,
-    createdBy int references family.user(userID),
+    createdBy int references familyFrame.tbUser(userID),
     createdDate timestamp DEFAULT CURRENT_TIMESTAMP,
-    treeID int references family.tree(treeID)
+    treeID int references familyFrame.tbTree(treeID)
 );
 
-create table family.relationshipType (
+create table familyFrame.tbRelationshipType (
     relationshipTypeID serial primary key,
     relationshipLabel text not null
 );
 
-create table family.relationship (
+create table familyFrame.tbRelationship (
     relationshipID serial PRIMARY KEY,
-    person1ID INT REFERENCES family.person(personID),
-    relationshipTypeID INT REFERENCES family.relationshipType(relationshipTypeID),
-    person2ID INT REFERENCES family.person(personID)
+    person1ID INT REFERENCES familyFrame.tbPerson(personID),
+    relationshipTypeID INT REFERENCES familyFrame.tbRelationshipType(relationshipTypeID),
+    person2ID INT REFERENCES familyFrame.tbPerson(personID)
 );
 
-CREATE TABLE family.treeAuthors (
-    treeID INT REFERENCES family.tree(treeID),
-    userID INT REFERENCES family.user(userID),
+CREATE TABLE familyFrame.tbTreeAuthors (
+    treeID INT REFERENCES familyFrame.tbTree(treeID),
+    userID INT REFERENCES familyFrame.tbUser(userID),
     createdDate timestamp DEFAULT CURRENT_TIMESTAMP
 );
