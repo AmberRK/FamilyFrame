@@ -1,6 +1,6 @@
 drop schema if exists familyFrame cascade;
 create schema familyFrame;
-create EXTENSION pgcrypto; 
+create EXTENSION if not exists pgcrypto; 
 
 CREATE TABLE familyFrame.tbUser (
     userID SERIAL PRIMARY KEY,
@@ -10,7 +10,7 @@ CREATE TABLE familyFrame.tbUser (
 );
 
 CREATE TABLE familyFrame.tbTree (
-    treeID serial PRIMARY KEY,
+    treeID uuid DEFAULT gen_random_uuid () PRIMARY KEY,
     treeLabel text NOT NULL,
     createdBy INT REFERENCES familyFrame.tbUser(userID),
     createdDate timestamp DEFAULT CURRENT_TIMESTAMP
@@ -25,7 +25,7 @@ create table familyFrame.tbPerson(
     gender text,
     createdBy int references familyFrame.tbUser(userID),
     createdDate timestamp DEFAULT CURRENT_TIMESTAMP,
-    treeID int references familyFrame.tbTree(treeID)
+    treeID uuid references familyFrame.tbTree(treeID)
 );
 
 create table familyFrame.tbRelationshipType (
@@ -41,7 +41,7 @@ create table familyFrame.tbRelationship (
 );
 
 CREATE TABLE familyFrame.tbTreeAuthors (
-    treeID INT REFERENCES familyFrame.tbTree(treeID),
+    treeID uuid REFERENCES familyFrame.tbTree(treeID),
     userID INT REFERENCES familyFrame.tbUser(userID),
     createdDate timestamp DEFAULT CURRENT_TIMESTAMP
 );

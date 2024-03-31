@@ -19,7 +19,7 @@ VALUES
 DO $$
 Declare 
     userId int := ( Select userID from familyFrame.tbUser where displayName='admin');
-    familyTreeId int := ( Select treeID from familyFrame.tbTree where treeLabel = 'The Simpsons' );
+    familyTreeId uuid := ( Select treeID from familyFrame.tbTree where treeLabel = 'The Simpsons' );
 
 BEGIN
 

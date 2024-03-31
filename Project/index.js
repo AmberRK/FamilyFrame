@@ -34,6 +34,7 @@ app.get('/results', async (req, res) => {
   try {
     // Add client releasing?
     const result = await db.query("SELECT personid, firstname, lastname, dateofbirth FROM familyFrame.tbPerson;")
+    // const result = await db.query("SELECT * from familyFrame.;")
     res.send(result.rows)
   }
   catch (err) {
