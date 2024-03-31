@@ -1,7 +1,7 @@
 FROM alpine
 
 # Install postgresql and set up the database
-RUN apk add postgresql nodejs npm
+RUN apk add postgresql postgresql-contrib nodejs npm
 RUN npm install -g nodemon
 
 RUN su -l postgres -c "initdb -D /var/lib/postgresql/data"
