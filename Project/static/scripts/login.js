@@ -52,14 +52,13 @@
 async function login() {
   document.getElementById('login').addEventListener('submit', function (event) {
     event.preventDefault();
-    console.log("Loggin in");
     const formData = new FormData(this);
     const jsonData = {};
 
     formData.forEach((value, key) => {
       jsonData[key] = value;
     });
-    console.log(jsonData);
+    // console.log(jsonData);
     fetch("/existingUser", {
       method: "POST",
       body: JSON.stringify(jsonData),

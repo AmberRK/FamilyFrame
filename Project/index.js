@@ -1,6 +1,7 @@
 import express from "express";
 import bodyParser from "body-parser";
 import cookieParser from "cookie-parser";
+import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import * as d3 from "d3";
 import * as db from './static/scripts/transaction.js'
@@ -19,8 +20,7 @@ const app = express();
 const port = process.env.PORT || 3000;
 console.log("Port: " + port);
 
-// import * as d3 from "d3";
-// const d3 = require('d3');
+const secretKey = 'your_secret_key';
 
 app.use(express.static(__dirname + '/static'));
 app.use(cookieParser());
@@ -144,27 +144,63 @@ app.post('/login', (req, res) => {
 app.post('/existingUser', async (req, res) => {
   try {
     db.query('BEGIN')
-    const queryText = 'SELECT displayname FROM familyFrame.tbUser WHERE email = $1 and passwordHash = crypt($2, passwordHash)';
+    const queryText = 'SELECT userid, displayname FROM familyFrame.tbUser WHERE email = $1 and passwordHash = crypt($2, passwordHash)';
     const passedValues = [req.body.email, req.body.password];
-    db.query(queryText, passedValues)
-      .then(() => {
-        console.log("Insert successful");
-        res.status(200).json({ message: "Account authenticated" });
-        return db.query('COMMIT');
-      })
-      // const result = await db.query("SELECT p1.firstname AS person1_name, r2.relationshiplabel, p2.firstname AS person2_name FROM familyFrame.tbRelationship r JOIN familyFrame.tbPerson p1 ON r.person1ID = p1.personID JOIN familyFrame.tbPerson p2 ON r.person2ID = p2.personID JOIN familyFrame.tbRelationshiptype r2 on r.relationshiptypeid = r2.relationshiptypeid;")
-      // res.send(result.rows)
-      .catch(error => {
-        console.error("Error:", error);
-        res.status(400).json({ err: error });
-        db.query('ROLLBACK');
-      });
+    const result = await db.query(queryText, passedValues);
 
+    if (result.rows.length === 1) {
+      const user = result.rows[0];
+      // const fakeUser = { id: 1, username: 'example_user' };
+      const accessToken = jwt.sign(user, secretKey, { expiresIn: '1d' });
+      // res.json({ accessToken });
+      res.status(200).json({ message: "Account authenticated", user, accessToken });
+
+    } else {
+      console.log("Authentication failed");
+      res.status(401).json({ error: "Authentication failed" });
+    }
   }
   catch (error) {
     console.error('Error:', error);
     res.status(500).json({ error: 'Internal Server Error' });
   }
+});
+
+function authenticateToken(req, res, next) {
+  // Extract JWT from the Authorization header
+  const authHeader = req.headers['authorization'];
+  const token = authHeader && authHeader.split(' ')[1];
+
+  if (!token) {
+    return res.sendStatus(401); // Unauthorized
+  }
+
+  // Verify JWT signature
+  jwt.verify(token, secretKey, (err, user) => {
+    if (err) {
+      return res.sendStatus(403); // Forbidden
+    }
+    req.user = user; // Attach user information to the request object
+    next();
+  });
+}
+
+// Route for user login (generating JWT)
+app.post('/loginJWT', (req, res) => {
+
+  const fakeUser = { id: 1, username: 'example_user' };
+
+  // Generate JWT with user information
+  const accessToken = jwt.sign(fakeUser, secretKey, { expiresIn: '15m' });
+
+  res.json({ accessToken });
+
+});
+
+// Protected route (accessible only to authenticated users)
+app.get('/profileJWT', authenticateToken, (req, res) => {
+  // Access user information from the request object
+  res.json(req.user);
 });
 
 app.post('/createUser', async (req, res) => {
