@@ -67,7 +67,11 @@ async function login() {
       }
     })
       .then((response) => response.json())
-      .then((json) => console.log(json));
-
-  });
+      .then((json) => {
+        console.log(json);
+        if (json.message == "Account authenticated") {
+          window.location.href = "/mytrees";
+        }
+      })
+});
 };
