@@ -7,7 +7,6 @@ async function createAcct() {
     formData.forEach((value, key) => {
       jsonData[key] = value;
     });
-    // Email regex
     let emailRegex = RegExp("^[a-zA-Z0-9.!#$%&’*+\/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$");
     let emailToCheck = jsonData.email;
     if (emailRegex.test(emailToCheck)) {
