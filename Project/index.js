@@ -1,11 +1,26 @@
-const express = require('express');
-const db = require('./static/scripts/transaction.js');
-const bodyParser = require('body-parser');
-var cookieParser = require('cookie-parser');
+import express from "express";
+import bodyParser from "body-parser";
+import cookieParser from "cookie-parser";
+import jwt from "jsonwebtoken";
+import bcrypt from "bcrypt";
+import * as d3 from "d3";
+import * as db from './static/scripts/transaction.js'
+
+import path from 'path';
+import url from 'url';
+
+const __filename = url.fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+// const express = require('express');
+// const db = require('./static/scripts/transaction.js');
+// const bodyParser = require('body-parser');
+// var cookieParser = require('cookie-parser');
+
 const app = express();
 const port = process.env.PORT || 3000;
 console.log("Port: " + port);
 
+const secretKey = 'your_secret_key';
 
 app.use(express.static(__dirname + '/static'));
 app.use(cookieParser());
@@ -18,7 +33,8 @@ app.get('/mytrees', (req, res) => res.sendFile(__dirname + '/static/displayTrees
 app.get('/results', async (req, res) => {
   try {
     // Add client releasing?
-    const result = await db.query("SELECT personid, firstname, lastname, dateofbirth FROM person;")
+    const result = await db.query("SELECT personid, firstname, lastname, dateofbirth FROM familyFrame.tbPerson;")
+    // const result = await db.query("SELECT * from familyFrame.;")
     res.send(result.rows)
   }
   catch (err) {
@@ -29,28 +45,41 @@ app.get('/results', async (req, res) => {
 
 app.get('/results/:id', async (req, res) => {
   const { id } = req.params
-  const { rows } = await db.query("SELECT * FROM person WHERE personid = $1", [id])
+  const { rows } = await db.query("SELECT * FROM familyFrame.tbPerson WHERE personid = $1", [id])
   res.send(rows[0])
 })
 
 app.get('/stratifyChildren', async (req, res) => {
   const { id } = req.params
-  const { rows } = await db.query("select p2.firstname AS name, p1.firstname as parent FROM family.relationship r JOIN family.person p1 ON r.person1ID = p1.personID JOIN family.person p2 ON r.person2ID = p2.personID JOIN family.relationshiptype r2 on r.relationshiptypeid = r2.relationshiptypeid where p1.personID = 1 and r2.relationshiplabel = 'Parent';")
-// --where p1.personID = 1 and r2.relationshiplabel = 'Parent';
+  // const { rows } = await db.query("select p2.firstname AS name, p1.firstname as parent FROM familyFrame.tbRelationship r JOIN familyFrame.tbPerson p1 ON r.person1ID = p1.personID JOIN familyFrame.tbPerson p2 ON r.person2ID = p2.personID JOIN familyFrame.tbRelationshiptype r2 on r.relationshiptypeid = r2.relationshiptypeid where p1.personID = 1 and r2.relationshiplabel = 'Parent';")
+  const { rows } = await db.query("select p.firstname as name, null as parent from familyFrame.tbPerson p where p.personid not in (select distinct person2id from familyFrame.tbRelationship r where r.relationshiptypeid = 1) union select p2.firstname as name, p1.firstname as parent from familyFrame.tbRelationship r join familyFrame.tbPerson p1 on r.person1ID = p1.personID join familyFrame.tbPerson p2 on r.person2ID = p2.personID join familyFrame.tbRelationshiptype r2 on r.relationshiptypeid = r2.relationshiptypeid --where r2.relationshiplabel = 'Parent'; where p1.personID = 1 and r2.relationshiplabel = 'Parent' order by parent desc");
+  // --where p1.personID = 1 and r2.relationshiplabel = 'Parent';
   res.send(rows)
 })
 
 app.get('/children/:id', async (req, res) => {
   const { id } = req.params
-  const { rows } = await db.query("SELECT p2.personid as id, p2.firstname AS childName FROM family.relationship r JOIN family.person p1 ON r.person1ID = p1.personID JOIN family.person p2 ON r.person2ID = p2.personID JOIN family.relationshiptype r2 on r.relationshiptypeid = r2.relationshiptypeid where p1.personID = $1 and r2.relationshiplabel = 'Parent';", [id])
+  const { rows } = await db.query("SELECT p2.personid as id, p2.firstname AS childName FROM familyFrame.tbRelationship r JOIN familyFrame.tbPerson p1 ON r.person1ID = p1.personID JOIN familyFrame.tbPerson p2 ON r.person2ID = p2.personID JOIN familyFrame.tbRelationshiptype r2 on r.relationshiptypeid = r2.relationshiptypeid where p1.personID = $1 and r2.relationshiplabel = 'Parent';", [id])
   // const { rows } = await db.query("SELECT p2.firstname AS children FROM "family".relationship r JOIN "family".person p1 ON r.person1ID = p1.personID JOIN "family".person p2 ON r.person2ID = p2.personID JOIN "family".relationshiptype r2 on r.relationshiptypeid = r2.relationshiptypeid where p1.personID = 1 and r2.relationshiplabel = 'Parent';", [id])
   res.send(rows)
 })
 
+app.get('/users', async (req, res) => {
+  try {
+    // Add client releasing?
+    const result = await db.query("SELECT * from familyFrame.tbUser");
+    res.send(result.rows)
+  }
+  catch (err) {
+    console.error(err);
+    res.send("Error " + err);
+  }
+});
+
 app.get('/rel', async (req, res) => {
   try {
     // Add client releasing?
-    const result = await db.query("SELECT p1.firstname AS person1_name, r2.relationshiplabel, p2.firstname AS person2_name FROM family.relationship r JOIN family.person p1 ON r.person1ID = p1.personID JOIN family.person p2 ON r.person2ID = p2.personID JOIN family.relationshiptype r2 on r.relationshiptypeid = r2.relationshiptypeid;")
+    const result = await db.query("SELECT p1.firstname AS person1_name, r2.relationshiplabel, p2.firstname AS person2_name FROM familyFrame.tbRelationship r JOIN familyFrame.tbPerson p1 ON r.person1ID = p1.personID JOIN familyFrame.tbPerson p2 ON r.person2ID = p2.personID JOIN familyFrame.tbRelationshiptype r2 on r.relationshiptypeid = r2.relationshiptypeid;")
     res.send(result.rows)
   }
   catch (err) {
@@ -62,15 +91,15 @@ app.get('/rel', async (req, res) => {
 app.post('/insertPerson', (req, res) => {
   // const client = db.getClient()
   try {
-    db.query('BEGIN')
-    const insertText = 'INSERT INTO person(firstName, lastName, dateOfBirth, gender, createdBy, treeID) VALUES ($1, $2, $3, $4, $5, $6)';
+    db.query('BEGIN');
+    const insertText = 'INSERT INTO familyFrame.tbPerson(firstName, lastName, dateOfBirth, gender, createdBy, treeID) VALUES ($1, $2, $3, $4, $5, $6)';
     // const insertValues = ['Mona', 'Simpson', '1901-01-12', 'Female', 1, 1];
     const insertValues = [req.body.firstName, req.body.lastName, req.body.dob, req.body.gender, req.body.createdBy, req.body.treeID];
-    db.query(insertText, insertValues)
-    db.query('COMMIT')
+    db.query(insertText, insertValues);
+    db.query('COMMIT');
   } catch (e) {
-    db.query('ROLLBACK')
-    throw e
+    db.query('ROLLBACK');
+    throw e;
   }
   // finally {
   //   client.release()
@@ -110,6 +139,100 @@ app.post('/login', (req, res) => {
   catch (error) {
     console.error('Error:', error);
     res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+app.post('/existingUser', async (req, res) => {
+  try {
+    db.query('BEGIN')
+    const queryText = 'SELECT userid, displayname FROM familyFrame.tbUser WHERE email = $1 and passwordHash = crypt($2, passwordHash)';
+    const passedValues = [req.body.email, req.body.password];
+    const result = await db.query(queryText, passedValues);
+
+    if (result.rows.length === 1) {
+      const user = result.rows[0];
+      // const fakeUser = { id: 1, username: 'example_user' };
+      const accessToken = jwt.sign(user, secretKey, { expiresIn: '1d' });
+      // res.json({ accessToken });
+      res.cookie('jwt', accessToken, { httpOnly: true, sameSite: true });
+      res.status(200).json({ message: "Account authenticated", user, accessToken });
+
+    } else {
+      console.log("Authentication failed");
+      res.status(401).json({ error: "Authentication failed" });
+    }
+  }
+  catch (error) {
+    console.error('Error:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
+
+function authenticateToken(req, res, next) {
+  // Extract JWT from the Authorization header
+  const authHeader = req.headers['authorization'];
+  const token = authHeader && authHeader.split(' ')[1];
+
+  if (!token) {
+    return res.sendStatus(401); // Unauthorized
+  }
+
+  // Verify JWT signature
+  jwt.verify(token, secretKey, (err, user) => {
+    if (err) {
+      return res.sendStatus(403); // Forbidden
+    }
+    req.user = user; // Attach user information to the request object
+    next();
+  });
+}
+
+// Route for user login (generating JWT)
+app.post('/loginJWT', (req, res) => {
+
+  const fakeUser = { id: 1, username: 'example_user' };
+
+  // Generate JWT with user information
+  const accessToken = jwt.sign(fakeUser, secretKey, { expiresIn: '15m' });
+
+  res.json({ accessToken });
+
+});
+
+// Protected route (accessible only to authenticated users)
+app.get('/profileJWT', authenticateToken, (req, res) => {
+  // Access user information from the request object
+  res.json(req.user);
+});
+
+app.post('/createUser', async (req, res) => {
+  try {
+    db.query('BEGIN')
+    const insertText = 'INSERT INTO familyFrame.tbUser(displayName, email, passwordHash) VALUES ($1, $2, crypt($3, gen_salt(\'bf\')))';
+    const insertValues = [req.body.displayName, req.body.email, req.body.password];
+    db.query(insertText, insertValues)
+      .then(() => {
+        console.log("Insert successful");
+        res.status(200).json({ message: "Account created successfully" });
+        return db.query('COMMIT');
+      })
+      .catch(error => {
+        console.error("Error:", error);
+        res.status(400).json({ err: error });
+        db.query('ROLLBACK');
+      });
+  }
+
+  // let saltRounds = 10;
+  // bcrypt.hash("password", saltRounds).then(function (hash) {
+  //   // res.status(200).json({ pword: hash });
+  //   console.log(hash);
+  // })
+  catch (error) {
+    db.query('ROLLBACK')
+    // If an error occurs, send an error response
+    console.error('Error hashing password:', error);
+    res.status(500).json({ success: false, error: 'Error hashing password' });
   }
 });
 

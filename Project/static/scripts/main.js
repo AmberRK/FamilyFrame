@@ -1,27 +1,9 @@
 // import * as d3 from "d3";
+// const d3 = require('d3');
 
 // Grabs the login cookie
-document.addEventListener('DOMContentLoaded', async () => {
-	await grabCookie();
-});
-
-// imageInput.addEventListener('change', function () {
-// 	const selectedFile = imageInput.files[0];
-
-// 	if (selectedFile && selectedFile.type.startsWith('image/')) {
-// 		const reader = new FileReader();
-
-// 		reader.onload = function (event) {
-// 			const imageUrl = event.target.result;
-// 			imageBox.style.backgroundImage = `url(${imageUrl})`;
-
-// 			localStorage.setItem('savedImage', imageUrl);
-// 		};
-
-// 		reader.readAsDataURL(selectedFile);
-// 	} else {
-// 		alert('Please select a valid image file.');
-// 	}
+// document.addEventListener('DOMContentLoaded', async () => {
+// 	await grabCookie();
 // });
 
 function grabFormData() {
@@ -37,6 +19,7 @@ function grabFormData() {
 
 		// console.log(jsonData);
 		postNewPerson(jsonData);
+		getAllData();
 	});
 };
 
