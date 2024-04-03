@@ -1,9 +1,9 @@
+
 async function createAcct() {
   document.getElementById('accCreate').addEventListener('submit', function (event) {
     event.preventDefault();
     const formData = new FormData(this);
     const jsonData = {};
-
     formData.forEach((value, key) => {
       jsonData[key] = value;
     });
@@ -18,7 +18,14 @@ async function createAcct() {
     })
       .then((response) => response.json())
       .then((json) => console.log(json));
-
+    const verificationCode = Math.floor(100000 + Math.random() * 900000);
+    fetch("/emailVerification", {
+      method: "POST",
+      body: JSON.stringify({verificationCode: verificationCode, email: jsonData.email}),
+      headers: {
+        "Content-type": "application/json; charset=UTF-8"
+      }
+    })
     // bcrypt.hash(myPlaintextPassword, saltRounds).then(function (hash) {
     // Store hash in your password DB.
     // console.log(hash);

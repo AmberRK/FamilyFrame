@@ -5,16 +5,12 @@ import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import * as d3 from "d3";
 import * as db from './static/scripts/transaction.js'
-
+import createTransport from 'nodemailer';
 import path from 'path';
 import url from 'url';
 
 const __filename = url.fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-// const express = require('express');
-// const db = require('./static/scripts/transaction.js');
-// const bodyParser = require('body-parser');
-// var cookieParser = require('cookie-parser');
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -159,15 +155,17 @@ app.post('/existingUser', async (req, res) => {
 
     } else {
       console.log("Authentication failed");
-      res.status(401).json({ error: "Authentication failed" });
+      res.status(401).json({ message: "Authentication failed" });
     }
   }
   catch (error) {
     console.error('Error:', error);
-    res.status(500).json({ error: 'Internal Server Error' });
+    res.status(500).json({ message: 'Internal Server Error' });
   }
 });
 
+// Use this function to authenticate token, use authentication for navbar
+// Make new path for navbar, use this function to authenticate token
 function authenticateToken(req, res, next) {
   // Extract JWT from the Authorization header
   const authHeader = req.headers['authorization'];
@@ -210,10 +208,11 @@ app.post('/createUser', async (req, res) => {
     db.query('BEGIN')
     const insertText = 'INSERT INTO familyFrame.tbUser(displayName, email, passwordHash) VALUES ($1, $2, crypt($3, gen_salt(\'bf\')))';
     const insertValues = [req.body.displayName, req.body.email, req.body.password];
+    
     db.query(insertText, insertValues)
       .then(() => {
         console.log("Insert successful");
-        res.status(200).json({ message: "Account created successfully" });
+        res.status(200).json({ message: "Account created successfully", email: req.body.email});
         return db.query('COMMIT');
       })
       .catch(error => {
@@ -245,6 +244,32 @@ app.post('/index', (req, res) => {
   };
   res.json(dataToSend);
 
+});
+
+app.post('/emailVerification', (req, res) => {
+  console.log("Sending email to: " + req.body.email);
+    var transporter = createTransport({
+        service: 'gmail',
+        auth: {
+            user: 'familyframe.do.not.reply@gmail.com',
+            pass: 'familyframe2024'
+        }
+    });
+
+    var mailOptions = {
+        from: 'familyframe.do.not.reply@gmail.com',
+        to: req.body.email,
+        subject: 'FamilyFrame Verification Code',
+        text: 'Your verification code is: ' + req.body.verificationCode
+    }
+
+    transporter.sendMail(mailOptions, function(error, info){
+        if (error) {
+          console.log(error);
+        } else {
+          console.log('Email sent: ' + info.response);
+        }
+      });
 });
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
