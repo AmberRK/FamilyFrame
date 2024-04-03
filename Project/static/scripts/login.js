@@ -153,7 +153,12 @@ async function login() {
             response.json()
           }
         })
-        .then((json) => replacePlaceholderNavbar(json))
+        .then((json) => {
+          replacePlaceholderNavbar(json);
+          if (json.message == "Account authenticated") {
+            window.location.href = "/mytrees";
+          }
+        })
         .catch(() => navbarNotLoggedIn());
     }
     catch(error)
