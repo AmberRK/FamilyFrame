@@ -19,20 +19,19 @@ async function createAcct() {
         }
       })
 
-        .then((response) => response.json())
+        .then((response) => {
+          if (response.ok) {
+            alert("Success!")
+          } else {
+            alert("Error!")
+          }
+          response.json()
+        })
         .then((json) => console.log(json));
     }
     else {
       window.alert("Email failed regex");
     };
-    const verificationCode = Math.floor(100000 + Math.random() * 900000);
-    fetch("/emailVerification", {
-      method: "POST",
-      body: JSON.stringify({verificationCode: verificationCode, email: jsonData.email}),
-      headers: {
-        "Content-type": "application/json; charset=UTF-8"
-      }
-    })
     // bcrypt.hash(myPlaintextPassword, saltRounds).then(function (hash) {
     // Store hash in your password DB.
     // console.log(hash);

@@ -8,7 +8,7 @@ import * as db from './static/scripts/transaction.js'
 import createTransport from 'nodemailer';
 import path from 'path';
 import url from 'url';
-
+import request from 'request';
 const __filename = url.fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
@@ -211,7 +211,37 @@ app.post('/createUser', async (req, res) => {
     
     db.query(insertText, insertValues)
       .then(() => {
-        console.log("Insert successful");
+        // Make an object to send to MailChimp
+        const mailChimpEmail = {
+          members: [
+            {
+              email_address: req.body.email,
+              status: 'pending'
+            }
+          ]
+        }
+        // Convert object to JSON
+        const jsonData = JSON.stringify(mailChimpEmail);
+
+        // Set up options for the request
+        const options = {
+          url: 'https://us18.api.mailchimp.com/3.0/lists/ee85e33acb',
+          method: 'POST',
+          headers: {
+            Authorization: 'auth 7104ba39dead2e1035ff87427b07465f-us18'
+          },
+          body: jsonData
+        }
+        
+        // Send the request to MailChimp
+        request (options, (error, response, body) => {
+          if(error) {
+             res.json({error}) // error :(
+          } else {
+             res.sendStatus(200); //successful :)
+          }
+       })
+
         res.status(200).json({ message: "Account created successfully", email: req.body.email});
         return db.query('COMMIT');
       })
