@@ -1,9 +1,9 @@
+
 async function createAcct() {
   document.getElementById('accCreate').addEventListener('submit', function (event) {
     event.preventDefault();
     const formData = new FormData(this);
     const jsonData = {};
-
     formData.forEach((value, key) => {
       jsonData[key] = value;
     });
@@ -19,13 +19,19 @@ async function createAcct() {
         }
       })
 
-        .then((response) => response.json())
+        .then((response) => {
+          if (response.ok) {
+            alert("Success!")
+          } else {
+            alert("Error!")
+          }
+          response.json()
+        })
         .then((json) => console.log(json));
     }
     else {
       window.alert("Email failed regex");
     };
-
     // bcrypt.hash(myPlaintextPassword, saltRounds).then(function (hash) {
     // Store hash in your password DB.
     // console.log(hash);

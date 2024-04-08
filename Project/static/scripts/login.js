@@ -47,10 +47,75 @@
 //         console.error('Error:', error);
 //         throw error;
 //       }
-//     }
+
+  
+//}
+
+document.addEventListener('DOMContentLoaded', deleteAllCookies);
+
+function deleteCookie(name) {
+  document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+}
+
+function deleteAllCookies() 
+{
+  
+}
+async function replacePlaceholderNavbar(json) {
+  var navbarPlaceholder = document.getElementById('navbarPlaceholder');
+  console.log(json);
+  var navbarContent = "";
+  // Use express session for if user is logged in, show my trees and login, else opposite
+  if(json.message === "Authentication failed" || json.message === "Internal Server Error")
+  {
+      navbarContent = '<nav class="navbar">' +
+                      '   <ul>' +
+                      '       <li><a href="#"onclick="navigateToHome()">Home</a></li>' +
+                      '       <li><a href="#"onclick="navigateToEditor()">Tree Editor</a></li>' +
+                      '       <li><a href="#"onclick="navigateToLogin()">Login</a></li>' +
+                      '       <li><a href="#"onclick="navigateToUI()">UI</a></li>' +
+                      '       <li><a href="#"onclick="navigateToAbout()">About</a></li>' +
+                      '   </ul>' +
+                      '</nav>';
+  }
+  else
+  {
+      navbarContent = '<nav class="navbar">' +
+      '   <ul>' +
+      '       <li><a href="#"onclick="navigateToHome()">Home</a></li>' +
+      '       <li ><a href="#" onclick="navigateToMyTrees()">My Trees</a></li>' +
+      '       <li><a href="#"onclick="navigateToEditor()">Tree Editor</a></li>' +
+      '       <li><a href="#"onclick="navigateToLogin()">Login</a></li>' +
+      '        <li><a href="#"onclick="navigateToUI()">UI</a></li>' +
+      '       <li><a href="#"onclick="navigateToAbout()">About</a></li>' +
+      '   </ul>' +
+      '</nav>';
+  }
+      
+  // Design the navbar
+  
+  // Replace the innerHTML with dynamic content
+  navbarPlaceholder.innerHTML = navbarContent;
+}
+
+function navbarNotLoggedIn()
+{
+  var navbarPlaceholder = document.getElementById('navbarPlaceholder');
+  navbarContent = '<nav class="navbar">' +
+                      '   <ul>' +
+                      '       <li><a href="#"onclick="navigateToHome()">Home</a></li>' +
+                      '       <li><a href="#"onclick="navigateToEditor()">Tree Editor</a></li>' +
+                      '       <li><a href="#"onclick="navigateToLogin()">Login</a></li>' +
+                      '       <li><a href="#"onclick="navigateToUI()">UI</a></li>' +
+                      '       <li><a href="#"onclick="navigateToAbout()">About</a></li>' +
+                      '   </ul>' +
+                      '</nav>';
+  navbarPlaceholder.innerHTML = navbarContent;
+}
 
 async function login() {
-  document.getElementById('login').addEventListener('submit', function (event) {
+  document.getElementById('login').addEventListener('submit', function (event) 
+  {
     event.preventDefault();
     const formData = new FormData(this);
     const jsonData = {};
@@ -59,19 +124,38 @@ async function login() {
       jsonData[key] = value;
     });
     // console.log(jsonData);
-    fetch("/existingUser", {
-      method: "POST",
-      body: JSON.stringify(jsonData),
-      headers: {
-        "Content-type": "application/json; charset=UTF-8"
-      }
-    })
-      .then((response) => response.json())
-      .then((json) => {
-        console.log(json);
-        if (json.message == "Account authenticated") {
-          window.location.href = "/index";
+    try
+    {
+      fetch("/existingUser", {
+        method: "POST",
+        body: JSON.stringify(jsonData),
+        headers: {
+          "Content-type": "application/json; charset=UTF-8"
         }
       })
-});
-};
+        .then((response) => {
+          if(!response.ok)
+          {
+            console.log("Uh oh");
+            navbarNotLoggedIn();
+            throw new Error(`HTTP error! Status: ${response.status}`);
+          }
+          else
+          {
+            response.json()
+          }
+        })
+        .then((json) => {
+          replacePlaceholderNavbar(json);
+          if (json.message == "Account authenticated") {
+            window.location.href = "/mytrees";
+          }
+        })
+        .catch(() => navbarNotLoggedIn());
+    }
+    catch(error)
+    {
+      navbarNotLoggedIn();
+    }
+  });
+}
