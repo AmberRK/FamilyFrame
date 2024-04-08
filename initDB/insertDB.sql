@@ -52,8 +52,8 @@ VALUES
     (2, (SELECT relationshipTypeID FROM familyFrame.tbRelationshipType WHERE relationshipLabel = 'Parent'), 4), -- Marge is a parent of Lisa
 
     (1, (SELECT relationshipTypeID FROM familyFrame.tbRelationshipType WHERE relationshipLabel = 'Parent'), 5), -- Homer is a parent of Maggie
-    (2, (SELECT relationshipTypeID FROM familyFrame.tbRelationshipType WHERE relationshipLabel = 'Parent'), 5); -- Marge is a parent of Maggie
+    (2, (SELECT relationshipTypeID FROM familyFrame.tbRelationshipType WHERE relationshipLabel = 'Parent'), 5), -- Marge is a parent of Maggie
 
-    (6, (SELECT relationshipTypeID FROM familyFrame.tbRelationshipType WHERE relationshipLabel = 'Parent'), 1), -- Homer is a parent of Bart
+    (6, (SELECT relationshipTypeID FROM familyFrame.tbRelationshipType WHERE relationshipLabel = 'Parent'), 1); -- Homer is a parent of Bart
 
 COMMIT;
