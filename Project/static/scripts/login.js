@@ -70,7 +70,7 @@ async function login() {
       .then((json) => {
         console.log(json);
         if (json.message == "Account authenticated") {
-          window.location.href = "/mytrees";
+          window.location.href = "/index";
         }
       })
 });
