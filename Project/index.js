@@ -168,20 +168,21 @@ app.post('/existingUser', async (req, res) => {
 // Make new path for navbar, use this function to authenticate token
 function authenticateToken(req, res, next) {
   // Extract JWT from the Authorization header
-  const authHeader = req.headers['authorization'];
-  const token = authHeader && authHeader.split(' ')[1];
+  // const authHeader = req.cookies.jwt;
+  // console.log("auth: " + authHeader + " split: " + authHeader.split(' ')[1]);
+  // const token = authHeader && authHeader.split(' ')[1];
 
-  if (!token) {
-    return res.sendStatus(401); // Unauthorized
-  }
+  // if (!token) {
+  //   return res.sendStatus(401); // Unauthorized
+  // }
 
   // Verify JWT signature
-  jwt.verify(token, secretKey, (err, user) => {
+  jwt.verify(req.cookies.jwt, secretKey, (err, user) => {
     if (err) {
       return res.sendStatus(403); // Forbidden
     }
     req.user = user; // Attach user information to the request object
-    next();
+    // next();
   });
 }
 
@@ -265,42 +266,18 @@ app.post('/createUser', async (req, res) => {
   }
 });
 
-app.post('/index', (req, res) => {
+app.post('/checkjwt', (req, res) => {
   // Get cookie
-  const cookieValue = req.cookies.emails;
-  const dataToSend =
-  {
-    message: cookieValue
-  };
-  res.json(dataToSend);
-
-});
-
-app.post('/emailVerification', (req, res) => {
-  console.log("Sending email to: " + req.body.email);
-    var transporter = createTransport({
-        service: 'gmail',
-        auth: {
-            user: 'familyframe.do.not.reply@gmail.com',
-            pass: 'familyframe2024'
-        }
-    });
-
-    var mailOptions = {
-        from: 'familyframe.do.not.reply@gmail.com',
-        to: req.body.email,
-        subject: 'FamilyFrame Verification Code',
-        text: 'Your verification code is: ' + req.body.verificationCode
+  jwt.verify(token, secretKey, (err, user) => {
+    if (err) {
+      return res.sendStatus(403); // Forbidden
     }
+    return res.sendStatus(200);// Attach user information to the request object
+    // next();
+  });
 
-    transporter.sendMail(mailOptions, function(error, info){
-        if (error) {
-          console.log(error);
-        } else {
-          console.log('Email sent: ' + info.response);
-        }
-      });
 });
+
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
 });
