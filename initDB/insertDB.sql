@@ -39,7 +39,7 @@ END $$;
 -- Homer and Marge are spouses
 INSERT INTO familyFrame.tbRelationship (person1ID, RelationshipTypeID, person2ID)
 VALUES
-    (1, (SELECT relationshipTypeID FROM familyFrame.tbRelationshipType WHERE relationshipLabel = 'Spouse'), 2),
+    -- (1, (SELECT relationshipTypeID FROM familyFrame.tbRelationshipType WHERE relationshipLabel = 'Spouse'), 2),
     (2, (SELECT relationshipTypeID FROM familyFrame.tbRelationshipType WHERE relationshipLabel = 'Spouse'), 1);
 
 -- Homer and Marge are parents of Bart, Lisa, and Maggie
@@ -52,6 +52,8 @@ VALUES
     (2, (SELECT relationshipTypeID FROM familyFrame.tbRelationshipType WHERE relationshipLabel = 'Parent'), 4), -- Marge is a parent of Lisa
 
     (1, (SELECT relationshipTypeID FROM familyFrame.tbRelationshipType WHERE relationshipLabel = 'Parent'), 5), -- Homer is a parent of Maggie
-    (2, (SELECT relationshipTypeID FROM familyFrame.tbRelationshipType WHERE relationshipLabel = 'Parent'), 5); -- Marge is a parent of Maggie
+    (2, (SELECT relationshipTypeID FROM familyFrame.tbRelationshipType WHERE relationshipLabel = 'Parent'), 5), -- Marge is a parent of Maggie
+
+    (6, (SELECT relationshipTypeID FROM familyFrame.tbRelationshipType WHERE relationshipLabel = 'Parent'), 1); -- Homer is a parent of Bart
 
 COMMIT;
