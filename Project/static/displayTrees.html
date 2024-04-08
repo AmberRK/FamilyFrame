@@ -19,12 +19,27 @@
 
         <div id="treeList"></div>
         <div id="JWT test">
+            <button onclick="getMyTrees()">Get My Trees (on load)</button>
         </div>
 
         <footer>
             <div id="footerPlaceholder"></div>
         </footer>
 
+        <script>
+            function getMyTrees() {
+                fetch("/grabmytrees", {
+                    method: "GET",
+                    body: JSON.stringify(jsonData),
+                    headers: {
+                        "Content-type": "application/json; charset=UTF-8"
+                        // "Authorization: Bearer" + cookie
+                    }
+                })
+                    .then((response) => response.json())
+                    .then((json) => console.log(json));
+            }
+        </script>
         <script src="scripts/leader-line.min.js"></script>
         <script src="scripts/main.js"></script>
         <script src="scripts/transaction.js"></script>
