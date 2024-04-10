@@ -11,6 +11,7 @@ import url from 'url';
 import request from 'request';
 const __filename = url.fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+import axios from 'axios';
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -151,6 +152,7 @@ app.post('/existingUser', async (req, res) => {
       const accessToken = jwt.sign(user, secretKey, { expiresIn: '1d' });
       // res.json({ accessToken });
       res.cookie('jwt', accessToken, { httpOnly: true, sameSite: true });
+      console.log("Cookie: " + req.cookies.jwt);
       res.status(200).json({ message: "Account authenticated", user, accessToken });
 
     } else {
@@ -168,9 +170,9 @@ app.post('/existingUser', async (req, res) => {
 // Make new path for navbar, use this function to authenticate token
 function authenticateToken(req, res, next) {
   // Extract JWT from the Authorization header
-  // const authHeader = req.cookies.jwt;
-  // console.log("auth: " + authHeader + " split: " + authHeader.split(' ')[1]);
-  // const token = authHeader && authHeader.split(' ')[1];
+  const authHeader = req.cookies.jwt;
+  console.log("auth: " + authHeader + " split: " + authHeader.split(' ')[1]);
+  const token = authHeader && authHeader.split(' ')[1];
 
   // if (!token) {
   //   return res.sendStatus(401); // Unauthorized
@@ -179,10 +181,11 @@ function authenticateToken(req, res, next) {
   // Verify JWT signature
   jwt.verify(req.cookies.jwt, secretKey, (err, user) => {
     if (err) {
+      console.log("Error: " + err);
       return res.sendStatus(403); // Forbidden
     }
     req.user = user; // Attach user information to the request object
-    // next();
+    next();
   });
 }
 
@@ -207,50 +210,23 @@ app.get('/profileJWT', authenticateToken, (req, res) => {
 app.post('/createUser', async (req, res) => {
   try {
     db.query('BEGIN')
+    const queryText = 'SELECT userid, displayname FROM familyFrame.tbUser WHERE email = $1';
+    const passedValues = [req.body.email];
+    const result = await db.query(queryText, passedValues);
+    if(result.rows.length > 0)
+    {
+      res.status(400).json({ message: "Email already in use" });
+      return;
+    }
+    db.query('BEGIN')
     const insertText = 'INSERT INTO familyFrame.tbUser(displayName, email, passwordHash) VALUES ($1, $2, crypt($3, gen_salt(\'bf\')))';
     const insertValues = [req.body.displayName, req.body.email, req.body.password];
     
     db.query(insertText, insertValues)
-      .then(() => {
-        // Make an object to send to MailChimp
-        const mailChimpEmail = {
-          members: [
-            {
-              email_address: req.body.email,
-              status: 'pending'
-            }
-          ]
-        }
-        // Convert object to JSON
-        const jsonData = JSON.stringify(mailChimpEmail);
-
-        // Set up options for the request
-        const options = {
-          url: 'https://us18.api.mailchimp.com/3.0/lists/ee85e33acb',
-          method: 'POST',
-          headers: {
-            Authorization: 'auth 7104ba39dead2e1035ff87427b07465f-us18'
-          },
-          body: jsonData
-        }
-        
-        // Send the request to MailChimp
-        request (options, (error, response, body) => {
-          if(error) {
-             res.json({error}) // error :(
-          } else {
-             res.sendStatus(200); //successful :)
-          }
-       })
-
-        res.status(200).json({ message: "Account created successfully", email: req.body.email});
+    .then(() => {
+      res.status(200).json({ message: "Account created successfully", email: req.body.email});
         return db.query('COMMIT');
-      })
-      .catch(error => {
-        console.error("Error:", error);
-        res.status(400).json({ err: error });
-        db.query('ROLLBACK');
-      });
+    });
   }
 
   // let saltRounds = 10;
@@ -258,11 +234,12 @@ app.post('/createUser', async (req, res) => {
   //   // res.status(200).json({ pword: hash });
   //   console.log(hash);
   // })
-  catch (error) {
-    db.query('ROLLBACK')
+  catch (error) 
+  {
+    await db.query('ROLLBACK');
     // If an error occurs, send an error response
     console.error('Error hashing password:', error);
-    res.status(500).json({ success: false, error: 'Error hashing password' });
+    res.status(400).json({ err: error });
   }
 });
 
@@ -276,6 +253,37 @@ app.post('/checkjwt', (req, res) => {
     // next();
   });
 
+});
+
+app.post('/verifyEmail', bodyParser.urlencoded({ extended: false }),  (req, res) => {
+  // Make an object to send to MailChimp
+  const mailChimpEmail = {
+    members: [
+      {
+        email_address: req.body,
+        status: 'pending'
+      }
+    ]
+  }
+  // Convert object to JSON
+  const jsonData = JSON.stringify(mailChimpEmail);
+  // Set up options for the request
+  const options = {
+    url: 'https://us18.api.mailchimp.com/3.0/lists/ee85e33acb',
+    method: 'POST',
+    headers: {
+      Authorization: 'auth 7104ba39dead2e1035ff87427b07465f-us18',
+    },
+    body: jsonData
+  }
+  // Send the request to MailChimp
+  request (options, (error, response, body) => {
+    if(error) {
+      res.sendStatus(500); // error :(
+    } else {
+      res.sendStatus(200); //successful :)
+    }
+  })
 });
 
 app.listen(port, () => {
