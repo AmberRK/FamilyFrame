@@ -31,7 +31,23 @@ async function createAcct() {
     }
     else {
       window.alert("Email failed regex");
-    };
+    }
+
+    fetch("/verifyEmail", {
+      method: "POST",
+      body: JSON.stringify(jsonData.email),
+      headers: {
+        "Content-type": "application/json; charset=UTF-8"
+      }
+    }).then((response) => {
+      if (response.ok) {
+        alert("Success!")
+      } else {
+        alert("Error!")
+      }
+      response.json()
+    })
+    .then((json) => console.log(json));
     // bcrypt.hash(myPlaintextPassword, saltRounds).then(function (hash) {
     // Store hash in your password DB.
     // console.log(hash);
@@ -45,4 +61,4 @@ async function createAcct() {
     //   })
     //   .catch(err => console.error(err.message));
   });
-};
+}
