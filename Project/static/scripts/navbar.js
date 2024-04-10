@@ -9,9 +9,8 @@ function replacePlaceholderNavbar() {
     '       <li><a href="#"onclick="navigateToHome()">Home</a></li>' +
     '       <li ><a href="#" onclick="navigateToMyTrees()">My Trees</a></li>' +
     '       <li><a href="#"onclick="navigateToEditor()">Tree Editor</a></li>' +
-    '       <li><a href="#"onclick="navigateToLogin()">Logout</a></li>' +
     '        <li><a href="#"onclick="navigateToUI()">UI</a></li>' +
-    '       <li><a href="#"onclick="navigateToAbout()">About</a></li>' +
+    '       <li><a href="#"onclick="navigateToLogin()">Logout</a></li>' +
     '   </ul>' +
     '</nav>';    
     navbarPlaceholder.innerHTML = navbarContent;
@@ -25,9 +24,8 @@ function navbarNotLoggedIn()
                       '   <ul>' +
                       '       <li><a href="#"onclick="navigateToHome()">Home</a></li>' +
                       '       <li><a href="#"onclick="navigateToEditor()">Tree Editor</a></li>' +
-                      '       <li><a href="#"onclick="navigateToLogin()">Login</a></li>' +
                       '       <li><a href="#"onclick="navigateToUI()">UI</a></li>' +
-                      '       <li><a href="#"onclick="navigateToAbout()">About</a></li>' +
+                      '       <li><a href="#"onclick="navigateToLogin()">Login</a></li>' +
                       '   </ul>' +
                       '</nav>';
   navbarPlaceholder.innerHTML = navbarContent;
