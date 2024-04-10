@@ -1,3 +1,17 @@
+function navbarNotLoggedIn()
+{
+  var navbarPlaceholder = document.getElementById('navbarPlaceholder');
+  navbarContent = '<nav class="navbar">' +
+                      '   <ul>' +
+                      '       <li><a href="#"onclick="navigateToHome()">Home</a></li>' +
+                      '       <li><a href="#"onclick="navigateToEditor()">Tree Editor</a></li>' +
+                      '       <li><a href="#"onclick="navigateToUI()">UI</a></li>' +
+                      '       <li><a href="#"onclick="navigateToLogin()">Login</a></li>' +
+                      '   </ul>' +
+                      '</nav>';
+  navbarPlaceholder.innerHTML = navbarContent;
+}
+
 function replacePlaceholderNavbar() {
   var navbarPlaceholder = document.getElementById('navbarPlaceholder');
   

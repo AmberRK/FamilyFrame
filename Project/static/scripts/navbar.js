@@ -34,7 +34,7 @@ function navbarNotLoggedIn()
 async function checkLoggedIn() {
     try 
     {
-		fetch("/checkjwt")
+		fetch("/profileJWT")
         .then((response) => {
         if (!response.ok) 
         {

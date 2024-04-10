@@ -152,6 +152,7 @@ app.post('/existingUser', async (req, res) => {
       const accessToken = jwt.sign(user, secretKey, { expiresIn: '1d' });
       // res.json({ accessToken });
       res.cookie('jwt', accessToken, { httpOnly: true, sameSite: true });
+      console.log("Cookie: " + req.cookies.jwt);
       res.status(200).json({ message: "Account authenticated", user, accessToken });
 
     } else {
@@ -169,9 +170,9 @@ app.post('/existingUser', async (req, res) => {
 // Make new path for navbar, use this function to authenticate token
 function authenticateToken(req, res, next) {
   // Extract JWT from the Authorization header
-  // const authHeader = req.cookies.jwt;
-  // console.log("auth: " + authHeader + " split: " + authHeader.split(' ')[1]);
-  // const token = authHeader && authHeader.split(' ')[1];
+  const authHeader = req.cookies.jwt;
+  console.log("auth: " + authHeader + " split: " + authHeader.split(' ')[1]);
+  const token = authHeader && authHeader.split(' ')[1];
 
   // if (!token) {
   //   return res.sendStatus(401); // Unauthorized
@@ -180,10 +181,11 @@ function authenticateToken(req, res, next) {
   // Verify JWT signature
   jwt.verify(req.cookies.jwt, secretKey, (err, user) => {
     if (err) {
+      console.log("Error: " + err);
       return res.sendStatus(403); // Forbidden
     }
     req.user = user; // Attach user information to the request object
-    // next();
+    next();
   });
 }
 
@@ -207,6 +209,15 @@ app.get('/profileJWT', authenticateToken, (req, res) => {
 
 app.post('/createUser', async (req, res) => {
   try {
+    db.query('BEGIN')
+    const queryText = 'SELECT userid, displayname FROM familyFrame.tbUser WHERE email = $1';
+    const passedValues = [req.body.email];
+    const result = await db.query(queryText, passedValues);
+    if(result.rows.length > 0)
+    {
+      res.status(400).json({ message: "Email already in use" });
+      return;
+    }
     db.query('BEGIN')
     const insertText = 'INSERT INTO familyFrame.tbUser(displayName, email, passwordHash) VALUES ($1, $2, crypt($3, gen_salt(\'bf\')))';
     const insertValues = [req.body.displayName, req.body.email, req.body.password];
