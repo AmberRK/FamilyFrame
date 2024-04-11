@@ -52,21 +52,7 @@
                 <!-- <button onclick="getDynamicData()">Fetch dynamic data</button>
                 <div id="result2"></div> -->
                 <button onclick="getChildrenToStratify()">D3 Stratify</button>
-                <div id="stratifyDiv">
-                    <div id="container"></div>
-                    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
-                    <script type="module">
-
-                        // Declare the chart dimensions and margins.
-                        const width = 640;
-                        const height = 400;
-                        const marginTop = 20;
-                        const marginRight = 20;
-                        const marginBottom = 30;
-                        const marginLeft = 40;
-
-                    </script>
-                </div>
+                <div id="svg-container"></div>
             </div>
             <!-- Set div id to the personid and then query for info where it equals id and the userid -->
             <div class="person" id="1">
@@ -88,6 +74,7 @@
     <script src="scripts/leader-line.min.js"></script>
     <script src="scripts/main.js"></script>
     <script src="scripts/transaction.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
     <script src="scripts/navbar.js"></script>
     <script src="scripts/footer.js"></script>
     <script>
