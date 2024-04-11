@@ -207,17 +207,22 @@ app.get('/profileJWT', authenticateToken, (req, res) => {
   res.json(req.user);
 });
 
-app.post('/createUser', async (req, res) => {
+app.post('/createUser', bodyParser.urlencoded({ extended: true }), async (req, res) => {
   try {
-    db.query('BEGIN')
+    // Check if email is already in use
+    await db.query('BEGIN')
     const queryText = 'SELECT userid, displayname FROM familyFrame.tbUser WHERE email = $1';
     const passedValues = [req.body.email];
     const result = await db.query(queryText, passedValues);
     if(result.rows.length > 0)
     {
+      await db.query('COMMIT');
       res.status(400).json({ message: "Email already in use" });
       return;
     }
+    await db.query('COMMIT');
+
+    // If email is not in use, create the account
     db.query('BEGIN')
     const insertText = 'INSERT INTO familyFrame.tbUser(displayName, email, passwordHash) VALUES ($1, $2, crypt($3, gen_salt(\'bf\')))';
     const insertValues = [req.body.displayName, req.body.email, req.body.password];
@@ -277,6 +282,7 @@ app.post('/verifyEmail', bodyParser.urlencoded({ extended: false }),  (req, res)
     body: jsonData
   }
   // Send the request to MailChimp
+  console.log("Email: " + req.body);
   request (options, (error, response, body) => {
     if(error) {
       res.sendStatus(500); // error :(

@@ -7,8 +7,10 @@ async function createAcct() {
     formData.forEach((value, key) => {
       jsonData[key] = value;
     });
+    console.log(jsonData);
     let emailRegex = RegExp("^[a-zA-Z0-9.!#$%&’*+\/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$");
     let emailToCheck = jsonData.email;
+    console.log("email: " + emailToCheck);
     if (emailRegex.test(emailToCheck)) {
       window.alert("Email passed regex");
       fetch("/createUser", {
@@ -35,7 +37,7 @@ async function createAcct() {
 
     fetch("/verifyEmail", {
       method: "POST",
-      body: JSON.stringify(jsonData.email),
+      body: JSON.stringify({email: emailToCheck}),
       headers: {
         "Content-type": "application/json; charset=UTF-8"
       }
