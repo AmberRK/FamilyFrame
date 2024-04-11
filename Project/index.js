@@ -265,7 +265,7 @@ app.post('/verifyEmail', bodyParser.urlencoded({ extended: false }),  (req, res)
   const mailChimpEmail = {
     members: [
       {
-        email_address: req.body,
+        email_address: req.body.email,
         status: 'pending'
       }
     ]
@@ -282,7 +282,7 @@ app.post('/verifyEmail', bodyParser.urlencoded({ extended: false }),  (req, res)
     body: jsonData
   }
   // Send the request to MailChimp
-  console.log("Email: " + req.body);
+  console.log("Email: " + req.body.email);
   request (options, (error, response, body) => {
     if(error) {
       res.sendStatus(500); // error :(
