@@ -125,29 +125,19 @@ function getChildrenToStratify() {
 		.then(response => response.json())
 		.then(data => {
 			// console.log(data);
-			const root = d3.stratify()
+			const treeData = d3.stratify()
 				.id((d) => d.name)
 				.parentId((d) => d.parent)
 				(data);
-			console.log(root);
-			// return (root);
-			const svgContainer = d3.select("#svg-container");
-			// const svg = svgContainer.append("svg")
-			// 	.attr("width", 400)
-			// 	.attr("height", 200);
+			console.log(treeData);
 
-			// // Append a rectangle to the SVG
-			// svg.append("rect")
-			// 	.attr("x", 50)
-			// 	.attr("y", 50)
-			// 	.attr("width", 100)
-			// 	.attr("height", 100)
-			// 	.attr("fill", "blue");
-
-			svgContainer.append(chartTree(root, {
-				label: d => d.name,
-				title: (d, n) => `${n.ancestors().reverse().map(d => d.data.name).join(".")}`, // hover text
-				width: 1152
+			let treeContainer = document.getElementById("tree-container");
+			treeContainer.appendChild(chartTree(treeData, {
+				label: d => d.id,
+				// title: (d, n) => `${n.ancestors().reverse().map(d => d.data.name).join(".")}`, // hover text
+				title: d => d.id,
+				// link: (d, n) => `https://github.com/prefuse/Flare/${n.children ? "tree" : "blob"}/master/flare/src/${n.ancestors().reverse().map(d => d.data.name).join("/")}${n.children ? "" : ".as"}`,
+				width: 500
 			}));
 		})
 		.catch(error => {
