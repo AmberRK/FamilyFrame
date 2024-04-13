@@ -15,6 +15,11 @@ INSERT INTO familyFrame.tbRelationshipType (relationshipLabel) VALUES
 INSERT INTO familyFrame.tbTree (treeLabel, createdBy)
 VALUES
     ('The Simpsons', ( Select userID from familyFrame.tbUser where displayName='admin'));
+   
+insert into familyframe.tbtreeauthor (treeID, userID) values
+	(( Select treeID from familyFrame.tbTree where treeLabel = 'The Simpsons' ), 
+	( Select userID from familyFrame.tbUser where displayName='admin'))
+;
 
 DO $$
 Declare 
