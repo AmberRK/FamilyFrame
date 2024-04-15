@@ -1,5 +1,4 @@
-document.addEventListener('DOMContentLoaded', checkLoggedIn);
-
+document.addEventListener('DOMContentLoaded', checkLoggedIn());
 
 function replacePlaceholderNavbar() {
     var navbarPlaceholder = document.getElementById('navbarPlaceholder');

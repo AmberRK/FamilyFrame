@@ -183,7 +183,8 @@ app.post('/existingUser', async (req, res) => {
 function authenticateToken(req, res, next) {
   // Extract JWT from the Authorization header
   const authHeader = req.cookies.jwt;
-  console.log("auth: " + authHeader + " split: " + authHeader.split(' ')[1]);
+  // console.log("auth: " + authHeader + " split: " + authHeader.split(' ')[1]);
+  console.log("auth: " + authHeader);
   const token = authHeader && authHeader.split(' ')[1];
 
   // if (!token) {
