@@ -27,6 +27,18 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.get('/', (req, res) => res.sendFile(__dirname + '/static/index.html'));
 app.get('/mytrees', (req, res) => res.sendFile(__dirname + '/static/displayTrees.html'));
 
+app.get('/grabmytrees', async (req, res) => {
+  try {
+    const result = await db.query("SELECT personid, firstname, lastname, dateofbirth FROM familyFrame.tbPerson;")
+    // const result = await db.query("SELECT * from familyFrame.;")
+    res.send(result.rows)
+  }
+  catch (err) {
+    console.error(err);
+    res.send("Error " + err);
+  }
+});
+
 app.get('/results', async (req, res) => {
   try {
     // Add client releasing?
@@ -171,7 +183,8 @@ app.post('/existingUser', async (req, res) => {
 function authenticateToken(req, res, next) {
   // Extract JWT from the Authorization header
   const authHeader = req.cookies.jwt;
-  console.log("auth: " + authHeader + " split: " + authHeader.split(' ')[1]);
+  // console.log("auth: " + authHeader + " split: " + authHeader.split(' ')[1]);
+  console.log("auth: " + authHeader);
   const token = authHeader && authHeader.split(' ')[1];
 
   // if (!token) {
@@ -188,6 +201,13 @@ function authenticateToken(req, res, next) {
     next();
   });
 }
+
+app.get('/getCredentials', (req, res) => {
+
+  let decoded = jwt.verify(req.cookies.jwt, secretKey);
+  // console.log(decoded);
+  res.json(decoded);
+});
 
 // Route for user login (generating JWT)
 app.post('/loginJWT', (req, res) => {
@@ -234,11 +254,6 @@ app.post('/createUser', bodyParser.urlencoded({ extended: true }), async (req, r
     });
   }
 
-  // let saltRounds = 10;
-  // bcrypt.hash("password", saltRounds).then(function (hash) {
-  //   // res.status(200).json({ pword: hash });
-  //   console.log(hash);
-  // })
   catch (error) 
   {
     await db.query('ROLLBACK');
@@ -246,18 +261,6 @@ app.post('/createUser', bodyParser.urlencoded({ extended: true }), async (req, r
     console.error('Error hashing password:', error);
     res.status(400).json({ err: error });
   }
-});
-
-app.post('/checkjwt', (req, res) => {
-  // Get cookie
-  jwt.verify(token, secretKey, (err, user) => {
-    if (err) {
-      return res.sendStatus(403); // Forbidden
-    }
-    return res.sendStatus(200);// Attach user information to the request object
-    // next();
-  });
-
 });
 
 app.post('/verifyEmail', bodyParser.urlencoded({ extended: false }),  (req, res) => {

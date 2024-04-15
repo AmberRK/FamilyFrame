@@ -1,11 +1,3 @@
-// import * as d3 from "d3";
-// const d3 = require('d3');
-
-// Grabs the login cookie
-// document.addEventListener('DOMContentLoaded', async () => {
-// 	await grabCookie();
-// });
-
 function grabFormData() {
 	document.getElementById('userForm').addEventListener('submit', function (event) {
 		event.preventDefault();
@@ -63,25 +55,6 @@ async function grabCookie() {
 	}
 }
 
-// function postNewPerson() {
-// 	fetch("/insertData", {
-// 		method: "POST",
-// 		body: JSON.stringify({
-// 			firstName: "Mona",
-// 			lastName: "Simpson",
-// 			dob: '1901-01-12',
-// 			gender: "Female",
-// 			createdBy: 1,
-// 			treeID: 1
-// 		}),
-// 		headers: {
-// 			"Content-type": "application/json; charset=UTF-8"
-// 		}
-// 	})
-// 		.then((response) => response.json())
-// 		.then((json) => console.log(json));
-// }
-
 function getDynamicData() {
 	fetch('/results/2')
 		.then(response => response.json())
@@ -125,35 +98,94 @@ function getChildrenToStratify() {
 		.then(response => response.json())
 		.then(data => {
 			// console.log(data);
-			const root = d3.stratify()
+			const treeData = d3.stratify()
 				.id((d) => d.name)
 				.parentId((d) => d.parent)
 				(data);
-			console.log(root);
-			// return (root);
-			const svgContainer = d3.select("#svg-container");
-			// const svg = svgContainer.append("svg")
-			// 	.attr("width", 400)
-			// 	.attr("height", 200);
+			console.log(treeData);
 
-			// // Append a rectangle to the SVG
-			// svg.append("rect")
-			// 	.attr("x", 50)
-			// 	.attr("y", 50)
-			// 	.attr("width", 100)
-			// 	.attr("height", 100)
-			// 	.attr("fill", "blue");
-
-			svgContainer.append(chartTree(root, {
-				label: d => d.name,
-				title: (d, n) => `${n.ancestors().reverse().map(d => d.data.name).join(".")}`, // hover text
-				width: 1152
+			let treeContainer = document.getElementById("tree-container");
+			treeContainer.appendChild(chartTree(treeData, {
+				label: d => d.id,
+				// title: (d, n) => `${n.ancestors().reverse().map(d => d.data.name).join(".")}`, // hover text
+				title: d => d.id,
+				// link: (d, n) => `https://github.com/prefuse/Flare/${n.children ? "tree" : "blob"}/master/flare/src/${n.ancestors().reverse().map(d => d.data.name).join("/")}${n.children ? "" : ".as"}`,
+				width: 500
 			}));
 		})
 		.catch(error => {
 			console.error('Error fetching data:', error);
 		});
 
+}
+
+function getChildren(parentID) {
+	return fetch("/children/" + parentID)
+		.then(response => response.json())
+		.then(data => {
+			return (data);
+		})
+		.catch(error => {
+			console.error('Error fetching data:', error);
+		});
+}
+
+function spawnChild(id) {
+	getChildren(id)
+		.then(data => {
+			let resultID = "resultDiv" + id;
+			const resultField = document.getElementById(resultID);
+			resultField.innerHTML = "";
+			if (Object.values(data).length != 0) {
+
+				data.forEach(function (row) {
+					let childDiv = document.createElement("div");
+					childDiv.classList.add("person");
+					childDiv.id = (row.id);
+					childDiv.textContent = row.childname;
+					resultField.appendChild(childDiv);
+
+					let spawnChildButton = document.createElement("button");
+					spawnChildButton.textContent = "Get Children";
+					spawnChildButton.addEventListener("click", function () { spawnChild(this.parentNode.id); });
+					childDiv.appendChild(spawnChildButton);
+
+					let grandChildDiv = document.createElement("div");
+
+					grandChildDiv.id = "resultDiv" + row.id;
+					childDiv.appendChild(grandChildDiv);
+				});
+			}
+			else {
+				resultField.innerHTML = "No children";
+			}
+		})
+}
+async function whoAmI() {
+	const response = await fetch("/getCredentials");
+	const data = await response.json();
+	// let addition = document.getElementById("credentials");
+	// addition.innerHTML = JSON.stringify(data, null, 2);
+	return (JSON.stringify(data, null, 2));
+}
+
+function getMyTrees() {
+	whoAmI()
+	.then(creds => { // Use then to wait for the whoAmI() function to complete
+		console.log(creds)
+		// const userid = creds.userid;
+		// console.log(userid);
+		console.log(creds.userid);
+		fetch("/grabmytrees", {
+			method: "GET",
+			headers: {
+				"Content-type": "application/json; charset=UTF-8"
+			},
+			body: creds.userid
+		})
+			.then(response => response.json())
+			.then(json => console.log(json));
+	});
 }
 
 // Copyright 2021-2023 Observable, Inc.
@@ -267,47 +299,4 @@ function chartTree(data, { // data is either tabular (array of objects) or hiera
 		.text((d, i) => L[i]);
 
 	return svg.node();
-}
-
-function getChildren(parentID) {
-	return fetch("/children/" + parentID)
-		.then(response => response.json())
-		.then(data => {
-			return (data);
-		})
-		.catch(error => {
-			console.error('Error fetching data:', error);
-		});
-}
-
-function spawnChild(id) {
-	getChildren(id)
-		.then(data => {
-			let resultID = "resultDiv" + id;
-			const resultField = document.getElementById(resultID);
-			resultField.innerHTML = "";
-			if (Object.values(data).length != 0) {
-
-				data.forEach(function (row) {
-					let childDiv = document.createElement("div");
-					childDiv.classList.add("person");
-					childDiv.id = (row.id);
-					childDiv.textContent = row.childname;
-					resultField.appendChild(childDiv);
-
-					let spawnChildButton = document.createElement("button");
-					spawnChildButton.textContent = "Get Children";
-					spawnChildButton.addEventListener("click", function () { spawnChild(this.parentNode.id); });
-					childDiv.appendChild(spawnChildButton);
-
-					let grandChildDiv = document.createElement("div");
-
-					grandChildDiv.id = "resultDiv" + row.id;
-					childDiv.appendChild(grandChildDiv);
-				});
-			}
-			else {
-				resultField.innerHTML = "No children";
-			}
-		})
 }

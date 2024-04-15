@@ -18,17 +18,13 @@
 
     <!-- password reset form, labeled for each box's expected input -->
     <div class="loginform">
+    <div>Input the email belonging to the account and press 'Send Email'. If valid, instructions will be sent to reset your password.</div>
       <form id="login" method="post">
         <table>
           <tr>
             <td> <label for="email">Email Address:</label> </td>
             <td> <input name="email" id="email" type="email" value="" placeholder="email@email.com" size="35" maxlength="35"> </td>
           </tr>
- <!--         <tr>
-            <td> <label for="pass">Password:</label> </td>
-            <td> <input name="password" id="password" type="password" value="crew" size="35" maxlength="35"> </td>
-          </tr>
--->
         </table>
         <input class="submit" type="submit" value="Send Email" onClick="">
         <input class="reset" type="reset" value="Reset">
@@ -47,7 +43,6 @@
     <script src="scripts/footer.js"></script>
     <script>
       document.addEventListener('DOMContentLoaded', function () {
-        checkLoggedIn();
         replacePlaceholderFooter();
       });
     </script>
