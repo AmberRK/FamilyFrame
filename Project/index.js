@@ -27,6 +27,18 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.get('/', (req, res) => res.sendFile(__dirname + '/static/index.html'));
 app.get('/mytrees', (req, res) => res.sendFile(__dirname + '/static/displayTrees.html'));
 
+app.get('/grabmytrees', async (req, res) => {
+  try {
+    const result = await db.query("SELECT personid, firstname, lastname, dateofbirth FROM familyFrame.tbPerson;")
+    // const result = await db.query("SELECT * from familyFrame.;")
+    res.send(result.rows)
+  }
+  catch (err) {
+    console.error(err);
+    res.send("Error " + err);
+  }
+});
+
 app.get('/results', async (req, res) => {
   try {
     // Add client releasing?
@@ -234,11 +246,6 @@ app.post('/createUser', bodyParser.urlencoded({ extended: true }), async (req, r
     });
   }
 
-  // let saltRounds = 10;
-  // bcrypt.hash("password", saltRounds).then(function (hash) {
-  //   // res.status(200).json({ pword: hash });
-  //   console.log(hash);
-  // })
   catch (error) 
   {
     await db.query('ROLLBACK');
