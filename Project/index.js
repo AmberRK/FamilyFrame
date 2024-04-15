@@ -202,6 +202,13 @@ function authenticateToken(req, res, next) {
   });
 }
 
+app.get('/getCredentials', (req, res) => {
+
+  let decoded = jwt.verify(req.cookies.jwt, secretKey);
+  // console.log(decoded);
+  res.json(decoded);
+});
+
 // Route for user login (generating JWT)
 app.post('/loginJWT', (req, res) => {
 
@@ -254,18 +261,6 @@ app.post('/createUser', bodyParser.urlencoded({ extended: true }), async (req, r
     console.error('Error hashing password:', error);
     res.status(400).json({ err: error });
   }
-});
-
-app.post('/checkjwt', (req, res) => {
-  // Get cookie
-  jwt.verify(token, secretKey, (err, user) => {
-    if (err) {
-      return res.sendStatus(403); // Forbidden
-    }
-    return res.sendStatus(200);// Attach user information to the request object
-    // next();
-  });
-
 });
 
 app.post('/verifyEmail', bodyParser.urlencoded({ extended: false }),  (req, res) => {

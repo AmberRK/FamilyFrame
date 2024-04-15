@@ -161,6 +161,32 @@ function spawnChild(id) {
 			}
 		})
 }
+async function whoAmI() {
+	const response = await fetch("/getCredentials");
+	const data = await response.json();
+	// let addition = document.getElementById("credentials");
+	// addition.innerHTML = JSON.stringify(data, null, 2);
+	return (JSON.stringify(data, null, 2));
+}
+
+function getMyTrees() {
+	whoAmI()
+	.then(creds => { // Use then to wait for the whoAmI() function to complete
+		console.log(creds)
+		// const userid = creds.userid;
+		// console.log(userid);
+		console.log(creds.userid);
+		fetch("/grabmytrees", {
+			method: "GET",
+			headers: {
+				"Content-type": "application/json; charset=UTF-8"
+			},
+			body: creds.userid
+		})
+			.then(response => response.json())
+			.then(json => console.log(json));
+	});
+}
 
 // Copyright 2021-2023 Observable, Inc.
 // Released under the ISC license.

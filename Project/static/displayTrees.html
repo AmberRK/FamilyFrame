@@ -17,9 +17,14 @@
             <h2>My Trees</h2>
         </div>
 
-        <div id="treeList"></div>
         <div id="JWT test">
             <button onclick="getMyTrees()">Get My Trees (on load)</button>
+        </div>
+        <div id="getCredentials">
+            <button onclick="whoAmI()">Who Am I?</button>
+        </div>
+        
+        <div id="credentials">
         </div>
 
         <footer>
@@ -27,18 +32,6 @@
         </footer>
 
         <script>
-            function getMyTrees() {
-                fetch("/grabmytrees", {
-                    method: "GET",
-                    body: JSON.stringify(jsonData),
-                    headers: {
-                        "Content-type": "application/json; charset=UTF-8"
-                        // "Authorization: Bearer" + cookie
-                    }
-                })
-                    .then((response) => response.json())
-                    .then((json) => console.log(json));
-            }
         </script>
         <script src="scripts/leader-line.min.js"></script>
         <script src="scripts/main.js"></script>
