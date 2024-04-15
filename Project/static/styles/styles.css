@@ -1,3 +1,10 @@
+/* Possible color scheme
+8ecae6
+219ebc
+023047
+ffb703
+fb8500 */
+
 .click-box {
   width: 200px;
   height: 100px;
@@ -175,5 +182,3 @@ li {
 .loginform span {
   color: white
 }
-
-/*login box CSS */
