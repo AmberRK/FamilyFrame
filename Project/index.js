@@ -300,7 +300,12 @@ app.post('/verifyEmail', bodyParser.urlencoded({ extended: false }), (req, res) 
   const jsonData = JSON.stringify(mailChimpEmail);
   // Set up options for the request
   const options = {
-    url: 'https://us18.api.mailchimp.com/3.0/lists/ee85e33acb',
+    // us-18 : authorization extenstion, seen at the end of our authorization key (example will show us-XX), 
+    // 7104ba39dead2e1035ff87427b07465f-us18 : authorzation key 
+    // ee85e33acb : Audience id
+    // api.mailchimp.com/3.0/lists: mailchimp API
+
+    url: 'https://us18.api.mailchimp.com/3.0/lists/ee85e33acb', 
     method: 'POST',
     headers: {
       Authorization: 'auth 7104ba39dead2e1035ff87427b07465f-us18',
