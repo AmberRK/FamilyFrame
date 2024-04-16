@@ -161,31 +161,45 @@ function spawnChild(id) {
 			}
 		})
 }
-async function whoAmI() {
-	const response = await fetch("/getCredentials");
-	const data = await response.json();
-	// let addition = document.getElementById("credentials");
-	// addition.innerHTML = JSON.stringify(data, null, 2);
-	return (JSON.stringify(data, null, 2));
-}
+// async function whoAmI() {
+// 	const response = await fetch("/getCredentials");
+// 	const data = await response.json();
+// 	return (data);
+// }
 
 function getMyTrees() {
-	whoAmI()
-	.then(creds => { // Use then to wait for the whoAmI() function to complete
-		console.log(creds)
-		// const userid = creds.userid;
-		// console.log(userid);
-		console.log(creds.userid);
-		fetch("/grabmytrees", {
-			method: "GET",
-			headers: {
-				"Content-type": "application/json; charset=UTF-8"
-			},
-			body: creds.userid
-		})
-			.then(response => response.json())
-			.then(json => console.log(json));
-	});
+	// whoAmI()
+	// .then(creds => { // Use then to wait for the whoAmI() function to complete
+	// 	// console.log(creds);
+	// 	// console.log(creds.userid);
+	// 	fetch("/grabmytrees", {
+	// 		method: "POST",
+	// 		headers: {
+	// 			"Content-type": "application/json; charset=UTF-8"
+	// 		},
+	// 		body: creds.userid
+	// 	})
+	// 		.then(response => response.json())
+	// 		.then(json => console.log(json));
+	// });
+	fetch("/grabmytrees", {
+		method: "GET",
+		headers: {
+			"Content-type": "application/json; charset=UTF-8"
+		}
+	})
+		.then(response => response.json())
+		.then(json => {
+			console.log(json);
+			let ulTree = document.getElementById("showMyTrees");
+			// listTree.innerHTML = JSON.stringify(json, null, 2);
+			json.forEach(function (item) {
+				var li = document.createElement("li");
+				li.textContent = "Name: " + item.treelabel;
+				ulTree.appendChild(li);
+			});
+
+		});
 }
 
 // Copyright 2021-2023 Observable, Inc.

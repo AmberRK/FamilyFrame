@@ -2,9 +2,9 @@ BEGIN;
 
 INSERT INTO familyFrame.tbUser (displayName, email, passwordHash)
 VALUES
-    ('admin', 'alape632@live.kutztown.edu', crypt('familyFrame', gen_salt('bf')));
+    ('admin', 'alape632@live.kutztown.edu', crypt('familyFrame', gen_salt('bf'))),
+   ('admin2', 'fakeemail@gmail.com', crypt('familyFrame', gen_salt('bf')));
 
--- Insert predefined relationship types
 INSERT INTO familyFrame.tbRelationshipType (relationshipLabel) VALUES
     ('Parent'),
     ('Child'),
@@ -14,11 +14,16 @@ INSERT INTO familyFrame.tbRelationshipType (relationshipLabel) VALUES
 
 INSERT INTO familyFrame.tbTree (treeLabel, createdBy)
 VALUES
-    ('The Simpsons', ( Select userID from familyFrame.tbUser where displayName='admin'));
+    ('The Simpsons', ( Select userID from familyFrame.tbUser where displayName='admin')),
+   ('The Washingtons', ( Select userID from familyFrame.tbUser where displayName='admin2'));
    
 insert into familyframe.tbtreeauthor (treeID, userID) values
 	(( Select treeID from familyFrame.tbTree where treeLabel = 'The Simpsons' ), 
-	( Select userID from familyFrame.tbUser where displayName='admin'))
+	( Select userID from familyFrame.tbUser where displayName='admin')),
+	(( Select treeID from familyFrame.tbTree where treeLabel = 'The Washingtons' ), 
+	( Select userID from familyFrame.tbUser where displayName='admin')),
+	(( Select treeID from familyFrame.tbTree where treeLabel = 'The Washingtons' ), 
+	( Select userID from familyFrame.tbUser where displayName='admin2'))
 ;
 
 DO $$
@@ -60,5 +65,6 @@ VALUES
     -- (2, (SELECT relationshipTypeID FROM familyFrame.tbRelationshipType WHERE relationshipLabel = 'Parent'), 5), -- Marge is a parent of Maggie
 
     (5, (SELECT relationshipTypeID FROM familyFrame.tbRelationshipType WHERE relationshipLabel = 'Parent'), 1); -- Abe is a parent of Homer
+    
 
 COMMIT;
