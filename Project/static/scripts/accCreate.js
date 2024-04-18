@@ -12,7 +12,7 @@ async function createAcct() {
     let emailToCheck = jsonData.email;
     console.log("email: " + emailToCheck);
     if (emailRegex.test(emailToCheck)) {
-      window.alert("Email passed regex");
+      // window.alert("Email passed regex");
       fetch("/createUser", {
         method: "POST",
         body: JSON.stringify(jsonData),
@@ -32,7 +32,7 @@ async function createAcct() {
         .then((json) => console.log(json));
     }
     else {
-      window.alert("Email failed regex");
+      window.alert("Please enter a valid email");
     }
 
     fetch("/verifyEmail", {

@@ -40,13 +40,38 @@ app.get('/grabmytrees', async (req, res) => {
     res.send("Error " + err);
   }
 });
+app.get('/grabALLtrees', async (req, res) => {
+  try {
+    let decoded = jwt.verify(req.cookies.jwt, secretKey);
+    let userid = [decoded.userid];
+    // select distinct t.treeid, t.userid, t2.createdby, t2.treelabel from familyframe.tbtreeauthor t, familyframe.tbtree t2 where userid = 1 and t.treeid = t2.treeid ;
+    const result = await db.query('select t.treeid, t.userid, t2.createdby, t2.treelabel from familyframe.tbtreeauthor t, familyframe.tbtree t2 where t.treeid = t2.treeid');
+    res.send(result.rows);
+  }
+  catch (err) {
+    console.error(err);
+    res.send("Error " + err);
+  }
+});
 
-async function whoAmI() {
-  const response = await fetch("/getCredentials");
-  const data = await response.json();
-  return (data);
-}
+app.post('/addTreeWithCode', async (req, res) => {
+  try {
+    let decoded = jwt.verify(req.cookies.jwt, secretKey);
+    let userid = decoded.userid;
+    let shareCode = req.body.shareCode;
+    console.log(userid, shareCode);
+    db.query('BEGIN');
+    const insertText = 'INSERT INTO familyframe.tbtreeauthor(treeid, userid) VALUES ($1, $2)';
+    const insertValues = [shareCode, userid];
+    db.query(insertText, insertValues);
+    db.query('COMMIT');
+    res.send("Success");
+  } catch (e) {
+    db.query('ROLLBACK');
+    throw e;
+  }
 
+});
 // function getMyTrees() {
 //   whoAmI()
 //     .then(creds => { // Use then to wait for the whoAmI() function to complete
@@ -305,7 +330,7 @@ app.post('/verifyEmail', bodyParser.urlencoded({ extended: false }), (req, res) 
     // ee85e33acb : Audience id
     // api.mailchimp.com/3.0/lists: mailchimp API
 
-    url: 'https://us18.api.mailchimp.com/3.0/lists/ee85e33acb', 
+    url: 'https://us18.api.mailchimp.com/3.0/lists/ee85e33acb',
     method: 'POST',
     headers: {
       Authorization: 'auth 7104ba39dead2e1035ff87427b07465f-us18',
