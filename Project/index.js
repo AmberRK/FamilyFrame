@@ -351,3 +351,20 @@ app.post('/verifyEmail', bodyParser.urlencoded({ extended: false }), (req, res) 
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
 });
+
+
+//Logout Cookie clearing
+app.post('/loggedout', async (req, res) => {
+try {
+    // doesn't work res.cookie('compacookie', 'testcookie2', { httpOnly: true, sameSite: true, expires: new Date(Date.now() + 900000) });
+   // doesn't work res.cookie('testcook', 'testcookie', { httpOnly: true, sameSite: true, expires: new Date(Date.now() + 1) }); //test cookie
+    res.clearCookie('jwt', { httpOnly: true, sameSite: true, path: "/" }).send('cleared cookie'); //this was the ONLY thing that worked
+    //console.log("Cookie: " + req.cookies.jwt);
+
+
+  }
+catch (error) {
+  console.error('Error:', error);
+  res.status(500).json({ message: 'Internal Server Error' });
+}
+});
