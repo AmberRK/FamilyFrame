@@ -9,7 +9,7 @@ function replacePlaceholderNavbar() {
     '       <li ><a href="#" onclick="navigateToMyTrees()">My Trees</a></li>' +
     '       <li><a href="#"onclick="navigateToEditor()">Tree Editor</a></li>' +
     '        <li><a href="#"onclick="navigateToUI()">UI</a></li>' +
-    '       <li><a href="#"onclick="navigateToLogin()">Logout</a></li>' +
+    '       <li><a href="#"onclick="navigateToLogout()">Logout</a></li>' +
     '   </ul>' +
     '</nav>';    
     navbarPlaceholder.innerHTML = navbarContent;
@@ -77,3 +77,40 @@ function navigateToUI() {
 function navigateToLogin() {
 	window.location.href = "/login";
 }
+
+//there probably was a more efficient way to do this, but I'm afraid to touch it any further
+async function navigateToLogout() {
+try
+    {
+      fetch("/loggedout", {
+        method: "POST",
+        //body: JSON.stringify(jsonData),
+        headers: {
+          "Content-type": "application/json; charset=UTF-8"
+        }
+      })
+        .then((response) => {
+          if(!response.ok)
+          {
+            console.log("Uh oh");
+            throw new Error(`HTTP error! Status: ${response.status}`);
+          }
+          else
+          {
+            navbarNotLoggedIn();
+            window.location.href = "/home";
+            return response.json()
+          }
+        })
+        .then((json) => {
+          if (json.message == "Logged out") {
+            navbarNotLoggedIn();
+            window.location.href = "/home";
+          }
+        })
+    }
+    catch(error)
+    {
+      replacePlaceholderNavbar();
+    }
+  }
