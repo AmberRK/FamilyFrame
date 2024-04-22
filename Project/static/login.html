@@ -29,15 +29,23 @@
         <table>
           <tr>
             <td> <label for="email">Email Address:</label> </td>
-            <td> <input name="email" id="email" type="email" value="alape632@live.kutztown.edu" size="35" maxlength="35"> </td>
+            <td> <input name="email" id="email" type="email" value="alape632@live.kutztown.edu" size="40" maxlength="40"> </td>
           </tr>
           <tr>
             <td> <label for="pass">Password:</label> </td>
-            <td> <input name="password" id="password" type="password" value="familyFrame" size="35" maxlength="35"> </td>
+            <td> 
+              <input name="password" id="password" type="password" value="familyFrame" size="36" maxlength="36"> 
+              <button id="togglePasswordVisibility" class="password-toggle-button" onClick="togglePassword()">
+                <img id = "eyeIcon" src = "images/eye-off-outline.svg" alt="Eye with a line through it" viewBox="0 0 12 12" width="12" height="12"/>
+              </button>
+            </td>
           </tr>
+          <div class="alert" id="alert">
+            <!-- Alert message will be displayed here --> 
+          </div>
         </table>
         <input class="submit" type="submit" value="Login" onClick="login()">
-        <input class="reset" type="reset" value="Reset">
+        <input class="reset" type="reset" value="Reset" onClick="resetFields()">
       </form>
 	    <br>
 	    <div>Don't have an account? <a href="./newuser.html">Sign Up</a></div>

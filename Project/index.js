@@ -229,10 +229,12 @@ app.get('/profileJWT', authenticateToken, (req, res) => {
 
 app.post('/createUser', bodyParser.urlencoded({ extended: true }), async (req, res) => {
   try {
+    // Move regex over here
     // Check if email is already in use
     await db.query('BEGIN')
     const queryText = 'SELECT userid, displayname FROM familyFrame.tbUser WHERE email = $1';
     const passedValues = [req.body.email];
+    console.log("Email: " + req.body.email);
     const result = await db.query(queryText, passedValues);
     if(result.rows.length > 0)
     {

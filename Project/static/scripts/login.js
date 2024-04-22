@@ -1,3 +1,49 @@
+function togglePassword() {
+  
+  var passwordField = document.getElementById("password");
+  var eyeIcon = document.getElementById("eyeIcon");
+
+  if (passwordField.type === "password") 
+  {
+    passwordField.type = "text";
+    eyeIcon.src = "images/eye-outline.svg"; // Change to hide eye icon
+  } 
+  else 
+  {
+    passwordField.type = "password";
+    eyeIcon.src = "images/eye-off-outline.svg"; // Change to show eye icon
+  }
+}
+
+function resetFields() 
+{
+  var email = document.getElementById("email");
+  email.setAttribute("value", "");
+  var password = document.getElementById("password");
+  password.setAttribute("value", "");
+}
+
+function alertUser(message) 
+{
+  var alert = document.getElementById("alert");
+  message = '<span class="closebtn">&times;</span>'
+  + ' <strong>Error!  </strong>' + message;
+  alert.setAttribute("style", "opacity: 1");
+  alert.innerHTML = message;
+
+  var close = document.getElementsByClassName("closebtn");
+  var i;
+
+  for (i = 0; i < close.length; i++) 
+  {
+    close[i].onclick = function(){
+      var div = this.parentElement;
+      div.style.opacity = "0";
+      setTimeout(function(){ div.style.display = "none"; }, 600);
+  }
+  }
+}
+
 function navbarNotLoggedIn()
 {
   var navbarPlaceholder = document.getElementById('navbarPlaceholder');
@@ -51,7 +97,7 @@ async function login() {
         .then((response) => {
           if(!response.ok)
           {
-            console.log("Uh oh");
+            alertUser("Invalid email or password");
             throw new Error(`HTTP error! Status: ${response.status}`);
           }
           else
@@ -65,6 +111,10 @@ async function login() {
             window.location.href = "/mytrees";
           }
         })
+        .catch((error) => {
+          console.error('Error:', error);
+          throw error;
+        });
     }
     catch(error)
     {
@@ -72,3 +122,4 @@ async function login() {
     }
   });
 }
+
