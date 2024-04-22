@@ -20,12 +20,31 @@
         <div id="JWT test">
             <button onclick="getMyTrees()">Get My Trees (on load)</button>
         </div>
-        <div id="getCredentials">
-            <button onclick="whoAmI()">Who Am I?</button>
+        <div id="debugTrees">
+            <button onclick="getALLTrees()">Get ALL Trees. To test adding a tree by code</button>
         </div>
-        
-        <div id="credentials">
-        </div>
+
+        <ul id="showMyTrees"></ul>
+        <ul id="showALLTrees"></ul>
+
+        <section class="modal hidden">
+            <div class="flex">
+                <button class="btn-close">⨉</button>
+            </div>
+            <div>
+                <h3>Add a tree via a share code</h3>
+            </div>
+            <form id="submitCode">
+                <input type="text" autocomplete="off" name="shareCode" id="shareCode"
+                    placeholder="xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx" />
+                <input class="submit" id="submitCode" type="submit" value="Add tree" onClick="addATree()">
+            </form>
+
+        </section>
+
+        <div class="overlay hidden"></div>
+        <button class="btn btn-open">Add tree (via code)</button>
+
 
         <footer>
             <div id="footerPlaceholder"></div>
@@ -42,6 +61,36 @@
             document.addEventListener('DOMContentLoaded', function () {
                 replacePlaceholderFooter();
             });
+            const modal = document.querySelector(".modal");
+            const overlay = document.querySelector(".overlay");
+            const openModalBtn = document.querySelector(".btn-open");
+            const closeModalBtn = document.querySelector(".btn-close");
+
+            // close modal function
+            const closeModal = function () {
+                modal.classList.add("hidden");
+                overlay.classList.add("hidden");
+            };
+
+            // close the modal when the close button and overlay is clicked
+            closeModalBtn.addEventListener("click", closeModal);
+            overlay.addEventListener("click", closeModal);
+
+            // close modal when the Esc key is pressed
+            document.addEventListener("keydown", function (e) {
+                if (e.key === "Escape" && !modal.classList.contains("hidden")) {
+                    closeModal();
+                }
+            });
+
+            // open modal function
+            const openModal = function () {
+                modal.classList.remove("hidden");
+                overlay.classList.remove("hidden");
+            };
+            // open modal event
+            openModalBtn.addEventListener("click", openModal);
+
         </script>
     </div>
 </body>

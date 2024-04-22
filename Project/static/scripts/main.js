@@ -161,33 +161,113 @@ function spawnChild(id) {
 			}
 		})
 }
-async function whoAmI() {
-	const response = await fetch("/getCredentials");
-	const data = await response.json();
-	// let addition = document.getElementById("credentials");
-	// addition.innerHTML = JSON.stringify(data, null, 2);
-	return (JSON.stringify(data, null, 2));
-}
+// async function whoAmI() {
+// 	const response = await fetch("/getCredentials");
+// 	const data = await response.json();
+// 	return (data);
+// }
 
 function getMyTrees() {
-	whoAmI()
-	.then(creds => { // Use then to wait for the whoAmI() function to complete
-		console.log(creds)
-		// const userid = creds.userid;
-		// console.log(userid);
-		console.log(creds.userid);
-		fetch("/grabmytrees", {
-			method: "GET",
+	fetch("/grabmytrees", {
+		method: "GET",
+		headers: {
+			"Content-type": "application/json; charset=UTF-8"
+		}
+	})
+		.then(response => response.json())
+		.then(json => {
+			console.log(json);
+			let ulTree = document.getElementById("showMyTrees");
+			// listTree.innerHTML = JSON.stringify(json, null, 2);
+			json.forEach(function (item) {
+				var li = document.createElement("li");
+				if (item.createdby == item.userid) {
+					li.textContent = "My tree name: " + item.treelabel;
+					ulTree.appendChild(li);
+				}
+				else {
+					li.textContent = "Name: " + item.treelabel;
+					ulTree.appendChild(li);
+				}
+			});
+
+		});
+}
+function getALLTrees() {
+	fetch("/grabALLtrees", {
+		method: "GET",
+		headers: {
+			"Content-type": "application/json; charset=UTF-8"
+		}
+	})
+		.then(response => response.json())
+		.then(json => {
+			console.log(json);
+			let ulTree = document.getElementById("showALLTrees");
+			// listTree.innerHTML = JSON.stringify(json, null, 2);
+			json.forEach(function (item) {
+				var li = document.createElement("li");
+				li.textContent = "Name: " + item.treelabel + " ID: " + item.treeid;
+				ulTree.appendChild(li);
+			});
+
+		});
+}
+
+// const modal = document.querySelector(".modal");
+// const overlay = document.querySelector(".overlay");
+// const openModalBtn = document.querySelector(".btn-open");
+// const closeModalBtn = document.querySelector(".btn-close");
+
+// // close modal function
+// const closeModal = function () {
+// 	modal.classList.add("hidden");
+// 	overlay.classList.add("hidden");
+// };
+
+// // close the modal when the close button and overlay is clicked
+// closeModalBtn.addEventListener("click", closeModal);
+// overlay.addEventListener("click", closeModal);
+
+// // close modal when the Esc key is pressed
+// document.addEventListener("keydown", function (e) {
+// 	if (e.key === "Escape" && !modal.classList.contains("hidden")) {
+// 		closeModal();
+// 	}
+// });
+
+// // open modal function
+// const openModal = function () {
+// 	modal.classList.remove("hidden");
+// 	overlay.classList.remove("hidden");
+// };
+// // open modal event
+// openModalBtn.addEventListener("click", openModal);
+
+function addATree() {
+	document.getElementById('submitCode').addEventListener('submit', function (event) {
+		event.preventDefault();
+		const formData = new FormData(this);
+		const jsonData = {};
+		formData.forEach((value, key) => {
+			jsonData[key] = value;
+		});
+		console.log(jsonData);
+
+		fetch("/addTreeWithCode", {
+			method: "POST",
 			headers: {
 				"Content-type": "application/json; charset=UTF-8"
 			},
-			body: creds.userid
+			body: JSON.stringify(jsonData)
 		})
-			.then(response => response.json())
-			.then(json => console.log(json));
-	});
+			// .then(response => response.json())
+			// .then(json => {
+			// console.log(json);
+			// });
+			.then(response => console.log(response));
+	})
 }
-
 // Copyright 2021-2023 Observable, Inc.
 // Released under the ISC license.
 // https://observablehq.com/@d3/tree

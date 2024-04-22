@@ -29,15 +29,65 @@ app.get('/mytrees', (req, res) => res.sendFile(__dirname + '/static/displayTrees
 
 app.get('/grabmytrees', async (req, res) => {
   try {
-    const result = await db.query("SELECT personid, firstname, lastname, dateofbirth FROM familyFrame.tbPerson;")
-    // const result = await db.query("SELECT * from familyFrame.;")
-    res.send(result.rows)
+    let decoded = jwt.verify(req.cookies.jwt, secretKey);
+    let userid = [decoded.userid];
+    // select distinct t.treeid, t.userid, t2.createdby, t2.treelabel from familyframe.tbtreeauthor t, familyframe.tbtree t2 where userid = 1 and t.treeid = t2.treeid ;
+    const result = await db.query('select t.treeid, t.userid, t2.createdby, t2.treelabel from familyframe.tbtreeauthor t, familyframe.tbtree t2 where userid = $1 and t.treeid = t2.treeid', userid);
+    res.send(result.rows);
   }
   catch (err) {
     console.error(err);
     res.send("Error " + err);
   }
 });
+app.get('/grabALLtrees', async (req, res) => {
+  try {
+    let decoded = jwt.verify(req.cookies.jwt, secretKey);
+    let userid = [decoded.userid];
+    // select distinct t.treeid, t.userid, t2.createdby, t2.treelabel from familyframe.tbtreeauthor t, familyframe.tbtree t2 where userid = 1 and t.treeid = t2.treeid ;
+    const result = await db.query('select t.treeid, t.userid, t2.createdby, t2.treelabel from familyframe.tbtreeauthor t, familyframe.tbtree t2 where t.treeid = t2.treeid');
+    res.send(result.rows);
+  }
+  catch (err) {
+    console.error(err);
+    res.send("Error " + err);
+  }
+});
+
+app.post('/addTreeWithCode', async (req, res) => {
+  try {
+    let decoded = jwt.verify(req.cookies.jwt, secretKey);
+    let userid = decoded.userid;
+    let shareCode = req.body.shareCode;
+    console.log(userid, shareCode);
+    db.query('BEGIN');
+    const insertText = 'INSERT INTO familyframe.tbtreeauthor(treeid, userid) VALUES ($1, $2)';
+    const insertValues = [shareCode, userid];
+    db.query(insertText, insertValues);
+    db.query('COMMIT');
+    res.send("Success");
+  } catch (e) {
+    db.query('ROLLBACK');
+    throw e;
+  }
+
+});
+// function getMyTrees() {
+//   whoAmI()
+//     .then(creds => { // Use then to wait for the whoAmI() function to complete
+//       // console.log(creds);
+//       // console.log(creds.userid);
+//       fetch("/grabmytrees", {
+//         method: "POST",
+//         headers: {
+//           "Content-type": "application/json; charset=UTF-8"
+//         },
+//         body: creds.userid
+//       })
+//         .then(response => response.json())
+//         .then(json => console.log(json));
+//     });
+// }
 
 app.get('/results', async (req, res) => {
   try {
@@ -236,8 +286,7 @@ app.post('/createUser', bodyParser.urlencoded({ extended: true }), async (req, r
     const passedValues = [req.body.email];
     console.log("Email: " + req.body.email);
     const result = await db.query(queryText, passedValues);
-    if(result.rows.length > 0)
-    {
+    if (result.rows.length > 0) {
       await db.query('COMMIT');
       res.status(400).json({ message: "Email already in use" });
       return;
@@ -248,16 +297,15 @@ app.post('/createUser', bodyParser.urlencoded({ extended: true }), async (req, r
     db.query('BEGIN')
     const insertText = 'INSERT INTO familyFrame.tbUser(displayName, email, passwordHash) VALUES ($1, $2, crypt($3, gen_salt(\'bf\')))';
     const insertValues = [req.body.displayName, req.body.email, req.body.password];
-    
+
     db.query(insertText, insertValues)
-    .then(() => {
-      res.status(200).json({ message: "Account created successfully", email: req.body.email});
+      .then(() => {
+        res.status(200).json({ message: "Account created successfully", email: req.body.email });
         return db.query('COMMIT');
-    });
+      });
   }
 
-  catch (error) 
-  {
+  catch (error) {
     await db.query('ROLLBACK');
     // If an error occurs, send an error response
     console.error('Error hashing password:', error);
@@ -265,7 +313,7 @@ app.post('/createUser', bodyParser.urlencoded({ extended: true }), async (req, r
   }
 });
 
-app.post('/verifyEmail', bodyParser.urlencoded({ extended: false }),  (req, res) => {
+app.post('/verifyEmail', bodyParser.urlencoded({ extended: false }), (req, res) => {
   // Make an object to send to MailChimp
   const mailChimpEmail = {
     members: [
@@ -284,7 +332,7 @@ app.post('/verifyEmail', bodyParser.urlencoded({ extended: false }),  (req, res)
     // ee85e33acb : Audience id
     // api.mailchimp.com/3.0/lists: mailchimp API
 
-    url: 'https://us18.api.mailchimp.com/3.0/lists/ee85e33acb', 
+    url: 'https://us18.api.mailchimp.com/3.0/lists/ee85e33acb',
     method: 'POST',
     headers: {
       Authorization: 'auth 7104ba39dead2e1035ff87427b07465f-us18',
@@ -293,8 +341,8 @@ app.post('/verifyEmail', bodyParser.urlencoded({ extended: false }),  (req, res)
   }
   // Send the request to MailChimp
   console.log("Email: " + req.body.email);
-  request (options, (error, response, body) => {
-    if(error) {
+  request(options, (error, response, body) => {
+    if (error) {
       res.sendStatus(500); // error :(
     } else {
       res.sendStatus(200); //successful :)
@@ -304,4 +352,21 @@ app.post('/verifyEmail', bodyParser.urlencoded({ extended: false }),  (req, res)
 
 app.listen(port, () => {
   console.log(`Server is running on http://localhost:${port}`);
+});
+
+
+//Logout Cookie clearing
+app.post('/loggedout', async (req, res) => {
+try {
+    // doesn't work res.cookie('compacookie', 'testcookie2', { httpOnly: true, sameSite: true, expires: new Date(Date.now() + 900000) });
+   // doesn't work res.cookie('testcook', 'testcookie', { httpOnly: true, sameSite: true, expires: new Date(Date.now() + 1) }); //test cookie
+    res.clearCookie('jwt', { httpOnly: true, sameSite: true, path: "/" }).send('cleared cookie'); //this was the ONLY thing that worked
+    //console.log("Cookie: " + req.cookies.jwt);
+
+
+  }
+catch (error) {
+  console.error('Error:', error);
+  res.status(500).json({ message: 'Internal Server Error' });
+}
 });

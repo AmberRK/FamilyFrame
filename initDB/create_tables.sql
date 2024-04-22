@@ -47,3 +47,5 @@ CREATE TABLE familyFrame.tbTreeAuthor (
     userID INT REFERENCES familyFrame.tbUser(userID),
     createdDate timestamp DEFAULT CURRENT_TIMESTAMP
 );
+
+COMMIT;
