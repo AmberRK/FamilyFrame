@@ -8,7 +8,6 @@ function replacePlaceholderNavbar() {
     '       <li><a href="#"onclick="navigateToHome()">Home</a></li>' +
     '       <li ><a href="#" onclick="navigateToMyTrees()">My Trees</a></li>' +
     '       <li><a href="#"onclick="navigateToEditor()">Tree Editor</a></li>' +
-    '        <li><a href="#"onclick="navigateToUI()">UI</a></li>' +
     '       <li><a href="#"onclick="navigateToLogout()">Logout</a></li>' +
     '   </ul>' +
     '</nav>';    
@@ -23,7 +22,6 @@ function navbarNotLoggedIn()
                       '   <ul>' +
                       '       <li><a href="#"onclick="navigateToHome()">Home</a></li>' +
                       '       <li><a href="#"onclick="navigateToEditor()">Tree Editor</a></li>' +
-                      '       <li><a href="#"onclick="navigateToUI()">UI</a></li>' +
                       '       <li><a href="#"onclick="navigateToLogin()">Login</a></li>' +
                       '   </ul>' +
                       '</nav>';
@@ -68,10 +66,6 @@ function navigateToEditor() {
 
 function navigateToAbout() {
 	window.location.href = "/about";
-}
-
-function navigateToUI() {
-	window.location.href = "/ui";
 }
 
 function navigateToLogin() {
