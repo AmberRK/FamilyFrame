@@ -171,6 +171,8 @@ app.get('/login', (req, res) => res.sendFile(__dirname + '/static/login.html'));
 app.get('/newuser', (req, res) => res.sendFile(__dirname + '/static/newuser.html'));
 app.get('/index', (req, res) => res.sendFile(__dirname + '/static/index.html'));
 app.get('/ui', (req, res) => res.sendFile(__dirname + '/static/uiDesign.html'));
+app.get('/forgotpass', (req, res) => res.sendFile(__dirname + '/static/forgotpass.html'));
+app.get('/newpass', (req, res) => res.sendFile(__dirname + '/static/newpass.html'));
 
 // Get stuff from login
 app.post('/login', (req, res) => {
@@ -369,4 +371,48 @@ catch (error) {
   console.error('Error:', error);
   res.status(500).json({ message: 'Internal Server Error' });
 }
+});
+
+app.post('/ownerVerify', async (req, res) => {
+  try {
+    db.query('BEGIN')
+    const queryText = 'SELECT passwordHash FROM familyFrame.tbUser WHERE email = $1';
+    const passedValues = [req.body.email];
+    const result = await db.query(queryText, passedValues);
+
+    if (result.rows.length === 1) {
+      const user = result.rows[0];
+      res.status(200).json({ message: "Email authenticated"});
+
+    } else {
+      console.log("Authentication failed");
+      res.status(401).json({ message: "Authentication failed" });
+    }
+  }
+  catch (error) {
+    console.error('Error:', error);
+    res.status(500).json({ message: 'Internal Server Error' });
+  }
+});
+
+app.post('/ownerChange', async (req, res) => {
+  try {
+    db.query('BEGIN')
+    const queryText = 'SELECT userid, displayname FROM familyFrame.tbUser WHERE passwordHash = crypt($1, passwordHash)';
+    const passedValues = [req.body.password];
+    const result = await db.query(queryText, passedValues);
+    console.log(result);
+    if (result.rows.length === 1) {
+      const user = result.rows[0];
+      res.status(200).json({ message: "Email authenticated"});
+
+    } else {
+      console.log("Authentication failed");
+      res.status(401).json({ message: "Authentication failed" });
+    }
+  }
+  catch (error) {
+    console.error('Error:', error);
+    res.status(500).json({ message: 'Internal Server Error' });
+  }
 });
