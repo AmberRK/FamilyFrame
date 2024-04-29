@@ -40,19 +40,19 @@ app.get('/grabmytrees', async (req, res) => {
     res.send("Error " + err);
   }
 });
-app.get('/grabALLtrees', async (req, res) => {
-  try {
-    let decoded = jwt.verify(req.cookies.jwt, secretKey);
-    let userid = [decoded.userid];
-    // select distinct t.treeid, t.userid, t2.createdby, t2.treelabel from familyframe.tbtreeauthor t, familyframe.tbtree t2 where userid = 1 and t.treeid = t2.treeid ;
-    const result = await db.query('select t.treeid, t.userid, t2.createdby, t2.treelabel from familyframe.tbtreeauthor t, familyframe.tbtree t2 where t.treeid = t2.treeid');
-    res.send(result.rows);
-  }
-  catch (err) {
-    console.error(err);
-    res.send("Error " + err);
-  }
-});
+// app.get('/grabALLtrees', async (req, res) => {
+//   try {
+//     let decoded = jwt.verify(req.cookies.jwt, secretKey);
+//     let userid = [decoded.userid];
+//     // select distinct t.treeid, t.userid, t2.createdby, t2.treelabel from familyframe.tbtreeauthor t, familyframe.tbtree t2 where userid = 1 and t.treeid = t2.treeid ;
+//     const result = await db.query('select t.treeid, t.userid, t2.createdby, t2.treelabel from familyframe.tbtreeauthor t, familyframe.tbtree t2 where t.treeid = t2.treeid');
+//     res.send(result.rows);
+//   }
+//   catch (err) {
+//     console.error(err);
+//     res.send("Error " + err);
+//   }
+// });
 
 app.post('/addTreeWithCode', async (req, res) => {
   try {
@@ -102,11 +102,11 @@ app.get('/results', async (req, res) => {
   }
 });
 
-app.get('/results/:id', async (req, res) => {
-  const { id } = req.params
-  const { rows } = await db.query("SELECT * FROM familyFrame.tbPerson WHERE personid = $1", [id])
-  res.send(rows[0])
-})
+// app.get('/results/:id', async (req, res) => {
+//   const { id } = req.params
+//   const { rows } = await db.query("SELECT * FROM familyFrame.tbPerson WHERE personid = $1", [id])
+//   res.send(rows[0])
+// })
 
 app.get('/stratifyChildren', async (req, res) => {
   const { id } = req.params
