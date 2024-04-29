@@ -9,23 +9,38 @@
 </head>
 
 
-<body>
+<body onload="javascript: getMyTrees()">
     <div id="flex-container">
         <div id="navbarPlaceholder"></div>
 
         <div>
             <h2>My Trees</h2>
+            <br>
         </div>
 
-        <div id="JWT test">
+        <!-- <div id="JWT test">
             <button onclick="getMyTrees()">Get My Trees (on load)</button>
-        </div>
-        <div id="debugTrees">
+        </div> -->
+        <!-- <div id="debugTrees">
             <button onclick="getALLTrees()">Get ALL Trees. To test adding a tree by code</button>
+        </div> -->
+        <div id="myTreesDiv">
+            <h3>Trees I created</h3>
+            <table id="showMyTrees">
+                <th>Name</th>
+                <th>Share Code</th>
+            </table>
+            <br>
         </div>
 
-        <ul id="showMyTrees"></ul>
-        <ul id="showALLTrees"></ul>
+        <div id="sharedTreesDiv">
+            <h3>Trees shared with me</h3>
+            <table id="showALLTrees">
+                <th>Name</th>
+            </table>
+            <br>
+            <br>
+        </div>
 
         <section class="modal hidden">
             <div class="flex">
@@ -43,8 +58,32 @@
         </section>
 
         <div class="overlay hidden"></div>
-        <button class="btn btn-open">Add tree (via code)</button>
+        <button class="btn btn-open">Add a tree with a code</button>
 
+        <section id="makeTreeDiv" class="modal hidden">
+            <div class="flex">
+                <button class="btn-close">⨉</button>
+            </div>
+            <div>
+                <h3>Create a tree</h3>
+            </div>
+            <form id="createTreeForm">
+                <input type="text" autocomplete="off" name="treeName" id="treeName"
+                    placeholder="Name" />
+                <input class="submit" id="submitTree" type="submit" value="Create tree" onClick="">
+            </form>
+        </section>
+
+        <div class="overlay hidden"></div>
+        <button class="btn btn-open">Create a tree</button>
+
+        <div id="popup" class="popup">
+            <p>Are you sure?</p>
+            <div class="popup-buttons">
+                <button id="yesButton" class="popup-button">Yes</button>
+                <button id="noButton" class="popup-button">No</button>
+            </div>
+        </div>
 
         <footer>
             <div id="footerPlaceholder"></div>
