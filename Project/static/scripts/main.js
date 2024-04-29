@@ -109,34 +109,34 @@ function postNewPerson(jsonData) {
 		.then((json) => console.log(json));
 }
 
-function getDynamicData() {
-	fetch('/results/2')
-		.then(response => response.json())
-		.then(data => {
-			// Display the data in the 'result' div
-			const resultDiv = document.getElementById('result2');
-			resultDiv.innerHTML = JSON.stringify(data, null, 2);
-		})
-		.catch(error => {
-			console.error('Error fetching data:', error);
-		});
-}
+// function getDynamicData() {
+// 	fetch('/results/2')
+// 		.then(response => response.json())
+// 		.then(data => {
+// 			// Display the data in the 'result' div
+// 			const resultDiv = document.getElementById('result2');
+// 			resultDiv.innerHTML = JSON.stringify(data, null, 2);
+// 		})
+// 		.catch(error => {
+// 			console.error('Error fetching data:', error);
+// 		});
+// }
 
-function getAllData() {
-	fetch('/results')
-		.then(response => response.json())
-		.then(data => {
-			// Display the data in the 'result' div
-			const resultField = document.getElementById('result');
-			resultField.innerHTML = JSON.stringify(data, null, 2);
-			// const jsonAlert = document.getElementById('result').innerText;
-			// window.alert(jsonAlert);
-			// window.alert(resultDiv.innerHTML);
-		})
-		.catch(error => {
-			console.error('Error fetching data:', error);
-		});
-}
+// function getAllData() {
+// 	fetch('/results')
+// 		.then(response => response.json())
+// 		.then(data => {
+// 			// Display the data in the 'result' div
+// 			const resultField = document.getElementById('result');
+// 			resultField.innerHTML = JSON.stringify(data, null, 2);
+// 			// const jsonAlert = document.getElementById('result').innerText;
+// 			// window.alert(jsonAlert);
+// 			// window.alert(resultDiv.innerHTML);
+// 		})
+// 		.catch(error => {
+// 			console.error('Error fetching data:', error);
+// 		});
+// }
 
 function getInfo(targetID) {
 	return fetch("/results/" + targetID)
@@ -173,48 +173,48 @@ function getChildrenToStratify() {
 
 }
 
-function getChildren(parentID) {
-	return fetch("/children/" + parentID)
-		.then(response => response.json())
-		.then(data => {
-			return (data);
-		})
-		.catch(error => {
-			console.error('Error fetching data:', error);
-		});
-}
+// function getChildren(parentID) {
+// 	return fetch("/children/" + parentID)
+// 		.then(response => response.json())
+// 		.then(data => {
+// 			return (data);
+// 		})
+// 		.catch(error => {
+// 			console.error('Error fetching data:', error);
+// 		});
+// }
 
-function spawnChild(id) {
-	getChildren(id)
-		.then(data => {
-			let resultID = "resultDiv" + id;
-			const resultField = document.getElementById(resultID);
-			resultField.innerHTML = "";
-			if (Object.values(data).length != 0) {
+// function spawnChild(id) {
+// 	getChildren(id)
+// 		.then(data => {
+// 			let resultID = "resultDiv" + id;
+// 			const resultField = document.getElementById(resultID);
+// 			resultField.innerHTML = "";
+// 			if (Object.values(data).length != 0) {
 
-				data.forEach(function (row) {
-					let childDiv = document.createElement("div");
-					childDiv.classList.add("person");
-					childDiv.id = (row.id);
-					childDiv.textContent = row.childname;
-					resultField.appendChild(childDiv);
+// 				data.forEach(function (row) {
+// 					let childDiv = document.createElement("div");
+// 					childDiv.classList.add("person");
+// 					childDiv.id = (row.id);
+// 					childDiv.textContent = row.childname;
+// 					resultField.appendChild(childDiv);
 
-					let spawnChildButton = document.createElement("button");
-					spawnChildButton.textContent = "Get Children";
-					spawnChildButton.addEventListener("click", function () { spawnChild(this.parentNode.id); });
-					childDiv.appendChild(spawnChildButton);
+// 					let spawnChildButton = document.createElement("button");
+// 					spawnChildButton.textContent = "Get Children";
+// 					spawnChildButton.addEventListener("click", function () { spawnChild(this.parentNode.id); });
+// 					childDiv.appendChild(spawnChildButton);
 
-					let grandChildDiv = document.createElement("div");
+// 					let grandChildDiv = document.createElement("div");
 
-					grandChildDiv.id = "resultDiv" + row.id;
-					childDiv.appendChild(grandChildDiv);
-				});
-			}
-			else {
-				resultField.innerHTML = "No children";
-			}
-		})
-}
+//					grandChildDiv.id = "resultDiv" + row.id;
+//					childDiv.appendChild(grandChildDiv);
+//				});
+//			}
+//			else {
+//				resultField.innerHTML = "No children";
+//			}
+//		})
+//}
 // async function whoAmI() {
 // 	const response = await fetch("/getCredentials");
 // 	const data = await response.json();
@@ -247,78 +247,91 @@ function getMyTrees() {
 	})
 		.then(response => response.json())
 		.then(json => {
-			myTrees = json;
-			console.log(json);
-			let ulTree = document.getElementById("showMyTrees");
-			// listTree.innerHTML = JSON.stringify(json, null, 2);
+			let tableOwnedTree = document.getElementById("showMyTrees");
+			let tableSharedTree = document.getElementById("showALLTrees");
+			const popup = document.getElementById('popup');
+			const yesButton = document.getElementById('yesButton');
+			const noButton = document.getElementById('noButton');
+
 			json.forEach(function (item) {
-				var li = document.createElement("li");
+				var tr = document.createElement("tr");
+				var tdLabel = document.createElement("td");
+				var tdShareCode = document.createElement("td");
+
 				if (item.createdby == item.userid) {
-					li.textContent = "My tree name: " + item.treelabel;
-					li.id = item.treeid;
-					console.log(item.treeid);
-					li.addEventListener("click", selectTree);
-					ulTree.appendChild(li);
+					tdLabel.textContent = item.treelabel;
+					tdShareCode.textContent = item.treeid;
+					tr.appendChild(tdLabel);
+					trLabel.addEventListener("click", selectTree);
+					tr.appendChild(tdShareCode);
+				} else {
+					tdLabel.textContent = item.treelabel;
+					// tdShareCode.textContent = "";
+					tdLabel.addEventListener("click", selectTree);
+					tr.appendChild(tdLabel);
 				}
-				else {
-					li.textContent = "Name: " + item.treelabel;
-					li.id = item.treeid;
-					li.addEventListener("click", selectTree);
-					ulTree.appendChild(li);
+
+				var editButton = document.createElement("button");
+				editButton.textContent = "Edit";
+
+				editButton.addEventListener("click", function () {
+					window.alert("Clicked");
+				});
+
+				tr.appendChild(editButton);
+
+				if (item.createdby == item.userid) {
+					var deleteButton = document.createElement("button");
+					deleteButton.textContent = "Delete";
+					deleteButton.addEventListener('click', () => {
+						popup.style.display = 'block';
+					});
+					tr.appendChild(deleteButton);
+
+					tableOwnedTree.appendChild(tr);
+				} else {
+					var removeButton = document.createElement("button");
+					removeButton.textContent = "Remove";
+					// removeButton.addEventListener("click", function () {
+					// 	window.alert("Clicked");
+					// });
+					tr.appendChild(removeButton);
+
+					tableSharedTree.appendChild(tr);
 				}
+
+				noButton.addEventListener('click', () => {
+					popup.style.display = 'none';
+				});
+
+				yesButton.addEventListener('click', () => {
+					window.alert('Clicked on modal');
+					popup.style.display = 'none';
+				});
 			});
+
 		});
 }
-function getALLTrees() {
-	fetch("/grabALLtrees", {
-		method: "GET",
-		headers: {
-			"Content-type": "application/json; charset=UTF-8"
-		}
-	})
-		.then(response => response.json())
-		.then(json => {
-			console.log(json);
-			let ulTree = document.getElementById("showALLTrees");
-			// listTree.innerHTML = JSON.stringify(json, null, 2);
-			json.forEach(function (item) {
-				var li = document.createElement("li");
-				li.textContent = "Name: " + item.treelabel + " ID: " + item.treeid;
-				ulTree.appendChild(li);
-			});
+// function getALLTrees() {
+// 	fetch("/grabALLtrees", {
+// 		method: "GET",
+// 		headers: {
+// 			"Content-type": "application/json; charset=UTF-8"
+// 		}
+// 	})
+// 		.then(response => response.json())
+// 		.then(json => {
+// 			console.log(json);
+// 			let ulTree = document.getElementById("showALLTrees");
+// 			// listTree.innerHTML = JSON.stringify(json, null, 2);
+// 			json.forEach(function (item) {
+// 				var li = document.createElement("li");
+// 				li.textContent = "Name: " + item.treelabel + " ID: " + item.treeid;
+// 				ulTree.appendChild(li);
+// 			});
 
-		});
-}
-
-// const modal = document.querySelector(".modal");
-// const overlay = document.querySelector(".overlay");
-// const openModalBtn = document.querySelector(".btn-open");
-// const closeModalBtn = document.querySelector(".btn-close");
-
-// // close modal function
-// const closeModal = function () {
-// 	modal.classList.add("hidden");
-// 	overlay.classList.add("hidden");
-// };
-
-// // close the modal when the close button and overlay is clicked
-// closeModalBtn.addEventListener("click", closeModal);
-// overlay.addEventListener("click", closeModal);
-
-// // close modal when the Esc key is pressed
-// document.addEventListener("keydown", function (e) {
-// 	if (e.key === "Escape" && !modal.classList.contains("hidden")) {
-// 		closeModal();
-// 	}
-// });
-
-// // open modal function
-// const openModal = function () {
-// 	modal.classList.remove("hidden");
-// 	overlay.classList.remove("hidden");
-// };
-// // open modal event
-// openModalBtn.addEventListener("click", openModal);
+// 		});
+// }
 
 function addATree() {
 	document.getElementById('submitCode').addEventListener('submit', function (event) {
