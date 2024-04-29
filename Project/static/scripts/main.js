@@ -262,7 +262,7 @@ function getMyTrees() {
 					tdLabel.textContent = item.treelabel;
 					tdShareCode.textContent = item.treeid;
 					tr.appendChild(tdLabel);
-					trLabel.addEventListener("click", selectTree);
+					tdLabel.addEventListener("click", selectTree);
 					tr.appendChild(tdShareCode);
 				} else {
 					tdLabel.textContent = item.treelabel;
