@@ -31,9 +31,10 @@ app.get('/grabmytrees', async (req, res) => {
   try {
     let decoded = jwt.verify(req.cookies.jwt, secretKey);
     let userid = [decoded.userid];
+    // db.query('BEGIN')
     // select distinct t.treeid, t.userid, t2.createdby, t2.treelabel from familyframe.tbtreeauthor t, familyframe.tbtree t2 where userid = 1 and t.treeid = t2.treeid ;
-    const result = await db.query('select t.treeid, t.userid, t2.createdby, t2.treelabel from familyframe.tbtreeauthor t, familyframe.tbtree t2 where userid = $1 and t.treeid = t2.treeid', userid);
-    res.send(result.rows);
+  const result = await db.query("SELECT t.treeid, t.userid, t2.createdby, t2.treelabel FROM familyFrame.tbTreeAuthor t, familyframe.tbTree t2 WHERE userid = $1 and t.treeid = t2.treeid", userid);
+  res.send(result.rows);
   }
   catch (err) {
     console.error(err);
@@ -45,8 +46,21 @@ app.get('/grabALLtrees', async (req, res) => {
     let decoded = jwt.verify(req.cookies.jwt, secretKey);
     let userid = [decoded.userid];
     // select distinct t.treeid, t.userid, t2.createdby, t2.treelabel from familyframe.tbtreeauthor t, familyframe.tbtree t2 where userid = 1 and t.treeid = t2.treeid ;
-    const result = await db.query('select t.treeid, t.userid, t2.createdby, t2.treelabel from familyframe.tbtreeauthor t, familyframe.tbtree t2 where t.treeid = t2.treeid');
+    const result = await db.query('select t.treeid, t.userid, t2.createdby, t2.treelabel from familyFrame.tbTreeAuthor t, familyframe.tbtree t2 where t.treeid = t2.treeid');
     res.send(result.rows);
+  }
+  catch (err) {
+    console.error(err);
+    res.send("Error " + err);
+  }
+});
+
+app.post('/selectTree', async (req, res) => {
+  try
+  {
+    res.cookie('treeid', req.body.treeID, { httpOnly: true, sameSite: true });
+    console.log("Treeid: " + req.cookies.treeID);
+    res.send("Success");
   }
   catch (err) {
     console.error(err);
@@ -61,7 +75,7 @@ app.post('/addTreeWithCode', async (req, res) => {
     let shareCode = req.body.shareCode;
     console.log(userid, shareCode);
     db.query('BEGIN');
-    const insertText = 'INSERT INTO familyframe.tbtreeauthor(treeid, userid) VALUES ($1, $2)';
+    const insertText = 'INSERT INTO familyFrame.tbTreeAuthor(treeid, userid) VALUES ($1, $2)';
     const insertValues = [shareCode, userid];
     db.query(insertText, insertValues);
     db.query('COMMIT');
@@ -88,6 +102,19 @@ app.post('/addTreeWithCode', async (req, res) => {
 //         .then(json => console.log(json));
 //     });
 // }
+
+app.get('/listOfPeople', async (req, res) => {
+  try
+  {
+    var treeid = req.cookies.treeid;
+    const result = await db.query("SELECT firstname FROM familyFrame.tbPerson where treeid = $1", [treeid]);
+    res.send(result.rows);
+  }
+  catch (err) {
+    console.error(err);
+    res.send({});
+  }
+});
 
 app.get('/results', async (req, res) => {
   try {
@@ -147,14 +174,29 @@ app.get('/rel', async (req, res) => {
   }
 });
 
-app.post('/insertPerson', (req, res) => {
+app.post('/insertPerson', async (req, res) => {
   // const client = db.getClient()
   try {
     db.query('BEGIN');
+    var treeID = req.cookies.treeid;
+    let decoded = jwt.verify(req.cookies.jwt, secretKey);
+    let userid = decoded.userid;
     const insertText = 'INSERT INTO familyFrame.tbPerson(firstName, lastName, dateOfBirth, gender, createdBy, treeID) VALUES ($1, $2, $3, $4, $5, $6)';
     // const insertValues = ['Mona', 'Simpson', '1901-01-12', 'Female', 1, 1];
-    const insertValues = [req.body.firstName, req.body.lastName, req.body.dob, req.body.gender, req.body.createdBy, req.body.treeID];
-    db.query(insertText, insertValues);
+    const insertValues = [req.body.firstName, req.body.lastName, req.body.dob, req.body.gender, userid, treeID];
+    await db.query(insertText, insertValues);
+    db.query('COMMIT');
+    var newPersonID = await db.query("SELECT personID FROM familyFrame.tbPerson WHERE firstName = $1", [req.body.firstName]);
+    var parentID = await db.query("SELECT personID FROM familyFrame.tbPerson WHERE firstName = $1", [req.body.parent]);
+    var parentLabel = await db.query("SELECT relationshiptypeid FROM familyFrame.tbRelationshiptype WHERE relationshipLabel = 'Parent'");
+    newPersonID = newPersonID.rows[0].personid;
+    parentID = parentID.rows[0].personid;
+    parentLabel = parentLabel.rows[0].relationshiptypeid;
+    console.log("New Person ID: " + newPersonID);
+    db.query('BEGIN');
+    const insertText2 = 'INSERT INTO familyFrame.tbRelationship(person1ID, person2ID, relationshipTypeID) VALUES ($1, $2, $3)';
+    const insertValues2 = [parentID, newPersonID, parentLabel];
+    db.query(insertText2, insertValues2);
     db.query('COMMIT');
   } catch (e) {
     db.query('ROLLBACK');
@@ -173,35 +215,6 @@ app.get('/index', (req, res) => res.sendFile(__dirname + '/static/index.html'));
 app.get('/ui', (req, res) => res.sendFile(__dirname + '/static/uiDesign.html'));
 app.get('/forgotpass', (req, res) => res.sendFile(__dirname + '/static/forgotpass.html'));
 app.get('/newpass', (req, res) => res.sendFile(__dirname + '/static/newpass.html'));
-
-// Get stuff from login
-app.post('/login', (req, res) => {
-  const receivedData = req.body;
-  try {
-    if (receivedData.loggedIn) {
-      console.log("You are logged in!");
-      // Set cookie, set secure = true for https when we have it
-      res.cookie('emails', receivedData.email, httpOnly = true, maxAge = 1000 * 60 * 60 * 24 * 7);
-
-      // Get cookie
-      const cookieValue = req.cookies.emails;
-      const dataToSend =
-      {
-        message: cookieValue
-      };
-
-      if (receivedData.email === "email") {
-        dataToSend.message = cookieValue;
-      }
-      // Send to client
-      res.json(dataToSend);
-    }
-  }
-  catch (error) {
-    console.error('Error:', error);
-    res.status(500).json({ error: 'Internal Server Error' });
-  }
-});
 
 app.post('/existingUser', async (req, res) => {
   try {
@@ -362,10 +375,9 @@ app.post('/loggedout', async (req, res) => {
 try {
     // doesn't work res.cookie('compacookie', 'testcookie2', { httpOnly: true, sameSite: true, expires: new Date(Date.now() + 900000) });
    // doesn't work res.cookie('testcook', 'testcookie', { httpOnly: true, sameSite: true, expires: new Date(Date.now() + 1) }); //test cookie
-    res.clearCookie('jwt', { httpOnly: true, sameSite: true, path: "/" }).send('cleared cookie'); //this was the ONLY thing that worked
+    res.clearCookie('jwt', { httpOnly: true, sameSite: true, path: "/" }); //this was the ONLY thing that worked
+    res.clearCookie('treeid', { httpOnly: true, sameSite: true, path: "/" }).send('cleared cookie');
     //console.log("Cookie: " + req.cookies.jwt);
-
-
   }
 catch (error) {
   console.error('Error:', error);

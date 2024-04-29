@@ -17,7 +17,7 @@ VALUES
     ('The Simpsons', ( Select userID from familyFrame.tbUser where displayName='admin')),
    ('The Washingtons', ( Select userID from familyFrame.tbUser where displayName='admin2'));
    
-insert into familyframe.tbtreeauthor (treeID, userID) values
+insert into familyFrame.tbTreeAuthor (treeID, userID) values
 	(( Select treeID from familyFrame.tbTree where treeLabel = 'The Simpsons' ), 
 	( Select userID from familyFrame.tbUser where displayName='admin')),
 	(( Select treeID from familyFrame.tbTree where treeLabel = 'The Washingtons' ), 

@@ -1,3 +1,85 @@
+function checkLoginForTrees()
+{
+	try 
+    {
+		fetch("/profileJWT")
+        .then((response) => {
+        if (!response.ok) 
+        {
+            disableForm();
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
+        else 
+        {
+            enableForm();
+        }
+        })
+        .catch(() => disableForm());
+    }
+	catch (error) 
+    {
+		console.error('Error:', error);
+		throw error;
+    }
+}
+
+function disableForm() 
+{
+    // Get the form element by its ID
+    const form = document.getElementById("userForm");
+    
+    // Check if the form exists
+    if (form) {
+        // Get all form elements within the form
+        const elements = form.elements;
+        
+        // Loop through each form element and set the `disabled` attribute to `true`
+        for (let i = 0; i < elements.length; i++) {
+            elements[i].disabled = true;
+        }
+    } else {
+        console.log(`Form with ID ${formId} not found.`);
+    }
+}
+
+function enableForm()
+{
+	// Get the form element by its ID
+	const form = document.getElementById("userForm");
+	
+	// Check if the form exists
+	if (form) {
+		// Get all form elements within the form
+		const elements = form.elements;
+		
+		// Loop through each form element and set the `disabled` attribute to `true`
+		for (let i = 0; i < elements.length; i++) {
+			elements[i].disabled = false;
+		}
+	} else {
+		console.log(`Form with ID ${formId} not found.`);
+	}
+	var parent = document.getElementById("parent");
+	fetch("/listOfPeople", {
+		method: "GET",
+		headers: {
+			"Content-type": "application/json; charset=UTF-8"
+		}
+	})
+	.then(response => response.json())
+	.then(json => 
+	{
+		json.forEach(function (item) {
+			parent.disabled = false;
+			parent.options[parent.options.length] = new Option(item.firstname, item.firstname);
+		});
+		if(parent.options.length === 1)
+		{
+			parent.disabled = true;
+		}
+	});
+
+}
 function grabFormData() {
 	document.getElementById('userForm').addEventListener('submit', function (event) {
 		event.preventDefault();
@@ -25,34 +107,6 @@ function postNewPerson(jsonData) {
 	})
 		.then((response) => response.json())
 		.then((json) => console.log(json));
-}
-
-async function grabCookie() {
-	try {
-		const response = await fetch('index',
-			{
-				method: 'POST',
-				headers:
-				{
-					'Content-Type': 'application/json'
-				},
-				body: JSON.stringify({ loggedIn: true })
-			});
-
-		if (!response.ok) {
-			throw new Error(`HTTP error! Status: ${response.status}`);
-		}
-
-		const data = await response.json();
-
-		// Right now just prints email, can be used to determine other logic
-		console.log('Success:', data.message, 'is logged in.');
-
-	}
-	catch (error) {
-		console.error('Error:', error);
-		throw error;
-	}
 }
 
 function getDynamicData() {
@@ -167,6 +221,23 @@ function spawnChild(id) {
 // 	return (data);
 // }
 
+async function selectTree(event) 
+{
+	let treeID = event.target.id;
+	console.log(treeID);
+	await fetch("/selectTree", {
+		method: "POST",
+		headers: {
+			"Content-type": "application/json; charset=UTF-8"
+		},
+		body: JSON.stringify({ treeID: treeID })
+	})
+	.then(response => {
+		console.log(response);
+		window.location.href = "/";
+	});
+}
+
 function getMyTrees() {
 	fetch("/grabmytrees", {
 		method: "GET",
@@ -176,6 +247,7 @@ function getMyTrees() {
 	})
 		.then(response => response.json())
 		.then(json => {
+			myTrees = json;
 			console.log(json);
 			let ulTree = document.getElementById("showMyTrees");
 			// listTree.innerHTML = JSON.stringify(json, null, 2);
@@ -183,14 +255,18 @@ function getMyTrees() {
 				var li = document.createElement("li");
 				if (item.createdby == item.userid) {
 					li.textContent = "My tree name: " + item.treelabel;
+					li.id = item.treeid;
+					console.log(item.treeid);
+					li.addEventListener("click", selectTree);
 					ulTree.appendChild(li);
 				}
 				else {
 					li.textContent = "Name: " + item.treelabel;
+					li.id = item.treeid;
+					li.addEventListener("click", selectTree);
 					ulTree.appendChild(li);
 				}
 			});
-
 		});
 }
 function getALLTrees() {

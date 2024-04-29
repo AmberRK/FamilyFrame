@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width" />
     <title>Family Frame</title>
     <link rel="stylesheet" type="text/css" href="styles/styles.css">
+    <link rel="icon" href="../images/familyFrameLogo.svg" type="image/svg+xml">
+
 </head>
 
 
@@ -17,7 +19,13 @@
         <div class="left-section">
             <h1>Person</h1>
             <p>Enter information about the person here: </p>
+            <br>
             <form id="userForm">
+
+                Parent: <select name="parent" id="parent"><br>
+                    <option value="" selected="selected" required>Select parent</option>
+                  </select>
+                  <br><br>
                 <label for="firstName">First Name:</label><br>
                 <input type="text" id="firstName" name="firstName" required><br><br>
 
@@ -31,15 +39,6 @@
                 <input type="text" id="gender" name="gender">
                 <br><br>
 
-                <label for="createdBy">Created By (userID, temp):</label><br>
-                <input type="text" id="createdBy" name="createdBy" required><br><br>
-
-                <label for="treeID">Tree ID (temp):</label><br>
-                <input type="text" id="treeID" name="treeID" required><br><br>
-
-                <label for="personID">Person ID:</label><br>
-                <input type="text" id="personID" name="personID" required><br><br>
-
                 <input type="submit" value="Submit">
             </form>
         </div>
@@ -47,12 +46,12 @@
         <div class="right-section">
             <h1>Tree Design</h1>
             <div>
-                <!-- <button onclick="getAllData()">Fetch all data</button>
+                <button onclick="getAllData()">Fetch all data</button>
                 <div id="resultDiv">
                     <pre id="result"></pre>
                 </div>
                 <button onclick="getChildrenToStratify()">D3 Stratify</button>
-                <div id="tree-container"></div> -->
+                <div id="tree-container"></div>
             </div>
         </div>
 
@@ -183,6 +182,7 @@
         document.addEventListener('DOMContentLoaded', function () {
             replacePlaceholderNavbar();
             replacePlaceholderFooter();
+            checkLoginForTrees();
         });
     </script>
 </body>

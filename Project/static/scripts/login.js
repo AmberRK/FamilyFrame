@@ -121,3 +121,16 @@ async function login() {
   });
 }
 
+document.getElementById('signUp').addEventListener('click', function(event) {
+  event.preventDefault(); // Prevent the default action of navigating
+  
+  // Set the href attribute and navigate
+  window.location.href = "/newpass";
+});
+
+document.getElementById('forgetPass').addEventListener('click', function(event) {
+  event.preventDefault(); // Prevent the default action of navigating
+  
+  // Set the href attribute and navigate
+  window.location.href = "/forgotpass";
+});
