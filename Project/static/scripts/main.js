@@ -1,3 +1,28 @@
+function pickExistingPerson(event) {
+	const selectedPerson = event.target.value;
+	fetch("/getPerson/", {
+		method: "POST",
+		headers: {
+			"Content-type": "application/json; charset=UTF-8"
+		},
+		body: JSON.stringify({ selectedPerson: selectedPerson })
+	})
+	.then(response => response.json())
+	.then(json => {
+		console.log(json);
+		person = json[0];
+		first = document.getElementById("firstName");
+		first.value = person.firstname;
+		last = document.getElementById("lastName");
+		last.value = person.lastname;
+		dob = document.getElementById("dateOfBirth");
+		dob.value = person.dateOfBirth;
+		gender = document.getElementById("gender");
+		gender.value = person.gender;
+
+	});
+}
+
 function checkLoginForTrees()
 {
 	try 
@@ -60,6 +85,7 @@ function enableForm()
 		console.log(`Form with ID ${formId} not found.`);
 	}
 	var parent = document.getElementById("parent");
+	var existingPerson = document.getElementById("existingPerson");
 	fetch("/listOfPeople", {
 		method: "GET",
 		headers: {
@@ -70,11 +96,15 @@ function enableForm()
 	.then(json => 
 	{
 		json.forEach(function (item) {
+			existingPerson.disabled = false;
+			existingPerson.options[existingPerson.options.length] = new Option(item.firstname, item.firstname);
+			existingPerson.addEventListener("change", pickExistingPerson);
 			parent.disabled = false;
 			parent.options[parent.options.length] = new Option(item.firstname, item.firstname);
 		});
 		if(parent.options.length === 1)
 		{
+			existingPerson.disabled = true;
 			parent.disabled = true;
 		}
 	});
@@ -93,20 +123,35 @@ function grabFormData() {
 
 		// console.log(jsonData);
 		postNewPerson(jsonData);
-		getAllData();
 	});
 };
 
 function postNewPerson(jsonData) {
-	fetch("/insertPerson", {
-		method: "POST",
-		body: JSON.stringify(jsonData),
-		headers: {
-			"Content-type": "application/json; charset=UTF-8"
-		}
-	})
+	var existingPerson = document.getElementById("existingPerson");
+	if(existingPerson.value != "")
+	{
+		fetch("/updatePerson", {
+			method: "POST",
+			body: JSON.stringify(jsonData),
+			headers: {
+				"Content-type": "application/json; charset=UTF-8"
+			}
+		})
 		.then((response) => response.json())
 		.then((json) => console.log(json));
+	}
+	else
+	{
+		fetch("/insertPerson", {
+			method: "POST",
+			body: JSON.stringify(jsonData),
+			headers: {
+				"Content-type": "application/json; charset=UTF-8"
+			}
+		})
+		.then((response) => response.json())
+		.then((json) => console.log(json));
+	}
 }
 
 // function getDynamicData() {
@@ -257,15 +302,18 @@ function getMyTrees() {
 				var tr = document.createElement("tr");
 				var tdLabel = document.createElement("td");
 				var tdShareCode = document.createElement("td");
-
+				tdLabel.style.cursor = "pointer";
+				tdLabel.classList.add('highlight');
 				if (item.createdby == item.userid) {
 					tdLabel.textContent = item.treelabel;
 					tdShareCode.textContent = item.treeid;
+					tdLabel.id = item.treeid;
 					tr.appendChild(tdLabel);
 					tdLabel.addEventListener("click", selectTree);
 					tr.appendChild(tdShareCode);
 				} else {
 					tdLabel.textContent = item.treelabel;
+					tdLabel.id = item.treeid;
 					// tdShareCode.textContent = "";
 					tdLabel.addEventListener("click", selectTree);
 					tr.appendChild(tdLabel);

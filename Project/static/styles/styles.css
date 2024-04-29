@@ -241,6 +241,9 @@ li {
   color: black;
 }
 
+td.highlight:hover {
+  background-color: lightgray; /* Change the background color to light gray on hover */
+}
 .modal {
   display: flex;
   flex-direction: column;

@@ -174,6 +174,15 @@ app.get('/rel', async (req, res) => {
   }
 });
 
+app.post('/getPerson', async (req, res) => {
+  var person = await db.query("SELECT firstname, lastname, dateOfBirth, gender FROM familyFrame.tbPerson WHERE firstName = $1", [req.body.selectedPerson]);
+  res.send(person.rows);
+});
+
+app.post('/updatePerson', async (req, res) => {
+  await db.query("UPDATE familyFrame.tbPerson SET firstName = $1, lastName = $2, dateOfBirth = $3 WHERE firstName = $4", [req.body.firstName, req.body.lastName, req.body.dob, req.body.firstName]);
+});
+
 app.post('/insertPerson', async (req, res) => {
   // const client = db.getClient()
   try {
