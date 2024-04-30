@@ -68,6 +68,27 @@ app.post('/selectTree', async (req, res) => {
   }
 });
 
+app.post('/createTree', async (req, res) => {
+  try {
+    let decoded = jwt.verify(req.cookies.jwt, secretKey);
+    let userid = decoded.userid;
+    // db.query('BEGIN')
+    const insertText = 'INSERT INTO familyFrame.tbTree(treeLabel, createdBy) VALUES ($1, $2)';
+    const insertValues = [req.body.treeName, userid];
+    await db.query(insertText, insertValues);
+    const treeID = await db.query("SELECT treeID FROM familyFrame.tbTree WHERE treeLabel = $1 AND createdBy = $2", [req.body.treeName, userid]);
+    await db.query('INSERT INTO familyFrame.tbTreeAuthor(treeid, userid) VALUES ($1, $2)', [treeID.rows[0].treeid, userid])
+    console.log("TreeID: " + treeID.rows[0].treeid);
+    res.cookie('treeid', treeID.rows[0].treeid, { httpOnly: true, sameSite: true });
+    // db.query('COMMIT');
+    res.send("Success");
+  }
+  catch (err) {
+    console.error(err);
+    res.send("Error " + err);
+  }
+});
+
 app.post('/addTreeWithCode', async (req, res) => {
   try {
     let decoded = jwt.verify(req.cookies.jwt, secretKey);
@@ -136,11 +157,22 @@ app.get('/results', async (req, res) => {
 // })
 
 app.get('/stratifyChildren', async (req, res) => {
-  const { id } = req.params
+  const { id } = req.params;
+  var treeID = req.cookies.treeid;
+  //const {peopleID} = await db.query("select personID from familyFrame.tbPerson p where p.personid in (select distinct person2id from familyFrame.tbRelationship r where r.relationshiptypeid = 1) AND treeID=$1;", [treeID]);
+  //var eldestID = await db.query("select personID from familyFrame.tbPerson p where p.personid not in (select distinct person2id from familyFrame.tbRelationship r where r.relationshiptypeid = 1) AND treeID=$1;", [treeID]);
+  //var parentLabel = await db.query("SELECT relationshiptypeid FROM familyFrame.tbRelationshiptype WHERE relationshipLabel = 'Parent'");
+  // newPersonID = newPersonID.rows[0].personid;
+  // eldestID = childID.rows[0].personid;
+  // parentLabel = parentLabel.rows[0].relationshiptypeid;
+  // const {rows} = await db.query('Select firstname, parent from familyFrame.tbPerson,  where treeID = $1 order by parent desc', [treeID]);
   // const { rows } = await db.query("select p2.firstname AS name, p1.firstname as parent FROM familyFrame.tbRelationship r JOIN familyFrame.tbPerson p1 ON r.person1ID = p1.personID JOIN familyFrame.tbPerson p2 ON r.person2ID = p2.personID JOIN familyFrame.tbRelationshiptype r2 on r.relationshiptypeid = r2.relationshiptypeid where p1.personID = 1 and r2.relationshiplabel = 'Parent';")
-  const { rows } = await db.query("select p.firstname as name, null as parent from familyFrame.tbPerson p where p.personid not in (select distinct person2id from familyFrame.tbRelationship r where r.relationshiptypeid = 1) union select p2.firstname as name, p1.firstname as parent from familyFrame.tbRelationship r join familyFrame.tbPerson p1 on r.person1ID = p1.personID join familyFrame.tbPerson p2 on r.person2ID = p2.personID join familyFrame.tbRelationshiptype r2 on r.relationshiptypeid = r2.relationshiptypeid --where r2.relationshiplabel = 'Parent'; where p1.personID = 1 and r2.relationshiplabel = 'Parent' order by parent desc");
+  const { rows } = await db.query("select p.firstname as name, null as parent, p.treeID from familyFrame.tbPerson p where p.personid not in (select distinct person2id from familyFrame.tbRelationship r where r.relationshiptypeid = 1) union select p2.firstname as name, p1.firstname as parent, p2.treeID from familyFrame.tbRelationship r join familyFrame.tbPerson p1 on r.person1ID = p1.personID join familyFrame.tbPerson p2 on r.person2ID = p2.personID join familyFrame.tbRelationshiptype r2 on r.relationshiptypeid = r2.relationshiptypeid --where r2.relationshiplabel = 'Parent'; where p1.personID = 1 and r2.relationshiplabel = 'Parent' order by parent desc");
+  console.log(rows);
+  const finalrows = rows.filter(row => row.treeid == treeID);
+  // const { finalrows } = await db.query('select firstname as name, null as parent from $1 where treeID = $2 order by parent desc', [rows, treeID]);
   // --where p1.personID = 1 and r2.relationshiplabel = 'Parent';
-  res.send(rows)
+  res.send(finalrows)
 })
 
 app.get('/children/:id', async (req, res) => {
@@ -175,18 +207,60 @@ app.get('/rel', async (req, res) => {
 });
 
 app.post('/getPerson', async (req, res) => {
-  var person = await db.query("SELECT firstname, lastname, dateOfBirth, gender FROM familyFrame.tbPerson WHERE firstName = $1", [req.body.selectedPerson]);
+  var treeID = req.cookies.treeid;
+  var person = await db.query("SELECT firstname, lastname, dateOfBirth, gender FROM familyFrame.tbPerson WHERE firstName = $1 AND treeID=$2", [req.body.selectedPerson, treeID]);
+  console.log("get person: " + person.rows[0].dateofbirth.getFullYear() + person.rows[0].dateofbirth.getMonth() + person.rows[0].dateofbirth.getDate());
+  if(person.rows[0].dateofbirth.getMonth() < 10)
+  {
+    if(person.rows[0].dateofbirth.getDate() < 10)
+    {
+      person.rows[0].dateofbirth = person.rows[0].dateofbirth.getFullYear() + "-0" + person.rows[0].dateofbirth.getMonth() + "-0" + person.rows[0].dateofbirth.getDate();
+    }
+    else
+    {
+      person.rows[0].dateofbirth = person.rows[0].dateofbirth.getFullYear() + "-0" + person.rows[0].dateofbirth.getMonth() + "-" + person.rows[0].dateofbirth.getDate();
+    }
+  }
+  else if(person.rows[0].dateofbirth.getDate() < 10)
+  {
+    person.rows[0].dateofbirth = person.rows[0].dateofbirth.getFullYear() + "-" + person.rows[0].dateofbirth.getMonth() + "-0" + person.rows[0].dateofbirth.getDate();
+  }
   res.send(person.rows);
 });
 
 app.post('/updatePerson', async (req, res) => {
-  await db.query("UPDATE familyFrame.tbPerson SET firstName = $1, lastName = $2, dateOfBirth = $3 WHERE firstName = $4", [req.body.firstName, req.body.lastName, req.body.dob, req.body.firstName]);
+  var treeID = req.cookies.treeid;
+  await db.query("UPDATE familyFrame.tbPerson SET firstName = $1, lastName = $2, dateOfBirth = $3 WHERE firstName = $4 AND treeID=$5", [req.body.firstName, req.body.lastName, req.body.dob, req.body.existingPerson, treeID]);
+});
+
+app.post('/insertNewEldest', async (req, res) => {
+  var treeID = req.cookies.treeid;
+  let decoded = jwt.verify(req.cookies.jwt, secretKey);
+  let userid = decoded.userid;    
+  await db.query('BEGIN');
+  console.log("Date of birth" + req.body.dateOfBirth);
+  await db.query("INSERT INTO familyFrame.tbPerson(firstname, lastname, dateOfBirth, gender, createdBy, treeID) VALUES ($1, $2, $3, $4, $5, $6)", [req.body.firstName, req.body.lastName, req.body.dateOfBirth, req.body.gender, userid, treeID]);
+  var newPersonID = await db.query("SELECT personID FROM familyFrame.tbPerson WHERE firstName = $1 AND treeID=$2", [req.body.firstName, treeID]);
+  var childID = await db.query("select personID from familyFrame.tbPerson p where p.personid not in (select distinct person2id from familyFrame.tbRelationship r where r.relationshiptypeid = 1) AND treeID=$1;", [treeID]);
+  var parentLabel = await db.query("SELECT relationshiptypeid FROM familyFrame.tbRelationshiptype WHERE relationshipLabel = 'Parent'");
+  await db.query('COMMIT');
+  newPersonID = newPersonID.rows[0].personid;
+  childID = childID.rows[0].personid;
+  parentLabel = parentLabel.rows[0].relationshiptypeid;
+  if(childID != newPersonID)
+  {
+    await db.query('BEGIN');
+    const insertText2 = 'INSERT INTO familyFrame.tbRelationship(person1ID, person2ID, relationshipTypeID) VALUES ($1, $2, $3)';
+    const insertValues2 = [newPersonID, childID, parentLabel];
+    await db.query(insertText2, insertValues2);
+    await db.query('COMMIT');
+  }
 });
 
 app.post('/insertPerson', async (req, res) => {
   // const client = db.getClient()
   try {
-    db.query('BEGIN');
+    await db.query('BEGIN');
     var treeID = req.cookies.treeid;
     let decoded = jwt.verify(req.cookies.jwt, secretKey);
     let userid = decoded.userid;
@@ -194,19 +268,19 @@ app.post('/insertPerson', async (req, res) => {
     // const insertValues = ['Mona', 'Simpson', '1901-01-12', 'Female', 1, 1];
     const insertValues = [req.body.firstName, req.body.lastName, req.body.dob, req.body.gender, userid, treeID];
     await db.query(insertText, insertValues);
-    db.query('COMMIT');
-    var newPersonID = await db.query("SELECT personID FROM familyFrame.tbPerson WHERE firstName = $1", [req.body.firstName]);
-    var parentID = await db.query("SELECT personID FROM familyFrame.tbPerson WHERE firstName = $1", [req.body.parent]);
+    await db.query('COMMIT');
+    var newPersonID = await db.query("SELECT personID FROM familyFrame.tbPerson WHERE firstName = $1 AND treeID=$2", [req.body.firstName, treeID]);
+    var parentID = await db.query("SELECT personID FROM familyFrame.tbPerson WHERE firstName = $1 AND treeID=$2", [req.body.parent, treeID]);
     var parentLabel = await db.query("SELECT relationshiptypeid FROM familyFrame.tbRelationshiptype WHERE relationshipLabel = 'Parent'");
     newPersonID = newPersonID.rows[0].personid;
     parentID = parentID.rows[0].personid;
     parentLabel = parentLabel.rows[0].relationshiptypeid;
     console.log("New Person ID: " + newPersonID);
-    db.query('BEGIN');
+    await db.query('BEGIN');
     const insertText2 = 'INSERT INTO familyFrame.tbRelationship(person1ID, person2ID, relationshipTypeID) VALUES ($1, $2, $3)';
     const insertValues2 = [parentID, newPersonID, parentLabel];
-    db.query(insertText2, insertValues2);
-    db.query('COMMIT');
+    await db.query(insertText2, insertValues2);
+    await db.query('COMMIT');
   } catch (e) {
     db.query('ROLLBACK');
     throw e;

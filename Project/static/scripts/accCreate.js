@@ -98,3 +98,10 @@ function createAcct(event) {
 }
 
 document.getElementById('accCreate').addEventListener('submit', createAcct);
+
+document.getElementById('goToLogin').addEventListener('click', function(event) {
+  event.preventDefault(); // Prevent the default action of navigating
+  
+  // Set the href attribute and navigate
+  window.location.href = "/login";
+});

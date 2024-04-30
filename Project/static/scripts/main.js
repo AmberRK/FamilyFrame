@@ -10,13 +10,14 @@ function pickExistingPerson(event) {
 	.then(response => response.json())
 	.then(json => {
 		console.log(json);
-		person = json[0];
+		var person = json[0];
+		// dateOfBirth = person.dateofbirth.getFullYear() + "-" + (person.dateofbirth.getMonth() + 1) + "-" + person.dateofbirth.getDate();
 		first = document.getElementById("firstName");
 		first.value = person.firstname;
 		last = document.getElementById("lastName");
 		last.value = person.lastname;
 		dob = document.getElementById("dateOfBirth");
-		dob.value = person.dateOfBirth;
+		dob.value = person.dateofbirth;
 		gender = document.getElementById("gender");
 		gender.value = person.gender;
 
@@ -69,15 +70,14 @@ function disableForm()
 
 function enableForm()
 {
+	console.log("Enabling form");
 	// Get the form element by its ID
 	const form = document.getElementById("userForm");
 	
 	// Check if the form exists
 	if (form) {
-		// Get all form elements within the form
 		const elements = form.elements;
 		
-		// Loop through each form element and set the `disabled` attribute to `true`
 		for (let i = 0; i < elements.length; i++) {
 			elements[i].disabled = false;
 		}
@@ -94,7 +94,10 @@ function enableForm()
 	})
 	.then(response => response.json())
 	.then(json => 
-	{
+	{	
+		parent.innerHTML = "";
+		existingPerson.innerHTML = "";
+		parent.options[parent.options.length] = new Option("New Eldest", "New Eldest");
 		json.forEach(function (item) {
 			existingPerson.disabled = false;
 			existingPerson.options[existingPerson.options.length] = new Option(item.firstname, item.firstname);
@@ -102,13 +105,12 @@ function enableForm()
 			parent.disabled = false;
 			parent.options[parent.options.length] = new Option(item.firstname, item.firstname);
 		});
-		if(parent.options.length === 1)
+		if(existingPerson.options.length === 0)
 		{
 			existingPerson.disabled = true;
-			parent.disabled = true;
 		}
+		getChildrenToStratify();
 	});
-
 }
 function grabFormData() {
 	document.getElementById('userForm').addEventListener('submit', function (event) {
@@ -121,18 +123,61 @@ function grabFormData() {
 			jsonData[key] = value;
 		});
 
-		// console.log(jsonData);
+		console.log(jsonData);
 		postNewPerson(jsonData);
 	});
 };
 
+function alertUser(message) 
+{
+  var alert = document.getElementById("alert");
+  message = '<span class="closebtn">&times;</span>'
+  + ' <strong>Error!  </strong>' + message;
+  alert.setAttribute("style", "opacity: 1");
+  alert.innerHTML = message;
+
+  var close = document.getElementsByClassName("closebtn");
+  var i;
+
+  for (i = 0; i < close.length; i++) 
+  {
+    close[i].onclick = function(){
+      var div = this.parentElement;
+      div.style.opacity = "0";
+      setTimeout(function(){ div.style.display = "none"; }, 600);
+  }
+  }
+}
+
 function postNewPerson(jsonData) {
-	var existingPerson = document.getElementById("existingPerson");
-	if(existingPerson.value != "")
+	const existingPerson = document.getElementById("existingPerson");
+	const firstName = document.getElementById("firstName").value;
+	const parent = document.getElementById("parent");
+	for (let i = 0; i < existingPerson.options.length; i++) {
+        // Compare the value of the option with the value to check
+        if (existingPerson.options[i].value === firstName) {
+			alertUser("Person already exists");
+			return;
+        }
+    }
+	if(parent.value == "New Eldest")
+	{
+		fetch('/insertNewEldest',
+		{
+			method: "POST",
+			body: JSON.stringify(jsonData),
+			headers: {
+				"Content-type": "application/json; charset=UTF-8"
+			}
+		})
+		.then((response) => response.json())
+		.then((json) => console.log(json));
+	}
+	else if(existingPerson.value != "")
 	{
 		fetch("/updatePerson", {
 			method: "POST",
-			body: JSON.stringify(jsonData),
+			body: JSON.stringify(jsonData + {selectedPerson: existingPerson.value}),
 			headers: {
 				"Content-type": "application/json; charset=UTF-8"
 			}
@@ -152,6 +197,9 @@ function postNewPerson(jsonData) {
 		.then((response) => response.json())
 		.then((json) => console.log(json));
 	}
+	let treeContainer = document.getElementById("tree-container");
+	treeContainer.removeChild(treeContainer.firstChild);
+	enableForm();
 }
 
 // function getDynamicData() {
@@ -202,8 +250,7 @@ function getChildrenToStratify() {
 				.parentId((d) => d.parent)
 				(data);
 			console.log(treeData);
-
-			let treeContainer = document.getElementById("tree-container");
+			const treeContainer = document.getElementById("tree-container");
 			treeContainer.appendChild(chartTree(treeData, {
 				label: d => d.id,
 				// title: (d, n) => `${n.ancestors().reverse().map(d => d.data.name).join(".")}`, // hover text
@@ -266,6 +313,30 @@ function getChildrenToStratify() {
 // 	return (data);
 // }
 
+async function createTree(event) 
+{
+	event.preventDefault();
+	const formData = new FormData(this);
+	const jsonData = {};
+	formData.forEach((value, key) => {
+		jsonData[key] = value;
+	});
+	console.log(jsonData);
+
+	fetch("/createTree", {
+		method: "POST",
+		headers: {
+			"Content-type": "application/json; charset=UTF-8"
+		},
+		body: JSON.stringify(jsonData)
+	})
+		// .then(response => response.json())
+		// .then(json => {
+		// console.log(json);
+		// });
+		.then(window.location.href = "/");
+}
+
 async function selectTree(event) 
 {
 	let treeID = event.target.id;
@@ -319,31 +390,22 @@ function getMyTrees() {
 					tr.appendChild(tdLabel);
 				}
 
-				var editButton = document.createElement("button");
-				editButton.textContent = "Edit";
-
-				editButton.addEventListener("click", function () {
-					window.alert("Clicked");
-				});
-
-				tr.appendChild(editButton);
-
 				if (item.createdby == item.userid) {
-					var deleteButton = document.createElement("button");
-					deleteButton.textContent = "Delete";
-					deleteButton.addEventListener('click', () => {
-						popup.style.display = 'block';
-					});
-					tr.appendChild(deleteButton);
+					//  deleteButton = document.createElement("button");
+					// deleteButton.textContent = "Delete";
+					// deleteButton.addEventListener('click', () => {
+					//	popup.style.display = 'block';
+					// });
+					// tr.appendChild(deleteButton);
 
 					tableOwnedTree.appendChild(tr);
 				} else {
-					var removeButton = document.createElement("button");
-					removeButton.textContent = "Remove";
+					//var removeButton = document.createElement("button");
+					//removeButton.textContent = "Remove";
 					// removeButton.addEventListener("click", function () {
 					// 	window.alert("Clicked");
 					// });
-					tr.appendChild(removeButton);
+					//tr.appendChild(removeButton);
 
 					tableSharedTree.appendChild(tr);
 				}
@@ -381,29 +443,29 @@ function getMyTrees() {
 // 		});
 // }
 
-function addATree() {
-	document.getElementById('submitCode').addEventListener('submit', function (event) {
-		event.preventDefault();
-		const formData = new FormData(this);
-		const jsonData = {};
-		formData.forEach((value, key) => {
-			jsonData[key] = value;
-		});
-		console.log(jsonData);
+function addATree(event) 
+{
+	console.log("Adding a tree");
+	event.preventDefault();
+	const formData = new FormData(this);
+	const jsonData = {};
+	formData.forEach((value, key) => {
+		jsonData[key] = value;
+	});
+	console.log(jsonData);
 
-		fetch("/addTreeWithCode", {
-			method: "POST",
-			headers: {
-				"Content-type": "application/json; charset=UTF-8"
-			},
-			body: JSON.stringify(jsonData)
-		})
-			// .then(response => response.json())
-			// .then(json => {
-			// console.log(json);
-			// });
-			.then(response => console.log(response));
+	fetch("/addTreeWithCode", {
+		method: "POST",
+		headers: {
+			"Content-type": "application/json; charset=UTF-8"
+		},
+		body: JSON.stringify(jsonData)
 	})
+		// .then(response => response.json())
+		// .then(json => {
+		// console.log(json);
+		// });
+		.then(response => console.log(response));
 }
 // Copyright 2021-2023 Observable, Inc.
 // Released under the ISC license.
@@ -478,6 +540,7 @@ function chartTree(data, { // data is either tabular (array of objects) or hiera
 		.attr("font-size", 10);
 
 	svg.append("g")
+	
 		.attr("fill", "none")
 		.attr("stroke", stroke)
 		.attr("stroke-opacity", strokeOpacity)
@@ -517,3 +580,6 @@ function chartTree(data, { // data is either tabular (array of objects) or hiera
 
 	return svg.node();
 }
+
+document.getElementById('submitCode').addEventListener('submit', addATree);
+document.getElementById('submitName').addEventListener('submit', createTree);

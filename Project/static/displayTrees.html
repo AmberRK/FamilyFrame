@@ -44,6 +44,22 @@
             <br>
             <br>
         </div>
+        <section id="makeTreeDiv" class="modal hidden">
+            <div class="flex">
+                <button class="btn-close">⨉</button>
+            </div>
+            <div>
+                <h3>Create a tree</h3>
+            </div>
+            <form id="submitName">
+                <input type="text" autocomplete="off" name="treeName" id="treeName"
+                    placeholder="Family Name" />
+                <input class="submit" id="submitTree" type="submit" value="Create tree" onClick="createTree()">
+            </form>
+        </section>
+
+        <div class="overlay hidden"></div>
+        <button class="btn btn-open">Create a tree</button>
 
         <section class="modal hidden">
             <div class="flex">
@@ -63,23 +79,6 @@
         <div class="overlay hidden"></div>
         <button class="btn btn-open">Add a tree with a code</button>
 
-        <section id="makeTreeDiv" class="modal hidden">
-            <div class="flex">
-                <button class="btn-close">⨉</button>
-            </div>
-            <div>
-                <h3>Create a tree</h3>
-            </div>
-            <form id="createTreeForm">
-                <input type="text" autocomplete="off" name="treeName" id="treeName"
-                    placeholder="Name" />
-                <input class="submit" id="submitTree" type="submit" value="Create tree" onClick="">
-            </form>
-        </section>
-
-        <div class="overlay hidden"></div>
-        <button class="btn btn-open">Create a tree</button>
-
         <div id="popup" class="popup">
             <p>Are you sure?</p>
             <div class="popup-buttons">
@@ -87,6 +86,13 @@
                 <button id="noButton" class="popup-button">No</button>
             </div>
         </div>
+
+        <!--<form id="addTreeName">
+            <input type="text" autocomplete="off" name="nameTree" id="nameTree"
+                placeholder="Family Name" />
+            <input class="submit" id="submitTreeName" type="submit" value="Add tree" onClick="createTree()">
+        </form> -->
+
 
         <footer>
             <div id="footerPlaceholder"></div>
@@ -103,36 +109,62 @@
             document.addEventListener('DOMContentLoaded', function () {
                 replacePlaceholderFooter();
             });
-            const modal = document.querySelector(".modal");
-            const overlay = document.querySelector(".overlay");
-            const openModalBtn = document.querySelector(".btn-open");
-            const closeModalBtn = document.querySelector(".btn-close");
+            const modal = document.querySelectorAll(".modal");
+            const overlay = document.querySelectorAll(".overlay");
+            const openModalBtn = document.querySelectorAll(".btn-open");
+            const closeModalBtn = document.querySelectorAll(".btn-close");
+            console.log(modal);
+            console.log(overlay);
+            console.log(openModalBtn);
+            console.log(closeModalBtn);
 
             // close modal function
-            const closeModal = function () {
-                modal.classList.add("hidden");
-                overlay.classList.add("hidden");
-            };
 
-            // close the modal when the close button and overlay is clicked
-            closeModalBtn.addEventListener("click", closeModal);
-            overlay.addEventListener("click", closeModal);
-
-            // close modal when the Esc key is pressed
-            document.addEventListener("keydown", function (e) {
-                if (e.key === "Escape" && !modal.classList.contains("hidden")) {
-                    closeModal();
-                }
-            });
-
-            // open modal function
-            const openModal = function () {
+            function openModal(modal, overlay) {
                 modal.classList.remove("hidden");
                 overlay.classList.remove("hidden");
-            };
-            // open modal event
-            openModalBtn.addEventListener("click", openModal);
+            }
 
+        // Function to close a modal
+        function closeModal(modal, overlay) {
+            modal.classList.add("hidden");
+            overlay.classList.add("hidden");
+        }
+
+        // Add click event listeners to open buttons
+        openModalBtn.forEach((button, index) => {
+        const correspondingModal = modal[index];
+        const correspondingOverlay = overlay[index];
+
+        button.addEventListener("click", () => {
+            openModal(correspondingModal, correspondingOverlay);
+        });
+    });
+
+    // Add click event listeners to close buttons and overlays
+    closeModalBtn.forEach((button, index) => {
+    const correspondingModal = modal[index];
+    const correspondingOverlay = overlay[index];
+
+    button.addEventListener("click", () => {
+        closeModal(correspondingModal, correspondingOverlay);
+    });
+    
+    correspondingOverlay.addEventListener("click", () => {
+        closeModal(correspondingModal, correspondingOverlay);
+    });
+    });
+
+    // Add event listener for Esc key to close modals
+    document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") {
+        modals.forEach((modal, index) => {
+            if (!modal.classList.contains("hidden")) {
+                closeModal(modal, overlays[index]);
+            }
+        });
+    }
+    });
         </script>
     </div>
 </body>

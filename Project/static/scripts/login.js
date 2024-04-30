@@ -1,17 +1,18 @@
-function togglePassword() {
-  
+document.getElementById("togglePasswordVisibility").addEventListener("click", togglePassword);
+function togglePassword(event) {
+  event.preventDefault();
   var passwordField = document.getElementById("password");
   var eyeIcon = document.getElementById("eyeIcon");
 
   if (passwordField.type === "password") 
   {
     passwordField.type = "text";
-    eyeIcon.src = "images/eye-outline.svg"; // Change to hide eye icon
+    eyeIcon.src = "../images/eye-outline.svg"; // Change to hide eye icon
   } 
   else 
   {
     passwordField.type = "password";
-    eyeIcon.src = "images/eye-off-outline.svg"; // Change to show eye icon
+    eyeIcon.src = "../images/eye-off-outline.svg"; // Change to show eye icon
   }
 }
 
@@ -105,7 +106,6 @@ async function login() {
         })
         .then((json) => {
           if (json.message == "Account authenticated") {
-            replacePlaceholderNavbar();
             window.location.href = "/mytrees";
           }
         })
@@ -121,16 +121,10 @@ async function login() {
   });
 }
 
-document.getElementById('signUp').addEventListener('click', function(event) {
-  event.preventDefault(); // Prevent the default action of navigating
-  
-  // Set the href attribute and navigate
-  window.location.href = "/newpass";
-});
+  function goToForgetPass() {
+    window.location.href = "/forgotpass";
+  }
 
-document.getElementById('forgetPass').addEventListener('click', function(event) {
-  event.preventDefault(); // Prevent the default action of navigating
-  
-  // Set the href attribute and navigate
-  window.location.href = "/forgotpass";
-});
+  function goToSignUp() {
+    window.location.href = "/newuser";
+  }

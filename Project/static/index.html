@@ -27,11 +27,6 @@
                     <option value="" selected="selected" required>Select parent</option>
                   </select>
                   <br><br>
-
-                Select Existing Person: <br></br><select name="existingPerson" id="existingPerson"><br>
-                    <option value="" selected="selected" required>Select person</option>
-                  </select>
-                  <br><br>
                 <label for="firstName">First Name:</label><br>
                 <input type="text" id="firstName" name="firstName" required><br><br>
 
@@ -39,31 +34,37 @@
                 <input type="text" id="lastName" name="lastName" required><br><br>
 
                 <label for="dateOfBirth">Date of Birth:</label><br>
-                <input type="date" id="dateOfBirth" name="dateOfBirth"><br><br>
+                <input type="date" id="dateOfBirth" name="dateOfBirth" required><br><br>
 
                 <label for="gender">Gender:</label><br>
                 <input type="text" id="gender" name="gender">
                 <br><br>
 
                 <input type="submit" value="Submit">
+                <div class="alert" id="alert">
+                    <!-- Alert message will be displayed here --> 
+                  </div>
             </form>
         </div>
 
         <div class="right-section">
             <h1>Tree Design</h1>
             <div>
-                <button onclick="getAllData()">Fetch all data</button>
-                <div id="resultDiv">
-                    <pre id="result"></pre>
-                </div>
-                <button onclick="getChildrenToStratify()">D3 Stratify</button>
+                <br></br>
+                Select Existing Person: <br></br><select name="existingPerson" id="existingPerson"><br>
+                    <option value="" selected="selected" required>Select person</option>
+                  </select>
+                  <br><br>
+                  <br></br>
+                <button onclick="getChildrenToStratify()">View Tree</button>
                 <div id="tree-container"></div>
             </div>
+            
         </div>
 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min.js"></script>
 
-        <script>
+        <!--<script>
 
             var treeData = [
                 {
@@ -173,7 +174,7 @@
 
             }
 
-        </script>
+        </script> -->
     </div>
 
     <div id="footerPlaceholder"></div>
