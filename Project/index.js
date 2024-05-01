@@ -95,11 +95,11 @@ app.post('/addTreeWithCode', async (req, res) => {
     let userid = decoded.userid;
     let shareCode = req.body.shareCode;
     console.log(userid, shareCode);
-    db.query('BEGIN');
+    await db.query('BEGIN');
     const insertText = 'INSERT INTO familyFrame.tbTreeAuthor(treeid, userid) VALUES ($1, $2)';
     const insertValues = [shareCode, userid];
-    db.query(insertText, insertValues);
-    db.query('COMMIT');
+    await db.query(insertText, insertValues);
+    await db.query('COMMIT');
     res.send("Success");
   } catch (e) {
     db.query('ROLLBACK');
@@ -210,27 +210,27 @@ app.post('/getPerson', async (req, res) => {
   var treeID = req.cookies.treeid;
   var person = await db.query("SELECT firstname, lastname, dateOfBirth, gender FROM familyFrame.tbPerson WHERE firstName = $1 AND treeID=$2", [req.body.selectedPerson, treeID]);
   console.log("get person: " + person.rows[0].dateofbirth.getFullYear() + person.rows[0].dateofbirth.getMonth() + person.rows[0].dateofbirth.getDate());
-  if(person.rows[0].dateofbirth.getMonth() < 10)
+  if(person.rows[0].dateofbirth.getMonth() + 1 < 10)
   {
     if(person.rows[0].dateofbirth.getDate() < 10)
     {
-      person.rows[0].dateofbirth = person.rows[0].dateofbirth.getFullYear() + "-0" + person.rows[0].dateofbirth.getMonth() + "-0" + person.rows[0].dateofbirth.getDate();
+      person.rows[0].dateofbirth = person.rows[0].dateofbirth.getFullYear() + "-0" + (person.rows[0].dateofbirth.getMonth() + 1) + "-0" + person.rows[0].dateofbirth.getDate();
     }
     else
     {
-      person.rows[0].dateofbirth = person.rows[0].dateofbirth.getFullYear() + "-0" + person.rows[0].dateofbirth.getMonth() + "-" + person.rows[0].dateofbirth.getDate();
+      person.rows[0].dateofbirth = person.rows[0].dateofbirth.getFullYear() + "-0" + (person.rows[0].dateofbirth.getMonth()+ 1) + "-" + person.rows[0].dateofbirth.getDate();
     }
   }
   else if(person.rows[0].dateofbirth.getDate() < 10)
   {
-    person.rows[0].dateofbirth = person.rows[0].dateofbirth.getFullYear() + "-" + person.rows[0].dateofbirth.getMonth() + "-0" + person.rows[0].dateofbirth.getDate();
+    person.rows[0].dateofbirth = person.rows[0].dateofbirth.getFullYear() + "-" + (person.rows[0].dateofbirth.getMonth() + 1) + "-0" + person.rows[0].dateofbirth.getDate();
   }
   res.send(person.rows);
 });
 
 app.post('/updatePerson', async (req, res) => {
   var treeID = req.cookies.treeid;
-  await db.query("UPDATE familyFrame.tbPerson SET firstName = $1, lastName = $2, dateOfBirth = $3 WHERE firstName = $4 AND treeID=$5", [req.body.firstName, req.body.lastName, req.body.dob, req.body.existingPerson, treeID]);
+  await db.query("UPDATE familyFrame.tbPerson SET firstName = $1, lastName = $2, dateOfBirth = $3 WHERE firstName = $4 AND treeID=$5", [req.body.firstName, req.body.lastName, req.body.dateOfBirth, req.body.selectedPerson, treeID]);
 });
 
 app.post('/insertNewEldest', async (req, res) => {
@@ -260,15 +260,17 @@ app.post('/insertNewEldest', async (req, res) => {
 app.post('/insertPerson', async (req, res) => {
   // const client = db.getClient()
   try {
-    await db.query('BEGIN');
     var treeID = req.cookies.treeid;
     let decoded = jwt.verify(req.cookies.jwt, secretKey);
-    let userid = decoded.userid;
-    const insertText = 'INSERT INTO familyFrame.tbPerson(firstName, lastName, dateOfBirth, gender, createdBy, treeID) VALUES ($1, $2, $3, $4, $5, $6)';
+    let userid = decoded.userid;    
+    await db.query('BEGIN');
+    console.log("Date of birth" + req.body.dateOfBirth);
+    await db.query("INSERT INTO familyFrame.tbPerson(firstname, lastname, dateOfBirth, gender, createdBy, treeID) VALUES ($1, $2, $3, $4, $5, $6)", [req.body.firstName, req.body.lastName, req.body.dateOfBirth, req.body.gender, userid, treeID]);
     // const insertValues = ['Mona', 'Simpson', '1901-01-12', 'Female', 1, 1];
-    const insertValues = [req.body.firstName, req.body.lastName, req.body.dob, req.body.gender, userid, treeID];
-    await db.query(insertText, insertValues);
-    await db.query('COMMIT');
+    //onst insertValues = [req.body.firstName, req.body.lastName, req.body.dob, req.body.gender, userid, treeID];
+    //await db.query('BEGIN');
+    //await db.query(insertText, insertValues);
+    //await db.query('COMMIT');
     var newPersonID = await db.query("SELECT personID FROM familyFrame.tbPerson WHERE firstName = $1 AND treeID=$2", [req.body.firstName, treeID]);
     var parentID = await db.query("SELECT personID FROM familyFrame.tbPerson WHERE firstName = $1 AND treeID=$2", [req.body.parent, treeID]);
     var parentLabel = await db.query("SELECT relationshiptypeid FROM familyFrame.tbRelationshiptype WHERE relationshipLabel = 'Parent'");

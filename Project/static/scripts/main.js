@@ -97,6 +97,7 @@ function enableForm()
 	{	
 		parent.innerHTML = "";
 		existingPerson.innerHTML = "";
+		existingPerson.options[existingPerson.options.length] = new Option("Existing Person", "");
 		parent.options[parent.options.length] = new Option("New Eldest", "New Eldest");
 		json.forEach(function (item) {
 			existingPerson.disabled = false;
@@ -153,15 +154,30 @@ function postNewPerson(jsonData) {
 	const existingPerson = document.getElementById("existingPerson");
 	const firstName = document.getElementById("firstName").value;
 	const parent = document.getElementById("parent");
-	for (let i = 0; i < existingPerson.options.length; i++) {
+	// for (let i = 0; i < existingPerson.options.length; i++) {
         // Compare the value of the option with the value to check
-        if (existingPerson.options[i].value === firstName) {
-			alertUser("Person already exists");
-			return;
-        }
-    }
-	if(parent.value == "New Eldest")
+    //     if (existingPerson.options[i].value === firstName && firstName != existingPerson.value) {
+	// 		alertUser("Person already exists");
+	// 		return;
+    //     }
+    // }
+	console.log("Existing person: " + existingPerson.value);
+	if(existingPerson.value != "")
 	{
+		jsonData.selectedPerson = existingPerson.value;
+		fetch("/updatePerson", {
+			method: "POST",
+			body: JSON.stringify(jsonData),
+			headers: {
+				"Content-type": "application/json; charset=UTF-8"
+			}
+		})
+		.then((response) => response.json())
+		.then((json) => console.log(json));
+	}
+	else if(parent.value == "New Eldest")
+	{
+		console.log(jsonData);
 		fetch('/insertNewEldest',
 		{
 			method: "POST",
@@ -173,20 +189,9 @@ function postNewPerson(jsonData) {
 		.then((response) => response.json())
 		.then((json) => console.log(json));
 	}
-	else if(existingPerson.value != "")
-	{
-		fetch("/updatePerson", {
-			method: "POST",
-			body: JSON.stringify(jsonData + {selectedPerson: existingPerson.value}),
-			headers: {
-				"Content-type": "application/json; charset=UTF-8"
-			}
-		})
-		.then((response) => response.json())
-		.then((json) => console.log(json));
-	}
 	else
 	{
+		console.log(jsonData);
 		fetch("/insertPerson", {
 			method: "POST",
 			body: JSON.stringify(jsonData),
