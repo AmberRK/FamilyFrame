@@ -479,8 +479,10 @@ app.post('/ownerVerify', async (req, res) => {
 
     if (result.rows.length === 1) {
       const user = result.rows[0];
-      res.status(200).json({ message: "Email authenticated"});
-
+      //const resetLink = `http://localhost:5000/newpass?email=${req.body.email}&token=${result.rows[0].passwordhash}`;
+       const resetLink = `http://family.familyframe.org/newpass?email=${req.body.email}&token=${result.rows[0].passwordhash}`;
+      //console.log(resetLink)
+      res.status(200).json({ message: resetLink});
     } else {
       console.log("Authentication failed");
       res.status(401).json({ message: "Authentication failed" });
